@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>GestionarPrestamos</title>
+<title>Insert title here</title>
 </head>
 <body>
 
