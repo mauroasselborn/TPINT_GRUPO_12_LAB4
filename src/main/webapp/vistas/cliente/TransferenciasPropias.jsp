@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Reportes</title>
+<title>TransferenciasPropias</title>
 </head>
 <body>
 
