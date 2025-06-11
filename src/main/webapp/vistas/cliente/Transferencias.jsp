@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -6,36 +5,33 @@
     <meta charset="UTF-8">
     <title>Transferencias</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
     <div class="container mt-5">
-        <div class="card mx-auto shadow" style="max-width: 500px;">
+        <div class="card mx-auto shadow-lg" style="max-width: 500px;">
             <div class="card-body">
-                <h4 class="card-title text-center mb-4">Realizar Transferencia</h4>
+                <h4 class="card-title text-center mb-4">
+                    <i class="bi bi-arrow-left-right"></i> Transferencias
+                </h4>
 
-                <form>
-                    <div class="mb-3">
-                        <label for="cuentaOrigen" class="form-label">Cuenta Origen</label>
-                        <select class="form-select" id="cuentaOrigen" required>
-                            <option selected disabled>Seleccione una cuenta</option>
-                            <option value="1">Cuenta 123456 - $10.000</option>
-                            <option value="2">Cuenta 789012 - $5.500</option>
-                        </select>
+                <!-- Tipo de Transferencia -->
+                <fieldset class="border rounded p-4 bg-white">
+                    <legend class="w-auto px-2 fw-bold text-primary">Tipo de Transferencia</legend>
+
+                    <div class="d-grid gap-3">
+                        <button type="button" class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                                onclick="window.location.href='transferenciaPropia.jsp'">
+                            <i class="bi bi-person-check me-2"></i> Entre mis cuentas
+                        </button>
+
+                        <button type="button" class="btn btn-outline-success d-flex align-items-center justify-content-center"
+                                onclick="window.location.href='transferenciaTerceros.jsp'">
+                            <i class="bi bi-people-fill me-2"></i> A terceros
+                        </button>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="cbuDestino" class="form-label">CBU Destino</label>
-                        <input type="text" class="form-control" id="cbuDestino" maxlength="22" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="monto" class="form-label">Monto</label>
-                        <input type="number" class="form-control" id="monto" step="0.01" min="0.01" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-success w-100">Transferir</button>
-                </form>
+                </fieldset>
             </div>
         </div>
     </div>
