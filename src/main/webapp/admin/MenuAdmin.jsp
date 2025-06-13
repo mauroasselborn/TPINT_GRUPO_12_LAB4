@@ -15,15 +15,17 @@ body {
 	display: flex;
 	min-height: 100vh;
 	overflow-x: hidden;
+	font-family: Arial, sans-serif;
+	background-color: #f5f5f5;
 }
 
 #sidebar {
 	min-width: 240px;
 	max-width: 240px;
-	background-color: #343a40;
+	background-color: #000;
 }
 
-#sidebar .nav-link {
+#sidebar .nav-link, #sidebar h4, #sidebar strong {
 	color: #ffffff;
 }
 
@@ -37,48 +39,42 @@ body {
 }
 
 .topbar {
-	background-color: #343a40;
+	background-color: #000;
 	padding: 0.75rem 1rem;
 	border-bottom: 1px solid #495057;
 	color: white;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+	margin-left: 0.5em;
+	display: inline-block;
+	width: auto;
+}
+
+.btn-action {
+	margin-right: 5px;
+}
+
+.table td, .table th {
+	vertical-align: middle;
+}
+
+.scroll-container {
+	overflow-x: auto;
+	width: 100%;
 }
 </style>
 </head>
 <body>
 
-	<!-- Sidebar -->
-	<div id="sidebar" class="d-flex flex-column p-3 text-white">
-		<h4 class="text-white text-center">Administrador</h4>
-		<hr>
-		<ul class="nav nav-pills flex-column mb-auto">
-			<li><strong>Clientes</strong></li>
-			<li><a href="Clientes.jsp" class="nav-link">Gestión de
-					Clientes</a></li>
 
-			<li class="mt-3"><strong>Cuentas</strong></li>
-			<li><a href="Cuentas.jsp" class="nav-link">Gestión de
-					Cuentas</a></li>
-
-			<li class="mt-3"><strong>Préstamos</strong></li>
-			<li><a href="Prestamos.jsp" class="nav-link">Solicitudes de
-					Préstamo</a></li>
-
-			<li class="mt-3"><strong>Reportes</strong></li>
-			<li><a href="Reportes.jsp" class="nav-link">Ver Reportes</a></li>
-		</ul>
-		<hr>
-		<a href="../../Login.jsp" class="btn btn-outline-light w-100">Cerrar
-			Sesión</a>
-	</div>
+	<jsp:include page="../componentes/MenuLateral.jsp" />
 
 	<!-- Contenido -->
 	<div id="content">
+
 		<!-- Barra superior -->
-		<div class="topbar d-flex justify-content-end align-items-center">
-			<span class="me-2"> <i class="bi bi-person-circle me-1"></i>
-				Administrador
-			</span>
-		</div>
+		<jsp:include page="../componentes/BarraSuperior.jsp" />
 
 		<!-- Contenido principal -->
 		<div class="p-4">
