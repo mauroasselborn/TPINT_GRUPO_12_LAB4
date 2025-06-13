@@ -1,88 +1,52 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Panel Administrador - Banco UTN</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-	rel="stylesheet">
-<style>
-body {
-	display: flex;
-	min-height: 100vh;
-	overflow-x: hidden;
-	font-family: Arial, sans-serif;
-	background-color: #f5f5f5;
-}
-
-#sidebar {
-	min-width: 240px;
-	max-width: 240px;
-	background-color: #000;
-}
-
-#sidebar .nav-link, #sidebar h4, #sidebar strong {
-	color: #ffffff;
-}
-
-#sidebar .nav-link:hover {
-	background-color: #495057;
-}
-
-#content {
-	flex-grow: 1;
-	width: 100%;
-}
-
-.topbar {
-	background-color: #000;
-	padding: 0.75rem 1rem;
-	border-bottom: 1px solid #495057;
-	color: white;
-}
-
-.dataTables_wrapper .dataTables_filter input {
-	margin-left: 0.5em;
-	display: inline-block;
-	width: auto;
-}
-
-.btn-action {
-	margin-right: 5px;
-}
-
-.table td, .table th {
-	vertical-align: middle;
-}
-
-.scroll-container {
-	overflow-x: auto;
-	width: 100%;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Panel Administrador - Banco UTN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            overflow: hidden;
+            background-color: #212529;
+            color: white;
+        }
+        .main-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100vh;
+        }
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            background-color: #343a40;
+        }
+    </style>
 </head>
 <body>
 
+    <!-- Sidebar -->
+    <jsp:include page="../componentes/MenuLateral.jsp" />
 
-	<jsp:include page="../componentes/MenuLateral.jsp" />
+    <!-- Contenedor principal -->
+    <div class="main-container">
+        <!-- Navbar -->
+        <jsp:include page="../componentes/BarraSuperior.jsp" />
 
-	<!-- Contenido -->
-	<div id="content">
-
-		<!-- Barra superior -->
-		<jsp:include page="../componentes/BarraSuperior.jsp" />
-
-		<!-- Contenido principal -->
-		<div class="p-4">
-			<h2>Bienvenido Administrador</h2>
-			<p>Usá el menú lateral para gestionar clientes, cuentas,
-				préstamos y reportes del sistema bancario.</p>
-		</div>
-	</div>
+        <!-- Contenido principal -->
+        <div class="container-fluid content">
+            <h1 class="mb-4">Bienvenido, Admin Juan Pérez</h1>
+            <p>Desde este panel podés gestionar clientes, usuarios, cuentas, préstamos y ver reportes del sistema bancario.</p>
+        </div>
+    </div>
 
 </body>
 </html>

@@ -13,7 +13,8 @@
 	<div class="container d-flex justify-content-center align-items-center vh-100">
 		<div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
 			<h4 class="text-center mb-4">Iniciar Sesión</h4>
-			<form action="admin/MenuAdmin.jsp" method="post">
+			 <form action="admin/MenuAdmin.jsp" method="post"> 
+			<!--<form action="cliente/MenuCliente.jsp" method="post">-->
 				<div class="mb-3">
 					<label for="usuario" class="form-label">Usuario</label>
 					<input type="text" class="form-control" id="usuario" name="usuario" required>

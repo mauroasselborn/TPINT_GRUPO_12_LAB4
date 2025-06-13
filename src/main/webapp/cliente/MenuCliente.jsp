@@ -52,7 +52,7 @@ body {
 }
 
 .topbar {
-	background-color: #146c43; /* Verde más oscuro */
+	background-color: #198754; /* Verde más oscuro */
 	color: white;
 	padding: 10px 20px;
 	display: flex;
