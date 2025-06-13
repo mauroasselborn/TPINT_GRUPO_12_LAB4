@@ -147,26 +147,36 @@ body {
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
-		$(document).ready(function() {
-			$('#tablaCuentas').DataTable({
-				responsive : true,
-				autoWidth : false,
-				language : {
-					search : "Filtrar:",
-					lengthMenu : "Mostrar _MENU_ registros por página",
-					zeroRecords : "No se encontraron resultados",
-					info : "Mostrando _START_ a _END_ de _TOTAL_ registros",
-					infoEmpty : "Mostrando 0 a 0 de 0 registros",
-					infoFiltered : "(filtrado de _MAX_ registros totales)",
-					paginate : {
-						first : "Primero",
-						last : "Último",
-						next : "Siguiente",
-						previous : "Anterior"
-					}
-				}
-			});
-		});
+	$(document).ready(function () {
+	    var tabla = $('#tablaCuentas').DataTable({
+	        responsive: true,
+	        autoWidth: false,
+	        select: {
+	            style: 'single', // selecciona de a una
+	            items: 'cell'    // selecciona celdas, no filas ni columnas
+	        },
+	        language: {
+	            search: "Filtrar:",
+	            lengthMenu: "Mostrar _MENU_ registros por página",
+	            zeroRecords: "No se encontraron resultados",
+	            info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+	            infoEmpty: "Mostrando 0 a 0 de 0 registros",
+	            infoFiltered: "(filtrado de _MAX_ registros totales)",
+	            paginate: {
+	                first: "Primero",
+	                last: "Último",
+	                next: "Siguiente",
+	                previous: "Anterior"
+	            }
+	        }
+	    });
+
+	    // Agregamos el evento click para seleccionar celdas
+	    $('#tablaCuentas tbody').on('click', 'td', function () {
+	        tabla.cell(this).select();
+	    });
+	});
+
 
 		function confirmarEliminacion(id) {
 			document.getElementById('idCuentaEliminar').value = id;
