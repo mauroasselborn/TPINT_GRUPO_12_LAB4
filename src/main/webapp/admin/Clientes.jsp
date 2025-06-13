@@ -65,6 +65,7 @@ body {
 						<th>Apellido</th>
 						<th>Email</th>
 						<th>Teléfono</th>
+						<th>Fecha Nacimiento</th>
 						<th>Acciones</th>
 					</tr>
 				</thead>
@@ -75,11 +76,12 @@ body {
 						<td>Pérez</td>
 						<td>juan@mail.com</td>
 						<td>1122334455</td>
+						<td>1990-01-01</td>
 						<td>
-							<div class="d-flex">
+							<div class="d-flex justify-content-center">
+								<button class="btn btn-info btn-sm me-2" onclick="abrirModalCliente('detalle')">Detalle</button>
 								<button class="btn btn-warning btn-sm me-2" onclick="abrirModalCliente('modificar')">Modificar</button>
-								<button class="btn btn-danger btn-sm me-2" onclick="abrirModalEliminar()">Eliminar</button>
-								<button class="btn btn-info btn-sm" onclick="abrirModalCliente('detalle')">Detalle</button>
+								<button class="btn btn-danger btn-sm" onclick="abrirModalEliminar()">Eliminar</button>
 							</div>
 						</td>
 					</tr>

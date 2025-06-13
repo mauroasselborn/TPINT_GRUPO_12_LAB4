@@ -101,7 +101,7 @@ body {
 							<td>2025-06-01</td>
 							<td>Juan Pérez</td>
 							<td class="text-nowrap">
-								<div class="d-flex">
+								<div class="d-flex justify-content-center">
 									<a href="ModificarCuenta.jsp?id=1"
 										class="btn btn-warning btn-sm btn-action">Modificar</a>
 									<button class="btn btn-danger btn-sm"
