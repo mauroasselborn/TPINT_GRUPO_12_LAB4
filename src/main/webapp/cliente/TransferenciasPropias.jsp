@@ -2,8 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <head>
     <meta charset="UTF-8">
-    <title>Transferencias entre Cuentas Propias</title>
+    <title>Transferencias Propias</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         /* Estilos básicos para el formulario y resumen */
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
@@ -36,7 +39,7 @@
 <% if (!formEnviado) { %>
     <!-- Sección de Formulario de transferencia -->
     <div class="form-container">
-    <h1>Transferencia entre Cuentas Propias</h1>
+    <h1>Transferencia entre Cuentas Propias...</h1>
         <form action="transferenciasPropias.jsp" method="post">
             <label for="origen">Cuenta Origen:</label>
             <select id="origen" name="cuentaOrigen" required>
@@ -58,8 +61,8 @@
             <input type="number" id="importe" name="importe" step="0.01" min="0" required />
 
             <div class="buttons">
-                <button type="submit">Transferir</button>
-                <button type="reset">Limpiar</button>
+                <button type="submit" class="btn btn-primary">Transferir</button>
+                <button type="reset" class="btn btn-secondary">Limpiar</button>
             </div>
         </form>
     </div>
