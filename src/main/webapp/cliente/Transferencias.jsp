@@ -22,12 +22,12 @@
 
                     <div class="d-grid gap-3">
                         <button type="button" class="btn btn-outline-primary d-flex align-items-center justify-content-center"
-                                onclick="window.location.href='transferenciaPropia.jsp'">
+                                onclick="window.location.href='TransferenciasPropias.jsp'">
                             <i class="bi bi-person-check me-2"></i> Entre mis cuentas
                         </button>
 
                         <button type="button" class="btn btn-outline-success d-flex align-items-center justify-content-center"
-                                onclick="window.location.href='transferenciaTerceros.jsp'">
+                                onclick="window.location.href='TransferenciasTerceros.jsp'">
                             <i class="bi bi-people-fill me-2"></i> A terceros
                         </button>
                     </div>
