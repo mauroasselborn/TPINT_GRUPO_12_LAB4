@@ -14,17 +14,20 @@
             <form action="#" method="post">
                 <div class="mb-3">
                     <label for="cuil">CUIL</label>
-                    <input type="text" class="form-control" name="cuil" placeholder="Ingrese el CUIL" value="20-25111301-7" required>
+                    <input type="text" class="form-control" name="cuil" placeholder="Ingrese el CUIL" 
+                    value="20-25111301-7" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" name="nombre" placeholder="Ingrese su nombre" value="Franco" required>
+                    <input type="text" class="form-control" name="nombre" placeholder="Ingrese su nombre" 
+                    value="Franco" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="apellido">Apellido</label>
-                    <input type="text" class="form-control" name="apellido" placeholder="Ingrese su apellido" value="Bonzi" required>
+                    <input type="text" class="form-control" name="apellido" placeholder="Ingrese su apellido"
+                     value="Bonzi" required>
                 </div>
 
                 <div class="mb-3">
@@ -115,12 +118,14 @@
 
                 <div class="mb-3">
                     <label>Contraseña</label>
-                    <input type="password" class="form-control" name="contraseña" placeholder="Ingrese su contraseña" required>
+                    <input type="password" class="form-control" name="contraseña" placeholder="Ingrese su contraseña" 
+                    required>
                 </div>
 
                 <div class="mb-3">
                     <label>Reitere su contraseña</label>
-                    <input type="password" class="form-control" name="contraseña2" placeholder="Repita la contraseña" required>
+                    <input type="password" class="form-control" name="contraseña2" placeholder="Repita la contraseña" 
+                    required>
                 </div>
 
                 <div class="text-center">
