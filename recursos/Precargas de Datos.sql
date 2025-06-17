@@ -1,3 +1,14 @@
+INSERT INTO nacionalidades (id, descripcion) VALUES
+(1, 'Argentina'),
+(2, 'Uruguaya'),
+(3, 'Chilena'),
+(4, 'Paraguaya'),
+(5, 'Boliviana'),
+(6, 'Brasileña'),
+(7, 'Peruana'),
+(8, 'Colombiana'),
+(9, 'Venezolana');
+
 INSERT INTO tipo_usuario (id, descripcion) VALUES
 (1, 'Administrador'),
 (2, 'Cliente');
@@ -283,15 +294,15 @@ INSERT INTO estado_prestamo (id, descripcion) VALUES
 
 -- Precarga de clientes (integrantes del grupo)
 
-INSERT INTO clientes (id, dni, cuil, nombre, apellido, sexo, nacionalidad, fecha_nacimiento, direccion, id_localidad, id_provincia, correo_electronico, telefono, activo)
+INSERT INTO clientes (id, dni, cuil, nombre, apellido, sexo, id_nacionalidad, fecha_nacimiento, direccion, id_localidad, id_provincia, correo_electronico, telefono, activo)
 VALUES
 
-(1, '30011111', '20-30011111-3', 'Mauro', 'Asselborn', 'Masculino', 'Argentina', '1992-07-27', 'Calle Alsina 272', 9, 9, 'mauro.asselborn@gmail.com', '1144965827', 1),
-(2, '30022222', '20-30022222-3', 'Adriel', 'Logullo', 'Masculino', 'Argentina', '1991-08-26', 'Calle Belgrano 218', 8, 8, 'adriel.logullo@gmail.com', '1148868537', 1),
-(3, '30033333', '20-30033333-3', 'Franco', 'Bonzi', 'Masculino', 'Argentina', '1994-08-16', 'Pasaje San Martín 845', 19, 19, 'franco.bonzi@gmail.com', '1141505620', 1),
-(4, '30044444', '20-30044444-3', 'Guido', 'Secovih', 'Masculino', 'Argentina', '1987-02-14', 'Calle Alsina 119', 7, 7, 'guido.secovih@gmail.com', '1140248697', 1),
-(5, '30055555', '20-30055555-3', 'Adrian', 'Criscione', 'Masculino', 'Argentina', '1997-03-20', 'Pasaje Alsina 279', 20, 20, 'adrian.criscione@gmail.com', '1142991320', 1),
-(6, '30066666', '20-30066666-3', 'Mariano', 'Stoesell', 'Masculino', 'Argentina', '1985-01-13', 'Pasaje Belgrano 331', 10, 10, 'mariano.stoesell@gmail.com', '1141350433', 1);
+(1, '30011111', '20-30011111-3', 'Mauro', 'Asselborn', 'Masculino', 1, '1992-07-27', 'Calle Alsina 272', 9, 9, 'mauro.asselborn@gmail.com', '1144965827', 1),
+(2, '30022222', '20-30022222-3', 'Adriel', 'Logullo', 'Masculino', 3, '1991-08-26', 'Calle Belgrano 218', 8, 8, 'adriel.logullo@gmail.com', '1148868537', 1),
+(3, '30033333', '20-30033333-3', 'Franco', 'Bonzi', 'Masculino', 2, '1994-08-16', 'Pasaje San Martín 845', 19, 19, 'franco.bonzi@gmail.com', '1141505620', 1),
+(4, '30044444', '20-30044444-3', 'Guido', 'Secovih', 'Masculino', 5, '1987-02-14', 'Calle Alsina 119', 7, 7, 'guido.secovih@gmail.com', '1140248697', 1),
+(5, '30055555', '20-30055555-3', 'Adrian', 'Criscione', 'Masculino', 8, '1997-03-20', 'Pasaje Alsina 279', 20, 20, 'adrian.criscione@gmail.com', '1142991320', 1),
+(6, '30066666', '20-30066666-3', 'Mariano', 'Stoesell', 'Masculino', 6, '1985-01-13', 'Pasaje Belgrano 331', 10, 10, 'mariano.stoesell@gmail.com', '1141350433', 1);
 
 -- Precarga de usuarios
 
@@ -304,3 +315,9 @@ VALUES
 (4, 4, 1, 'guido', '1234', 1),
 (5, 5, 2, 'adrian', '1234', 1),
 (6, 6, 2, 'mariano', '1234', 1);
+
+
+-- Precarga de Tipos de Cuentas
+INSERT INTO tipo_cuenta (id, descripcion) VALUES
+(1, 'Caja de ahorro'),
+(2, 'Cuenta corriente');

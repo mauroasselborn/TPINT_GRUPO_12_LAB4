@@ -43,7 +43,7 @@
 
         <!-- Contenido principal -->
         <div class="container-fluid content">
-            <h1 class="mb-4">Bienvenido, Admin Juan Pérez</h1>
+            <h1 class="mb-4">Bienvenido, Admin Mauro Asselborn</h1>
             <p>Desde este panel podés gestionar clientes, usuarios, cuentas, préstamos y ver reportes del sistema bancario.</p>
         </div>
     </div>

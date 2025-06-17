@@ -23,6 +23,12 @@ CREATE TABLE tipo_usuario (
     descripcion VARCHAR(50) NOT NULL
 );
 
+-- Tabla nacionalidades
+CREATE TABLE nacionalidades (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(100) NOT NULL
+);
+
 -- Tabla clientes
 CREATE TABLE clientes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -31,7 +37,7 @@ CREATE TABLE clientes (
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
     sexo VARCHAR(10) NOT NULL,
-    nacionalidad VARCHAR(50) NOT NULL,
+    id_nacionalidad INT NOT NULL,
     fecha_nacimiento DATE NOT NULL,
     direccion VARCHAR(100) NOT NULL,
     id_localidad INT NOT NULL,
@@ -39,6 +45,7 @@ CREATE TABLE clientes (
     correo_electronico VARCHAR(100) NOT NULL,
     telefono VARCHAR(20),
     activo TINYINT(1) DEFAULT 1,
+    FOREIGN KEY (id_nacionalidad) REFERENCES nacionalidades(id),
     FOREIGN KEY (id_localidad) REFERENCES localidades(id),
     FOREIGN KEY (id_provincia) REFERENCES provincias(id)
 );
@@ -61,13 +68,22 @@ CREATE TABLE tipo_movimiento (
     descripcion VARCHAR(50) NOT NULL
 );
 
+
+-- Tabla tipo_cuenta
+CREATE TABLE tipo_cuenta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(50) NOT NULL
+);
+
+
 -- Tabla cuentas
 CREATE TABLE cuentas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT NOT NULL,
     numero_cuenta VARCHAR(20) UNIQUE NOT NULL,
     cbu VARCHAR(30) UNIQUE NOT NULL,
-    tipo_cuenta VARCHAR(50) NOT NULL,
+    id_tipo_cuenta INT NOT NULL,
+    FOREIGN KEY (id_tipo_cuenta) REFERENCES tipo_cuenta(id),
     fecha_creacion DATE NOT NULL,
     saldo DECIMAL(10,2) NOT NULL DEFAULT 10000.00,
     activo TINYINT(1) DEFAULT 1,
