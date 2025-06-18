@@ -1,6 +1,6 @@
 <div id="sidebar" class="d-flex flex-column justify-content-between p-3 text-white bg-dark" style="min-height: 100vh;">
     <div>
-        <h4 class="text-white text-center">Administrador</h4>
+        <h4 class="text-white text-center">Banco Grupo12</h4>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li><a href="Clientes.jsp" class="nav-link text-white"><i class="bi bi-people-fill me-2"></i>Clientes</a></li>

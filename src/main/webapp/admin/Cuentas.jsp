@@ -13,63 +13,17 @@
 	rel="stylesheet">
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
-<style>
-body {
-	display: flex;
-	min-height: 100vh;
-	overflow-x: hidden;
-	font-family: Arial, sans-serif;
-	background-color: #f5f5f5;
-}
+<link rel="stylesheet" href="../css/styles.css">
 
-#sidebar {
-	min-width: 240px;
-	max-width: 240px;
-	background-color: #000;
-}
-
-#sidebar .nav-link, #sidebar h4, #sidebar strong {
-	color: #ffffff;
-}
-
-#sidebar .nav-link:hover {
-	background-color: #495057;
-}
-
-#content {
-	flex-grow: 1;
-	width: 100%;
-}
-
-.topbar {
-	background-color: #000;
-	padding: 0.75rem 1rem;
-	border-bottom: 1px solid #495057;
-	color: white;
-}
-
-.scroll-container {
-	overflow-x: auto;
-	width: 100%;
-}
-
-.btn-action {
-	margin-right: 5px;
-}
-
-.table td, .table th {
-	vertical-align: middle;
-}
-</style>
 </head>
 <body>
-	<jsp:include page="../componentes/MenuLateral.jsp" />
+	<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
 
 	<!-- Contenido -->
 	<div id="content">
 
 		<!-- Barra superior -->
-		<jsp:include page="../componentes/BarraSuperior.jsp" />
+		<jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
 
 		<div class="p-4">
 			<div class="d-flex justify-content-between align-items-center mb-3">
@@ -147,36 +101,26 @@ body {
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
-	$(document).ready(function () {
-	    var tabla = $('#tablaCuentas').DataTable({
-	        responsive: true,
-	        autoWidth: false,
-	        select: {
-	            style: 'single', // selecciona de a una
-	            items: 'cell'    // selecciona celdas, no filas ni columnas
-	        },
-	        language: {
-	            search: "Filtrar:",
-	            lengthMenu: "Mostrar _MENU_ registros por página",
-	            zeroRecords: "No se encontraron resultados",
-	            info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-	            infoEmpty: "Mostrando 0 a 0 de 0 registros",
-	            infoFiltered: "(filtrado de _MAX_ registros totales)",
-	            paginate: {
-	                first: "Primero",
-	                last: "Último",
-	                next: "Siguiente",
-	                previous: "Anterior"
-	            }
-	        }
-	    });
-
-	    // Agregamos el evento click para seleccionar celdas
-	    $('#tablaCuentas tbody').on('click', 'td', function () {
-	        tabla.cell(this).select();
-	    });
-	});
-
+		$(document).ready(function() {
+			var tabla = $('#tablaCuentas').DataTable({
+				responsive : true,
+				autoWidth : false,
+				language : {
+					search : "Filtrar:",
+					lengthMenu : "Mostrar _MENU_ registros por página",
+					zeroRecords : "No se encontraron resultados",
+					info : "Mostrando _START_ a _END_ de _TOTAL_ registros",
+					infoEmpty : "Mostrando 0 a 0 de 0 registros",
+					infoFiltered : "(filtrado de _MAX_ registros totales)",
+					paginate : {
+						first : "Primero",
+						last : "Último",
+						next : "Siguiente",
+						previous : "Anterior"
+					}
+				}
+			});
+		});
 
 		function confirmarEliminacion(id) {
 			document.getElementById('idCuentaEliminar').value = id;
