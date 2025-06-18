@@ -39,7 +39,7 @@
 <% if (!formEnviado) { %>
     <!-- Sección de Formulario de transferencia -->
     <div class="form-container">
-    <h1>Transferencia entre Cuentas Propias...</h1>
+    <h1>Transferencia entre Cuentas Propias</h1>
         <form action="transferenciasPropias.jsp" method="post">
             <label for="origen">Cuenta Origen:</label>
             <select id="origen" name="cuentaOrigen" required>
