@@ -104,9 +104,7 @@
         <input type="submit" value="Guardar Cambios">
     </form>
 
-    <div class="nota">
-        * Solo se pueden modificar el tipo y estado de la cuenta. El número de cuenta y saldo no pueden cambiarse manualmente.
-    </div>
+
 </div>
 
 </body>

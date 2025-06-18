@@ -101,10 +101,7 @@
         <input type="submit" value="Solicitar Préstamo">
     </form>
 
-    <div class="nota">
-        * El monto solicitado se acreditará automáticamente si el préstamo es aprobado por el banco.<br>
-        * Podrá visualizar las cuotas generadas desde el menú "Mis Préstamos".
-    </div>
+
 </div>
 
 </body>
