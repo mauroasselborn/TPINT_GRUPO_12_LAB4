@@ -40,7 +40,7 @@
     <!-- Sección de Formulario de transferencia -->
     <div class="form-container">
     <h1>Transferencia entre Cuentas Propias</h1>
-        <form action="transferenciasPropias.jsp" method="post">
+        <form action="TransferenciasPropias.jsp" method="post">
             <label for="origen">Cuenta Origen:</label>
             <select id="origen" name="cuentaOrigen" required>
                 <%-- Opciones de cuentas de origen (simuladas) --%>
@@ -76,7 +76,7 @@
         <hr />
         <p>¡Transferencia realizada con éxito!</p>
         <!-- Enlace para realizar otra transferencia (recargar formulario) -->
-        <p><a href="transferenciasPropias.jsp">Realizar otra transferencia</a></p>
+        <p><a href="TransferenciasPropias.jsp">Realizar otra transferencia</a></p>
     </div>
 <% } %>
 </body>

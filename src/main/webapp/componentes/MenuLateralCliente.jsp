@@ -7,7 +7,7 @@
             <li><a href="Transferencias.jsp" class="nav-link text-white"><i class="bi bi-arrow-left-right me-2"></i> Transferencias</a></li>
             <li><a href="GestionarPrestamos.jsp" class="nav-link text-white"><i class="bi bi-cash-stack me-2"></i> Gestión de Préstamos</a></li>
             <li><a href="SolicitarPrestamo.jsp" class="nav-link text-white"><i class="bi bi-cash-stack me-2"></i> Solicitar Préstamos</a></li>
-            <li><a href="PagosPrestamo.jsp" class="nav-link text-white"><i class="bi bi-credit-card-2-back me-2"></i> Pagos de Préstamos</a></li>
+            <li><a href="DetallePrestamo.jsp" class="nav-link text-white"><i class="bi bi-credit-card-2-back me-2"></i> Detalle Prestamos</a></li>
             <li><a href="MiPerfil.jsp" class="nav-link text-white"><i class="bi bi-person me-2"></i> Mi Perfil</a></li>
         </ul>
     </div>

@@ -38,7 +38,7 @@
     <!-- Sección de Formulario de transferencia a terceros -->
     <div class="form-container">
         <h1>Transferencia a Terceros</h1>
-        <form action="transferenciasTerceros.jsp" method="post">
+        <form action="TransferenciasTerceros.jsp" method="post">
             <label for="origen">Cuenta Origen:</label>
             <select id="origen" name="cuentaOrigen" class="form-select" required>
                 <% for (String c : cuentas) { %>
@@ -49,7 +49,7 @@
             <label for="cbu">CBU Destino:</label>
             <input type="text" id="cbu" name="cbuDestino" class="form-control"
                    placeholder="Ingrese CBU de la cuenta de destino"
-                   pattern="\\d{16}" title="16 dígitos numéricos" required />
+                   " title="16 dígitos numéricos" required />
 
             <label for="importe">Importe:</label>
             <input type="number" id="importe" name="importe" class="form-control"
@@ -71,7 +71,7 @@
         <hr />
         <p>¡Transferencia a tercero realizada con éxito!</p>
         <div class="buttons">
-            <a href="transferenciasTerceros.jsp" class="btn btn-primary">Hacer otra transferencia...</a>
+            <a href="TransferenciasTerceros.jsp" class="btn btn-primary">Hacer otra transferencia...</a>
         </div>
     </div>
 <% } %>
