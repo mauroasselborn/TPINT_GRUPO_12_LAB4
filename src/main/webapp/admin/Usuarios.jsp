@@ -19,10 +19,10 @@
 <body>
 
 	<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
-	<div id="content">
+	<div class="main-content">
 		<jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
 
-		<div class="p-4">
+		<div class="container-fluid content">
 			<div class="d-flex justify-content-between align-items-center mb-3">
 				<h2 class="mb-0">Usuarios</h2>
 
@@ -70,51 +70,62 @@
 		aria-labelledby="modalAltaUsuarioLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
+
 				<div class="modal-header">
 					<h5 class="modal-title" id="modalAltaUsuarioLabel">Alta de
 						Usuario</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
+
 				<div class="modal-body">
 					<form id="formAltaUsuario">
 						<div class="row g-3">
 							<div class="col-md-6">
 								<label class="form-label">Usuario</label> <input type="text"
-									class="form-control" name="usuario">
+									class="form-control" name="usuario" required>
 							</div>
+
 							<div class="col-md-6">
-								<label class="form-label">Nombre</label> <input type="text"
-									class="form-control" name="nombre">
+								<label class="form-label">Contraseña</label> <input
+									type="password" class="form-control" name="contrasena" required>
 							</div>
+
 							<div class="col-md-6">
-								<label class="form-label">Apellido</label> <input type="text"
-									class="form-control" name="apellido">
+								<label class="form-label">Repetir Contraseña</label> <input
+									type="password" class="form-control" name="repetirContrasena"
+									required>
 							</div>
+
 							<div class="col-md-6">
-								<label class="form-label">Email</label> <input type="email"
-									class="form-control" name="email">
+								<label class="form-label">Rol</label> <select
+									class="form-select" name="rol" id="rolSelect" required>
+									<option value="" disabled selected>Seleccionar rol</option>
+									<option value="admin">Admin</option>
+									<option value="cliente">Cliente</option>
+								</select>
 							</div>
+
 							<div class="col-md-6">
-								<label class="form-label">Rol</label> <input type="text"
-									class="form-control" name="rol">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Estado</label> <input type="text"
-									class="form-control" name="estado">
+								<label class="form-label">DNI del Cliente</label> <input
+									type="text" class="form-control" name="dniCliente"
+									id="dniClienteInput" disabled>
 							</div>
 						</div>
 					</form>
 				</div>
+
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">Cancelar</button>
 					<button type="submit" class="btn btn-success"
 						form="formAltaUsuario">Guardar Usuario</button>
 				</div>
+
 			</div>
 		</div>
 	</div>
+
 
 	<!-- Modal Confirmar Eliminación Usuario -->
 	<div class="modal fade" id="modalEliminarUsuario" tabindex="-1"
@@ -218,28 +229,45 @@ $(document).ready(function () {
 });
 
 function abrirModalUsuario(modo) {
-  const modal = new bootstrap.Modal(document.getElementById('modalUsuario'));
-  const form = document.getElementById('formUsuario');
-  const inputs = form.querySelectorAll('input');
-  const btnGuardar = document.getElementById('btnGuardarUsuario');
-  const titulo = document.getElementById('modalUsuarioLabel');
+	const modal = new bootstrap.Modal(document.getElementById('modalUsuario'));
+	const form = document.getElementById('formUsuario');
+ 	const inputs = form.querySelectorAll('input');
+	const btnGuardar = document.getElementById('btnGuardarUsuario');
+	const titulo = document.getElementById('modalUsuarioLabel');
 
-  inputs.forEach(input => input.disabled = false);
-  btnGuardar.style.display = 'inline-block';
-  titulo.innerText = 'Modificar Usuario';
+	inputs.forEach(input => input.disabled = false);
+  	btnGuardar.style.display = 'inline-block';
+ 	titulo.innerText = 'Modificar Usuario';
 
-  modal.show();
+  	modal.show();
 }
 
 function abrirModalEliminarUsuario() {
-  const modal = new bootstrap.Modal(document.getElementById('modalEliminarUsuario'));
-  modal.show();
+  	const modal = new bootstrap.Modal(document.getElementById('modalEliminarUsuario'));
+  	modal.show();
 }
 
 function abrirModalAltaUsuario() {
-  const modal = new bootstrap.Modal(document.getElementById('modalAltaUsuario'));
-  modal.show();
+  	const modal = new bootstrap.Modal(document.getElementById('modalAltaUsuario'));
+  	modal.show();
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+	const rolSelect = document.getElementById('rolSelect');
+    const dniInput = document.getElementById('dniClienteInput');
+
+    rolSelect.addEventListener('change', function () {
+      if (this.value === 'cliente') {
+      	dniInput.disabled = false;
+        dniInput.required = true;
+      } else {
+      	dniInput.disabled = true;
+        dniInput.required = false;
+        dniInput.value = '';
+      }
+    });
+ });
 </script>
 
 </body>

@@ -20,10 +20,10 @@
 <body>
 
 	<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
-	<div id="content">
+	<div class="main-content">
 		<jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
 
-		<div class="p-4">
+		<div class="container-fluid content">
 			<div class="d-flex justify-content-between align-items-center mb-3">
 				<h2 class="mb-0">Clientes</h2>
 				<a href="AltaCliente.jsp" class="btn btn-primary">Agregar nuevo cliente</a>
@@ -129,6 +129,18 @@
 							<div class="col-md-6">
 								<label class="form-label">Provincia</label> <input type="text"
 									class="form-control" value="Buenos Aires" name="provincia">
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Usuario</label> <input type="text"
+									class="form-control" value="usuario01" name="usuario">
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Contraseña</label> <input type="password"
+									class="form-control" value="1234" name="contraseña">
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Repetir Contraseña</label> <input type="password"
+									class="form-control" value="1234" name="RepContraseña">
 							</div>
 						</div>
 					</form>

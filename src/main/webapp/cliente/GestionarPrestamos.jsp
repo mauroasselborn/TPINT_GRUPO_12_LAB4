@@ -12,7 +12,7 @@
 
   <div class="container mt-4">
     <h2>Mis Préstamos</h2>
-    <a href="#" class="btn btn-primary mb-3">Solicitar Nuevo Préstamo</a>
+    <a href="SolicitarPrestamo.jsp" class="btn btn-primary mb-3">Solicitar Nuevo Préstamo</a>
 
     <table class="table table-striped">
       <thead>
@@ -30,21 +30,21 @@
           <td>$50.000</td>
           <td>12</td>
           <td><span class="badge bg-warning">PENDIENTE</span></td>
-          <td><button type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Ver</button></td>
+          <td><a href="DetallePrestamo.jsp" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Ver</a></td>
         </tr>
         <tr>
           <td>2</td>
           <td>$75.000</td>
           <td>24</td>
           <td><span class="badge bg-success">APROBADO</span></td>
-          <td><button type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Ver</button></td>
+          <td><a href="DetallePrestamo.jsp" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Ver</a></td>
         </tr>
         <tr>
           <td>3</td>
           <td>$30.000</td>
           <td>6</td>
           <td><span class="badge bg-danger">RECHAZADO</span></td>
-          <td><button type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Ver</button></td>
+          <td><a href="DetallePrestamo.jsp" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Ver</a></td>
         </tr>
       </tbody>
     </table>
