@@ -1,18 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Detalle de Pr√©stamo</title>
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-</head>
-<body>
+<jsp:include page="../componentes/Encabezado.jsp" />
+	
+	<!-- Sidebar -->
+  <jsp:include page="../componentes/MenuLateralCliente.jsp" />
 
-  <div class="container mt-5">
-    <h2 class="mb-4">Detalle del Pr√©stamo</h2>
+  <!-- Contenedor principal -->
+  <div class="main-content">
+    <!-- Navbar -->
+    <jsp:include page="../componentes/BarraSuperiorCliente.jsp" />
+    <!-- Contenido principal -->
+  <div class="container-fluid content py-4">
+    <h2 class="mb-4">Detalle del PrÈstamo</h2>
 
     <div class="table-responsive mb-4">
       <table class="table table-bordered align-middle">
@@ -34,7 +31,7 @@
             <td>6</td>
           </tr>
           <tr>
-            <th scope="row">Pr√≥xima cuota a pagar</th>
+            <th scope="row">PrÛxima cuota a pagar</th>
             <td>Cuota 7 de 12 - Monto: $4.500</td>
           </tr>
           <tr>
@@ -55,7 +52,7 @@
         <i class="bi bi-arrow-left"></i> Volver
       </a>
 
-      <!-- Bot√≥n para pagar la pr√≥xima cuota -->
+      <!-- BotÛn para pagar la prÛxima cuota -->
       <form action="PagarCuotaServlet" method="post">
         <input type="hidden" name="idPrestamo" value="1" />
         <input type="hidden" name="idCuota" value="123" />
@@ -65,8 +62,8 @@
       </form>
     </div>
   </div>
-
-  <!-- Bootstrap scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<jsp:include page="../componentes/Footer.jsp" />
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

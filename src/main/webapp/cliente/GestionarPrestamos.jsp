@@ -1,18 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mis Pr√©stamos</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-</head>
-<body>
+<jsp:include page="../componentes/Encabezado.jsp" />
+	
+	<!-- Sidebar -->
+  <jsp:include page="../componentes/MenuLateralCliente.jsp" />
 
-  <div class="container mt-4">
-    <h2>Mis Pr√©stamos</h2>
-    <a href="SolicitarPrestamo.jsp" class="btn btn-primary mb-3">Solicitar Nuevo Pr√©stamo</a>
+  <!-- Contenedor principal -->
+  <div class="main-content">
+    <!-- Navbar -->
+    <jsp:include page="../componentes/BarraSuperiorCliente.jsp" />
+    <!-- Contenido principal -->
+
+  <div class="container-fluid content py-4">
+    <h2>Mis PrÈstamos</h2>
+    <a href="SolicitarPrestamo.jsp" class="btn btn-primary mb-3">Solicitar Nuevo PrÈstamo</a>
 
     <table class="table table-striped">
       <thead>
@@ -48,6 +47,10 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  
+  <jsp:include page="../componentes/Footer.jsp" />
+  
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

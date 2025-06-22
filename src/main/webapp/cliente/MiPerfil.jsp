@@ -1,14 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Mi Perfil</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+<!-- Encabezado -->
+  <jsp:include page="../componentes/Encabezado.jsp" />
 
-    <div class="container mt-5">
+  <!-- Sidebar -->
+  <jsp:include page="../componentes/MenuLateralCliente.jsp" />
+
+  <!-- Contenedor principal -->
+  <div class="main-content">
+    <!-- Navbar -->
+    <jsp:include page="../componentes/BarraSuperiorCliente.jsp" />
+    <!-- Contenido principal -->
+    <div class="container-fluid content py-4">
         <div class="card mx-auto shadow" style="max-width: 600px;">
             <div class="card-body">
                 <h4 class="card-title text-center mb-4">Mi Perfil</h4>
@@ -21,7 +22,7 @@
                         </div>
                         <div class="col">
                             <label class="form-label">Apellido</label>
-                            <input type="text" class="form-control" value="PÃ©rez" readonly>
+                            <input type="text" class="form-control" value="Pérez" readonly>
                         </div>
                     </div>
 
@@ -37,12 +38,12 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Correo ElectrÃ³nico</label>
+                        <label class="form-label">Correo Electrónico</label>
                         <input type="email" class="form-control" value="juan.perez@email.com" readonly>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">DirecciÃ³n</label>
+                        <label class="form-label">Dirección</label>
                         <input type="text" class="form-control" value="Av. Siempre Viva 123" readonly>
                     </div>
 
@@ -69,13 +70,15 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">TelÃ©fono</label>
+                        <label class="form-label">Teléfono</label>
                         <input type="text" class="form-control" value="1123456789" readonly>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
+        <!-- Footer -->
+  		<jsp:include page="../componentes/Footer.jsp" />
+ </div>
 </body>
 </html>
