@@ -1,20 +1,20 @@
 <!-- Encabezado -->
-  <jsp:include page="../componentes/Encabezado.jsp" />
+<jsp:include page="../componentes/Encabezado.jsp" />
 
-  <!-- Sidebar -->
-  <jsp:include page="../componentes/MenuLateralAdmin.jsp" />
+<!-- Sidebar -->
+<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
 
-  <!-- Contenedor principal -->
-  <div class="main-content">
-    <!-- Navbar -->
-    <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
-    <!-- Contenido principal -->
-    <div class="container-fluid content py-4">
+<!-- Contenedor principal -->
+<div class="main-content">
+	<!-- Navbar -->
+	<jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+	<!-- Contenido principal -->
+	<div class="container-fluid content py-4">
 
 		<div class="container-fluid content">
 			<div class="d-flex justify-content-between align-items-center mb-3">
 				<h2 class="mb-0">Clientes</h2>
-				<a href="AltaCliente.jsp" class="btn btn-primary">Agregar nuevo cliente</a>
+				<a href="AltaCliente.jsp" class="btn btn-primary">Agregar nuevo	cliente</a>
 			</div>
 			<div class="scroll-x">
 				<table id="tablaClientes" class="table table-bordered table-hover">
@@ -39,12 +39,9 @@
 							<td>1990-01-01</td>
 							<td>
 								<div class="d-flex justify-content-center">
-									<button class="btn btn-info btn-sm me-2"
-										onclick="abrirModalCliente('detalle')">Detalle</button>
-									<button class="btn btn-warning btn-sm me-2"
-										onclick="abrirModalCliente('modificar')">Modificar</button>
-									<button class="btn btn-danger btn-sm"
-										onclick="abrirModalEliminarCliente()">Eliminar</button>
+									<button class="btn btn-info btn-sm me-2" onclick="abrirModalCliente('detalle')">Detalle</button>
+									<button class="btn btn-warning btn-sm me-2"	onclick="abrirModalCliente('modificar')">Modificar</button>
+									<button class="btn btn-danger btn-sm" onclick="abrirModalEliminarCliente()">Eliminar</button>
 								</div>
 							</td>
 						</tr>
@@ -123,12 +120,14 @@
 									class="form-control" value="usuario01" name="usuario">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Contraseña</label> <input type="password"
-									class="form-control" value="1234" name="contraseña">
+								<label class="form-label">Contraseña</label> <input
+									type="password" class="form-control" value="1234"
+									name="contraseña">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Repetir Contraseña</label> <input type="password"
-									class="form-control" value="1234" name="RepContraseña">
+								<label class="form-label">Repetir Contraseña</label> <input
+									type="password" class="form-control" value="1234"
+									name="RepContraseña">
 							</div>
 						</div>
 					</form>
@@ -165,12 +164,10 @@
 		</div>
 	</div>
 	<jsp:include page="../componentes/Footer.jsp" />
-	</div>
+</div>
 
-	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-	<script
-		src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-	<script>
+
+<script>
 $(document).ready(function () {
     $('#tablaClientes').DataTable({
         responsive: true,
@@ -217,7 +214,5 @@ function abrirModalEliminarCliente() {
   modal.show();
 }
 </script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

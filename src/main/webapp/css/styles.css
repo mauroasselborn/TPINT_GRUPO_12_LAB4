@@ -6,71 +6,69 @@ body {
 	overflow-x: hidden;
 	font-family: Arial, sans-serif;
 	background-color: #f5f5f5;
-	
 }
-       .container {
-            max-width: 600px;
-            margin: 40px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
-        }
 
-        h2 {
-            text-align: center;
-            color: #333;
-        }
+.container {
+	max-width: 600px;
+	margin: 40px auto;
+	background-color: white;
+	padding: 30px;
+	border-radius: 12px;
+	box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+}
 
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-        }
+h2 {
+	text-align: center;
+	color: #333;
+}
 
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
+label {
+	display: block;
+	margin-top: 15px;
+	font-weight: bold;
+}
 
-        input[type="submit"] {
-            margin-top: 25px;
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+input[type="number"], select {
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+}
 
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
+input[type="submit"] {
+	margin-top: 25px;
+	width: 100%;
+	padding: 12px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	font-size: 16px;
+	cursor: pointer;
+}
 
-        .info {
-            text-align: right;
-            color: #555;
-            font-size: 14px;
-        }
+input[type="submit"]:hover {
+	background-color: #0056b3;
+}
 
-        .nota {
-            margin-top: 10px;
-            font-size: 13px;
-            color: #777;
-        }
+.info {
+	text-align: right;
+	color: #555;
+	font-size: 14px;
+}
+
+.nota {
+	margin-top: 10px;
+	font-size: 13px;
+	color: #777;
+}
 
 #sidebar, .sidebar {
 	min-width: 240px;
 	max-width: 240px;
 	width: 240px;
 	background-color: #000;
-	
 	padding: 20px 0;
 	position: fixed;
 	height: 100vh;
@@ -124,7 +122,6 @@ body {
 
 .table td, .table th {
 	vertical-align: middle;
-	
 }
 
 .scroll-x, .scroll-container {
@@ -136,21 +133,70 @@ body {
 	margin-right: 5px;
 }
 
-        h1 { color: #333; }
-        .form-container, .result-container { max-width: 500px; padding: 20px; margin: auto; background-color: #fff; border: 1px solid #ccc; border-radius: 5px; }
-        label { display: block; margin: 10px 0 5px; font-weight: bold; }
-        select, input[type="number"] { width: 100%; padding: 8px; box-sizing: border-box; }
-        .buttons { margin-top: 15px; }
-        .buttons button { margin-right: 10px; padding: 8px 16px; }
-        
-        
-     
-       
-        h1 { color: #333; }
-        .form-container, .result-container { max-width: 500px; padding: 20px; margin: auto; background-color: #fff; border: 1px solid #ccc; border-radius: 5px; }
-        label { display: block; margin: 10px 0 5px; font-weight: bold; }
-        select, input[type="text"], input[type="number"] { width: 100%; padding: 8px; box-sizing: border-box; }
-        .buttons { margin-top: 15px; }
-        .buttons button, .buttons a { margin-right: 10px; padding: 8px 16px; }
-       
-        
+h1 {
+	color: #333;
+}
+
+.form-container, .result-container {
+	max-width: 500px;
+	padding: 20px;
+	margin: auto;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+label {
+	display: block;
+	margin: 10px 0 5px;
+	font-weight: bold;
+}
+
+select, input[type="number"] {
+	width: 100%;
+	padding: 8px;
+	box-sizing: border-box;
+}
+
+.buttons {
+	margin-top: 15px;
+}
+
+.buttons button {
+	margin-right: 10px;
+	padding: 8px 16px;
+}
+
+h1 {
+	color: #333;
+}
+
+.form-container, .result-container {
+	max-width: 500px;
+	padding: 20px;
+	margin: auto;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+label {
+	display: block;
+	margin: 10px 0 5px;
+	font-weight: bold;
+}
+
+select, input[type="text"], input[type="number"] {
+	width: 100%;
+	padding: 8px;
+	box-sizing: border-box;
+}
+
+.buttons {
+	margin-top: 15px;
+}
+
+.buttons button, .buttons a {
+	margin-right: 10px;
+	padding: 8px 16px;
+}
