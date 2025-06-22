@@ -1,29 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>GestiÃ³n de Cuentas</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-	rel="stylesheet">
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
-<link rel="stylesheet" href="../css/styles.css">
+<!-- Encabezado -->
+  <jsp:include page="../componentes/Encabezado.jsp" />
 
-</head>
-<body>
-	<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
+  <!-- Sidebar -->
+  <jsp:include page="../componentes/MenuLateralAdmin.jsp" />
 
-	<!-- Contenido -->
-	<div id="content">
-
-		<!-- Barra superior -->
-		<jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+  <!-- Contenedor principal -->
+  <div class="main-content">
+    <!-- Navbar -->
+    <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+    <!-- Contenido principal -->
+    <div class="container-fluid content py-4">
 
 		<div class="p-4">
 			<div class="d-flex justify-content-between align-items-center mb-3">
@@ -37,7 +23,7 @@
 					class="table table-bordered table-hover w-100">
 					<thead class="table-dark">
 						<tr>
-							<th>NÂ° Cuenta</th>
+							<th>N° Cuenta</th>
 							<th>CBU</th>
 							<th>Tipo</th>
 							<th>Saldo</th>
@@ -53,7 +39,7 @@
 							<td>Caja de ahorro</td>
 							<td>$10.000,00</td>
 							<td>2025-06-01</td>
-							<td>Juan PÃ©rez</td>
+							<td>Juan Pérez</td>
 							<td class="text-nowrap">
 								<div class="d-flex justify-content-center">
 									<a href="ModificarCuenta.jsp?id=1"
@@ -63,24 +49,25 @@
 								</div>
 							</td>
 						</tr>
-						<!-- MÃ¡s registros de ejemplo... -->
+						<!-- Más registros de ejemplo... -->
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
-
-	<!-- Modal de confirmaciÃ³n -->
+	<jsp:include page="../componentes/Footer.jsp" />
+	</div>
+	<!-- Modal de confirmación -->
 	<div class="modal fade" id="modalEliminar" tabindex="-1"
 		aria-labelledby="modalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="modalLabel">Confirmar EliminaciÃ³n</h5>
+					<h5 class="modal-title" id="modalLabel">Confirmar Eliminación</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Cerrar"></button>
 				</div>
-				<div class="modal-body">Â¿EstÃ¡s seguro que querÃ©s eliminar esta
+				<div class="modal-body">¿Estás seguro que querés eliminar esta
 					cuenta?</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -94,12 +81,8 @@
 			</div>
 		</div>
 	</div>
-
-	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-	<script
-		src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+		
+	
 	<script>
 		$(document).ready(function() {
 			var tabla = $('#tablaCuentas').DataTable({
@@ -107,14 +90,14 @@
 				autoWidth : false,
 				language : {
 					search : "Filtrar:",
-					lengthMenu : "Mostrar _MENU_ registros por pÃ¡gina",
+					lengthMenu : "Mostrar _MENU_ registros por página",
 					zeroRecords : "No se encontraron resultados",
 					info : "Mostrando _START_ a _END_ de _TOTAL_ registros",
 					infoEmpty : "Mostrando 0 a 0 de 0 registros",
 					infoFiltered : "(filtrado de _MAX_ registros totales)",
 					paginate : {
 						first : "Primero",
-						last : "Ãšltimo",
+						last : "Último",
 						next : "Siguiente",
 						previous : "Anterior"
 					}

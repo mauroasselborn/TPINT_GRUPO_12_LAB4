@@ -1,129 +1,15 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-	rel="stylesheet">
-<link rel="stylesheet" href="../css/styles.css">
-<title>Reporte de Movimientos</title>
-<style>
-body {
-	font-family: Arial, sans-serif;
-	background-color: #e6ecf0;
-	margin: 0;
-	padding: 0;
-}
+<!-- Encabezado -->
+  <jsp:include page="../componentes/Encabezado.jsp" />
 
-.container {
-	max-width: 1000px;
-	margin: 40px auto;
-	background-color: white;
-	padding: 30px;
-	border-radius: 12px;
-	box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
-}
+  <!-- Sidebar -->
+  <jsp:include page="../componentes/MenuLateralAdmin.jsp" />
 
-h2 {
-	text-align: center;
-	color: #333;
-}
-
-form {
-	margin-bottom: 30px;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 20px;
-	align-items: center;
-	justify-content: space-between;
-}
-
-label {
-	font-weight: bold;
-}
-
-input[type="date"], input[type="number"], select {
-	padding: 8px;
-	margin-top: 5px;
-	border: 1px solid #ccc;
-	border-radius: 6px;
-	width: 180px;
-}
-
-input[type="submit"] {
-	padding: 10px 20px;
-	background-color: #17a2b8;
-	color: white;
-	border: none;
-	border-radius: 6px;
-	font-size: 14px;
-	cursor: pointer;
-	margin-top: 20px;
-}
-
-input[type="submit"]:hover {
-	background-color: #117a8b;
-}
-
-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 15px;
-}
-
-table, th, td {
-	border: 1px solid #ddd;
-}
-
-th {
-	background-color: #f5f5f5;
-	padding: 10px;
-	text-align: left;
-}
-
-td {
-	padding: 10px;
-}
-
-.info {
-	text-align: right;
-	color: #555;
-	font-size: 14px;
-}
-
-.pagination {
-	text-align: center;
-	margin-top: 20px;
-}
-
-.pagination a {
-	margin: 0 5px;
-	padding: 6px 12px;
-	background-color: #ccc;
-	color: #000;
-	text-decoration: none;
-	border-radius: 4px;
-}
-
-.pagination a.active {
-	background-color: #17a2b8;
-	color: white;
-}
-</style>
-</head>
-<body>
-	<!-- Sidebar -->
-	<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
-
-	<div class="main-content">
-		<!-- Navbar -->
-		<jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
-
-		<div class="container content">
+  <!-- Contenedor principal -->
+  <div class="main-content">
+    <!-- Navbar -->
+    <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+    <!-- Contenido principal -->
+    <div class="container-fluid content py-4">
 			
 
 			<h2>Reporte de Movimientos</h2>
@@ -144,19 +30,19 @@ td {
 						name="tipoMovimiento">
 						<option value="">Todos</option>
 						<option value="altaCuenta">Alta de cuenta</option>
-						<option value="altaPrestamo">Alta de pr√©stamo</option>
-						<option value="pagoPrestamo">Pago de pr√©stamo</option>
+						<option value="altaPrestamo">Alta de prÈstamo</option>
+						<option value="pagoPrestamo">Pago de prÈstamo</option>
 						<option value="transferencia">Transferencia</option>
 					</select>
 				</div>
 
 				<div>
-					<label>Importe m√≠nimo:</label><br> <input type="number"
+					<label>Importe mÌnimo:</label><br> <input type="number"
 						name="importeMin" step="0.01" min="0" placeholder="Ej: 1000.00">
 				</div>
 
 				<div>
-					<label>Importe m√°ximo:</label><br> <input type="number"
+					<label>Importe m·ximo:</label><br> <input type="number"
 						name="importeMax" step="0.01" min="0" placeholder="Ej: 50000.00">
 				</div>
 
@@ -178,16 +64,16 @@ td {
 				<tbody>
 					<tr>
 						<td>2025-06-10</td>
-						<td>Dep√≥sito inicial</td>
+						<td>DepÛsito inicial</td>
 						<td>$10.000,00</td>
 						<td>Alta de cuenta</td>
 						<td>12345678</td>
 					</tr>
 					<tr>
 						<td>2025-06-11</td>
-						<td>Pr√©stamo aprobado</td>
+						<td>PrÈstamo aprobado</td>
 						<td>$50.000,00</td>
-						<td>Alta de pr√©stamo</td>
+						<td>Alta de prÈstamo</td>
 						<td>12345678</td>
 					</tr>
 					<tr>
@@ -204,6 +90,7 @@ td {
 				<a href="#">1</a> <a href="#" class="active">2</a> <a href="#">3</a>
 			</div>
 		</div>
+		<jsp:include page="../componentes/Footer.jsp" />
 	</div>
 
 </body>

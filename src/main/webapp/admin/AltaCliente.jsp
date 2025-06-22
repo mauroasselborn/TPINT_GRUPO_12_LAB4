@@ -1,15 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Alta Cliente</title>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-	<div class="container mt-4">
+<!-- Encabezado -->
+  <jsp:include page="../componentes/Encabezado.jsp" />
+
+  <!-- Sidebar -->
+  <jsp:include page="../componentes/MenuLateralAdmin.jsp" />
+
+  <!-- Contenedor principal -->
+  <div class="main-content">
+    <!-- Navbar -->
+    <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+    <!-- Contenido principal -->
+    <div class="container-fluid content py-4">
 		<div class="w-75 mx-auto">
 			<h2 class="text-center mb-4">Alta Cliente</h2>
 			<form>
@@ -53,11 +53,11 @@
 						<option>Colombia</option>
 						<option>Ecuador</option>
 						<option>Estados Unidos</option>
-						<option>Espa√±a</option>
+						<option>EspaÒa</option>
 						<option>Italia</option>
-						<option>Jap√≥n</option>
+						<option>JapÛn</option>
 						<option>Paraguay</option>
-						<option>Per√∫</option>
+						<option>Per˙</option>
 						<option>Rusia</option>
 						<option>Ucrania</option>
 						<option>Uruguay</option>
@@ -71,8 +71,8 @@
 				</div>
 
 				<div class="mb-3">
-					<label>Direcci√≥n</label> <input type="text" class="form-control"
-						name="direccion" placeholder="Ingrese su direcci√≥n">
+					<label>DirecciÛn</label> <input type="text" class="form-control"
+						name="direccion" placeholder="Ingrese su direcciÛn">
 				</div>
 
 				<div class="mb-3">
@@ -87,17 +87,17 @@
 						<option>Catamarca</option>
 						<option>Chaco</option>
 						<option>Chubut</option>
-						<option>C√≥rdoba</option>
+						<option>CÛrdoba</option>
 						<option>Corrientes</option>
-						<option>Entre R√≠os</option>
+						<option>Entre RÌos</option>
 						<option>Formosa</option>
 						<option>Jujuy</option>
 						<option>La Pampa</option>
 						<option>La Rioja</option>
 						<option>Mendoza</option>
 						<option>Misiones</option>
-						<option>Neuqu√©n</option>
-						<option>R√≠o Negro</option>
+						<option>NeuquÈn</option>
+						<option>RÌo Negro</option>
 						<option>Salta</option>
 						<option>San Juan</option>
 						<option>San Luis</option>
@@ -105,8 +105,8 @@
 						<option>Santa Fe</option>
 						<option>Santiago del Estero</option>
 						<option>Tierra del Fuego</option>
-						<option>Ant√°rtida e Islas del Atl√°ntico Sur</option>
-						<option>Tucum√°n</option>
+						<option>Ant·rtida e Islas del Atl·ntico Sur</option>
+						<option>Tucum·n</option>
 					</select>
 				</div>
 
@@ -116,8 +116,8 @@
 				</div>
 
 				<div class="mb-3">
-					<label>Tel√©fono</label> <input type="number" class="form-control"
-						name="telefono" placeholder="Ingrese el n√∫mero telef√≥nico">
+					<label>TelÈfono</label> <input type="number" class="form-control"
+						name="telefono" placeholder="Ingrese el n˙mero telefÛnico">
 				</div>
 
 				<div class="mb-3">
@@ -126,15 +126,15 @@
 				</div>
 
 				<div class="mb-3">
-					<label>Contrase√±a</label> <input type="password"
-						class="form-control" name="contrase√±a"
-						placeholder="Ingrese la Contrase√±a">
+					<label>ContraseÒa</label> <input type="password"
+						class="form-control" name="contraseÒa"
+						placeholder="Ingrese la ContraseÒa">
 				</div>
 
 				<div class="mb-3">
-					<label>Repetir Contrase√±a</label> <input type="password"
-						class="form-control" name="repContrase√±a"
-						placeholder="Repita la Contrase√±a">
+					<label>Repetir ContraseÒa</label> <input type="password"
+						class="form-control" name="repContraseÒa"
+						placeholder="Repita la ContraseÒa">
 				</div>
 
 				<div class="text-center">
@@ -143,6 +143,8 @@
 				</div>
 			</form>
 		</div>
+	</div>
+	<jsp:include page="../componentes/Footer.jsp" />
 	</div>
 </body>
 </html>

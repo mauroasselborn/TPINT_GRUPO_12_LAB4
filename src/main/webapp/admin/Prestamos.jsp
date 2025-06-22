@@ -1,28 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gestionar Pr√©stamos</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-	rel="stylesheet">
-<link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
+<!-- Encabezado -->
+  <jsp:include page="../componentes/Encabezado.jsp" />
 
-	<!-- Sidebar -->
-	<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
-	<div class="main-content">
-		<!-- Navbar -->
-		<jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
-		<div class="container content">
-			<h2>Gesti√≥n de Pr√©stamos</h2>
+  <!-- Sidebar -->
+  <jsp:include page="../componentes/MenuLateralAdmin.jsp" />
+
+  <!-- Contenedor principal -->
+  <div class="main-content">
+    <!-- Navbar -->
+    <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+    <!-- Contenido principal -->
+    <div class="container-fluid content py-4">
+			<h2>GestiÛn de PrÈstamos</h2>
 			<table class="table table-bordered table-hover">
 				<thead class="table-light">
 					<tr>
@@ -38,7 +26,7 @@
 				<tbody>
 					<tr>
 						<td>1</td>
-						<td>P√©rez, Juan</td>
+						<td>PÈrez, Juan</td>
 						<td>$50.000</td>
 						<td>12</td>
 						<td>2025-06-10</td>
@@ -54,7 +42,7 @@
 					</tr>
 					<tr>
 						<td>2</td>
-						<td>G√≥mez, Laura</td>
+						<td>GÛmez, Laura</td>
 						<td>$80.000</td>
 						<td>18</td>
 						<td>2025-06-15</td>
@@ -70,7 +58,7 @@
 					</tr>
 					<tr>
 						<td>3</td>
-						<td>Mart√≠nez, Pedro</td>
+						<td>MartÌnez, Pedro</td>
 						<td>$40.000</td>
 						<td>6</td>
 						<td>2025-06-18</td>
@@ -87,6 +75,7 @@
 				</tbody>
 			</table>
 		</div>
+		<jsp:include page="../componentes/Footer.jsp" />
 	</div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

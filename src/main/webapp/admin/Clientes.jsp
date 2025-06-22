@@ -1,27 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>GestiÃ³n de Clientes</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
-	rel="stylesheet">
-<link rel="stylesheet" href="../css/styles.css">
+<!-- Encabezado -->
+  <jsp:include page="../componentes/Encabezado.jsp" />
 
-</head>
-<body>
+  <!-- Sidebar -->
+  <jsp:include page="../componentes/MenuLateralAdmin.jsp" />
 
-	<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
-	<div class="main-content">
-		<jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+  <!-- Contenedor principal -->
+  <div class="main-content">
+    <!-- Navbar -->
+    <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+    <!-- Contenido principal -->
+    <div class="container-fluid content py-4">
 
 		<div class="container-fluid content">
 			<div class="d-flex justify-content-between align-items-center mb-3">
@@ -36,7 +24,7 @@
 							<th>Nombre</th>
 							<th>Apellido</th>
 							<th>Email</th>
-							<th>TelÃ©fono</th>
+							<th>Teléfono</th>
 							<th>Fecha Nacimiento</th>
 							<th>Acciones</th>
 						</tr>
@@ -45,7 +33,7 @@
 						<tr>
 							<td>12345678</td>
 							<td>Juan</td>
-							<td>PÃ©rez</td>
+							<td>Pérez</td>
 							<td>juan@mail.com</td>
 							<td>1122334455</td>
 							<td>1990-01-01</td>
@@ -94,7 +82,7 @@
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Apellido</label> <input type="text"
-									class="form-control" value="PÃ©rez" name="apellido">
+									class="form-control" value="Pérez" name="apellido">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Sexo</label> <input type="text"
@@ -115,11 +103,11 @@
 									class="form-control" value="juan@mail.com" name="email">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">TelÃ©fono</label> <input type="text"
+								<label class="form-label">Teléfono</label> <input type="text"
 									class="form-control" value="1122334455" name="telefono">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">DirecciÃ³n</label> <input type="text"
+								<label class="form-label">Dirección</label> <input type="text"
 									class="form-control" value="Calle Falsa 123" name="direccion">
 							</div>
 							<div class="col-md-6">
@@ -135,12 +123,12 @@
 									class="form-control" value="usuario01" name="usuario">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">ContraseÃ±a</label> <input type="password"
-									class="form-control" value="1234" name="contraseÃ±a">
+								<label class="form-label">Contraseña</label> <input type="password"
+									class="form-control" value="1234" name="contraseña">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Repetir ContraseÃ±a</label> <input type="password"
-									class="form-control" value="1234" name="RepContraseÃ±a">
+								<label class="form-label">Repetir Contraseña</label> <input type="password"
+									class="form-control" value="1234" name="RepContraseña">
 							</div>
 						</div>
 					</form>
@@ -155,18 +143,18 @@
 		</div>
 	</div>
 
-	<!-- Modal Confirmar EliminaciÃ³n Cliente -->
+	<!-- Modal Confirmar Eliminación Cliente -->
 	<div class="modal fade" id="modalEliminarCliente" tabindex="-1"
 		aria-labelledby="modalEliminarClienteLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="modalEliminarClienteLabel">Confirmar
-						EliminaciÃ³n</h5>
+						Eliminación</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">Â¿EstÃ¡s seguro que querÃ©s eliminar este
+				<div class="modal-body">¿Estás seguro que querés eliminar este
 					cliente?</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -175,6 +163,8 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<jsp:include page="../componentes/Footer.jsp" />
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -187,14 +177,14 @@ $(document).ready(function () {
         autoWidth: false,
         language: {
             search: "Filtrar:",
-            lengthMenu: "Mostrar _MENU_ registros por pÃ¡gina",
+            lengthMenu: "Mostrar _MENU_ registros por página",
             zeroRecords: "No se encontraron resultados",
             info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
             infoEmpty: "Mostrando 0 a 0 de 0 registros",
             infoFiltered: "(filtrado de _MAX_ registros totales)",
             paginate: {
                 first: "Primero",
-                last: "Ãšltimo",
+                last: "Último",
                 next: "Siguiente",
                 previous: "Anterior"
             }

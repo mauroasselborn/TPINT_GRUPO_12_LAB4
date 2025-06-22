@@ -1,13 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Modificar Cliente</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-4">
+<!-- Encabezado -->
+  <jsp:include page="../componentes/Encabezado.jsp" />
+
+  <!-- Sidebar -->
+  <jsp:include page="../componentes/MenuLateralAdmin.jsp" />
+
+  <!-- Contenedor principal -->
+  <div class="main-content">
+    <!-- Navbar -->
+    <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+    <!-- Contenido principal -->
+    <div class="container-fluid content py-4">
         <div class="w-75 mx-auto">
             <h2 class="text-center mb-4">Modificar Cliente</h2>
 
@@ -50,11 +52,11 @@
                         <option value="colombia">Colombia</option>
                         <option value="ecuador">Ecuador</option>
                         <option value="eeuu">Estados Unidos</option>
-                        <option value="espa√±a">Espa√±a</option>
+                        <option value="espaÒa">EspaÒa</option>
                         <option value="italia">Italia</option>
-                        <option value="japon">Jap√≥n</option>
+                        <option value="japon">JapÛn</option>
                         <option value="paraguay">Paraguay</option>
-                        <option value="peru">Per√∫</option>
+                        <option value="peru">Per˙</option>
                         <option value="rusia">Rusia</option>
                         <option value="ucrania">Ucrania</option>
                         <option value="uruguay">Uruguay</option>
@@ -68,13 +70,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label>Direcci√≥n</label>
+                    <label>DirecciÛn</label>
                     <input type="text" class="form-control" name="direccion" value="Villalba 2045">
                 </div>
 
                 <div class="mb-3">
                     <label>Localidad</label>
-                    <input type="text" class="form-control" name="localidad" value="San Mart√≠n">
+                    <input type="text" class="form-control" name="localidad" value="San MartÌn">
                 </div>
 
                 <div class="mb-3">
@@ -84,16 +86,16 @@
                         <option value="catamarca">Catamarca</option>
                         <option value="chaco">Chaco</option>
                         <option value="chubut">Chubut</option>
-                        <option value="cordoba">C√≥rdoba</option>
+                        <option value="cordoba">CÛrdoba</option>
                         <option value="corrientes">Corrientes</option>
-                        <option value="er">Entre R√≠os</option>
+                        <option value="er">Entre RÌos</option>
                         <option value="formosa">Formosa</option>
                         <option value="jujuy">Jujuy</option>
                         <option value="lp">La Pampa</option>
                         <option value="la">La Rioja</option>
                         <option value="mendoza">Mendoza</option>
-                        <option value="neuquen">Neuqu√©n</option>
-                        <option value="rn">R√≠o Negro</option>
+                        <option value="neuquen">NeuquÈn</option>
+                        <option value="rn">RÌo Negro</option>
                         <option value="salta">Salta</option>
                         <option value="sj">San Juan</option>
                         <option value="sl">San Luis</option>
@@ -101,8 +103,8 @@
                         <option value="sf">Santa Fe</option>
                         <option value="santiagoe">Santiago del Estero</option>
                         <option value="tf">Tierra del Fuego</option>
-                        <option value="antartida">Ant√°rtida e Islas del Atl√°ntico Sur</option>
-                        <option value="tucuman">Tucum√°n</option>
+                        <option value="antartida">Ant·rtida e Islas del Atl·ntico Sur</option>
+                        <option value="tucuman">Tucum·n</option>
                     </select>
                 </div>
 
@@ -117,14 +119,14 @@
                 </div>
 
                 <div class="mb-3">
-                    <label>Contrase√±a</label>
-                    <input type="password" class="form-control" name="contrase√±a" placeholder="Ingrese su contrase√±a" 
+                    <label>ContraseÒa</label>
+                    <input type="password" class="form-control" name="contraseÒa" placeholder="Ingrese su contraseÒa" 
                     required>
                 </div>
 
                 <div class="mb-3">
-                    <label>Reitere su contrase√±a</label>
-                    <input type="password" class="form-control" name="contrase√±a2" placeholder="Repita la contrase√±a" 
+                    <label>Reitere su contraseÒa</label>
+                    <input type="password" class="form-control" name="contraseÒa2" placeholder="Repita la contraseÒa" 
                     required>
                 </div>
 
@@ -133,6 +135,8 @@
                 </div>
             </form>
         </div>
+    </div>
+    <jsp:include page="../componentes/Footer.jsp" />
     </div>
 </body>
 </html>
