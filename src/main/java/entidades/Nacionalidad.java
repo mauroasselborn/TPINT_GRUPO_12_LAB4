@@ -1,13 +1,13 @@
 package entidades;
 
-public class TipoCuenta {
+public class Nacionalidad {
 	private int id;
 	private String descripcion;
 
-	public TipoCuenta() {
+	public Nacionalidad() {
 	}
 
-	public TipoCuenta(int id, String descripcion) {
+	public Nacionalidad(int id, String descripcion) {
 		this.id = id;
 		this.descripcion = descripcion;
 	}
