@@ -19,7 +19,7 @@ public class Cliente {
 
 	public Cliente() {}
 
-	// Getters y setters
+	// getters y setters
 	public int getId() { return id; }
 	public void setId(int id) { this.id = id; }
 
