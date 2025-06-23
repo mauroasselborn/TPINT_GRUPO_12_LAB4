@@ -6,6 +6,8 @@ public class Usuario {
 	private String contrasena;
 	private TipoUsuario tipoUsuario;
 	private boolean activo;
+	private int idTipoUsuario;
+	private int idCliente;
 
 	public Usuario() {
 	}
@@ -56,5 +58,21 @@ public class Usuario {
 
 	public void setActivo(boolean activo) {
 		this.activo = activo;
+	}
+
+	public int getIdTipoUsuario() {
+		return idTipoUsuario;
+	}
+
+	public void setIdTipoUsuario(int idTipoUsuario) {
+		this.idTipoUsuario = idTipoUsuario;
+	}
+
+	public int getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
 	}
 }
