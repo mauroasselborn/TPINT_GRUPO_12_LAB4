@@ -4,9 +4,9 @@ public class Cuenta {
 	private int id;
 	private String numeroCuenta;
 	private String cbu;
-	private String tipoCuenta;
 	private double saldo;
 	private String fechaCreacion;
+	private TipoCuenta tipoCuenta;
 	private Cliente cliente;
 	private boolean activo;
 
@@ -22,8 +22,8 @@ public class Cuenta {
 	public String getCbu() { return cbu; }
 	public void setCbu(String cbu) { this.cbu = cbu; }
 
-	public String getTipoCuenta() { return tipoCuenta; }
-	public void setTipoCuenta(String tipoCuenta) { this.tipoCuenta = tipoCuenta; }
+	public TipoCuenta getTipoCuenta() { return tipoCuenta; }
+	public void setTipoCuenta(TipoCuenta tipoCuenta) { this.tipoCuenta = tipoCuenta; }
 
 	public double getSaldo() { return saldo; }
 	public void setSaldo(double saldo) { this.saldo = saldo; }
