@@ -1,3 +1,8 @@
+<%@page import="entidades.Nacionalidad" %>
+<%@page import="entidades.Provincia" %>
+<%@page import="entidades.Localidad" %>
+<%@page import="java.util.ArrayList" %>
+
 <!-- Encabezado -->
   <jsp:include page="../componentes/Encabezado.jsp" />
 
@@ -43,25 +48,20 @@
 				</div>
 
 				<div class="mb-3">
-					<label>Nacionalidad</label> <select class="form-select"
-						name="nacionalidad">
-						<option>Argentina</option>
-						<option>Bolivia</option>
-						<option>Brasil</option>
-						<option>China</option>
-						<option>Chile</option>
-						<option>Colombia</option>
-						<option>Ecuador</option>
-						<option>Estados Unidos</option>
-						<option>España</option>
-						<option>Italia</option>
-						<option>Japón</option>
-						<option>Paraguay</option>
-						<option>Perú</option>
-						<option>Rusia</option>
-						<option>Ucrania</option>
-						<option>Uruguay</option>
-						<option>Venezuela</option>
+					<label for="nacionalidad" class="form-label">Nacionalidad</label> 
+					<select id="nacionalidad" name="nacionalidad" class="form-select" required> 
+						<option value="">Seleccione la nacionalidad</option>
+						
+						<%
+							///Obtener la lista de nacionalidades de la solicitud
+							ArrayList<Nacionalidad> listaNacionalidades = (ArrayList<Nacionalidad>) request.getAttribute("listaNacionalidades");
+							for(Nacionalidad nacionalidad : listaNacionalidades){
+						
+						%>
+							<option value="<%= nacionalidad.getId() %>"><%= nacionalidad.getDescripcion() %></option>
+						<%
+							}
+						%>
 					</select>
 				</div>
 
@@ -81,32 +81,19 @@
 				</div>
 
 				<div class="mb-3">
-					<label>Provincia</label> <select class="form-select"
-						name="provincia">
-						<option>Buenos Aires</option>
-						<option>Catamarca</option>
-						<option>Chaco</option>
-						<option>Chubut</option>
-						<option>Córdoba</option>
-						<option>Corrientes</option>
-						<option>Entre Ríos</option>
-						<option>Formosa</option>
-						<option>Jujuy</option>
-						<option>La Pampa</option>
-						<option>La Rioja</option>
-						<option>Mendoza</option>
-						<option>Misiones</option>
-						<option>Neuquén</option>
-						<option>Río Negro</option>
-						<option>Salta</option>
-						<option>San Juan</option>
-						<option>San Luis</option>
-						<option>Santa Cruz</option>
-						<option>Santa Fe</option>
-						<option>Santiago del Estero</option>
-						<option>Tierra del Fuego</option>
-						<option>Antártida e Islas del Atlántico Sur</option>
-						<option>Tucumán</option>
+					<label for="provincia" class="form-label">Provincia</label> 
+					<select id="provincia" name="provincia" class="form-select" required>
+						<option value="">Seleccione la provincia</option>
+						<%
+							ArrayList<Provincia> listaProvincias = (ArrayList<Provincia>) request.getAttribute("listaProvincias");
+							for(Provincia provincia :  listaProvincias){
+						%>
+						
+							<option value="<%= provincia.getId() %>"><%= provincia.getNombre() %></option>
+							
+						<%
+							}
+						%>	
 					</select>
 				</div>
 
@@ -127,13 +114,13 @@
 
 				<div class="mb-3">
 					<label>Contraseña</label> <input type="password"
-						class="form-control" name="contraseña"
+						class="form-control" name="contrasena"
 						placeholder="Ingrese la Contraseña">
 				</div>
 
 				<div class="mb-3">
 					<label>Repetir Contraseña</label> <input type="password"
-						class="form-control" name="repContraseña"
+						class="form-control" name="repContrasena"
 						placeholder="Repita la Contraseña">
 				</div>
 
