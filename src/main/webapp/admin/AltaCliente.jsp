@@ -53,15 +53,20 @@
 						<option value="">Seleccione la nacionalidad</option>
 						
 						<%
-							///Obtener la lista de nacionalidades de la solicitud
-							ArrayList<Nacionalidad> listaNacionalidades = (ArrayList<Nacionalidad>) request.getAttribute("listaNacionalidades");
-							for(Nacionalidad nacionalidad : listaNacionalidades){
-						
+    						ArrayList<Nacionalidad> listaNacionalidades = (ArrayList<Nacionalidad>) request.getAttribute("listaNacionalidades");
+    						if (listaNacionalidades != null) {
+        						for (Nacionalidad nacionalidad : listaNacionalidades) {
 						%>
-							<option value="<%= nacionalidad.getId() %>"><%= nacionalidad.getDescripcion() %></option>
+   							 <option value="<%= nacionalidad.getId() %>"><%= nacionalidad.getDescripcion() %></option>
 						<%
-							}
+        						}
+   							 } else {
 						%>
+    						<option value="">[Lista de nacionalidades no disponible]</option>
+						<%
+   							 }
+						%>
+						
 					</select>
 				</div>
 
