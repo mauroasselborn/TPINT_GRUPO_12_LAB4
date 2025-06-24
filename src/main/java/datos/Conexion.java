@@ -2,33 +2,32 @@ package datos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class Conexion {
-	private static final String host = "localhost";
-	private static final String port = "3306";
-	private static final String db = "BancoGrupo12";
-	private static final String usuario = "root";
-	private static final String clave = "root";
+    private static final String host = "localhost";
+    private static final String port = "3306";
+    private static final String db = "bancogrupo12";
+    private static final String usuario = "root";
+    private static final String clave = "root";
 
-	private static Connection conexion = null;
+    private static Connection conexion = null;
 
-	private Conexion() {}
+    private Conexion() {}
 
-	public static Conexion getConexion() {
-		if (conexion == null) {
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				conexion = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db + "?useSSL=false&serverTimezone=UTC", usuario, clave);
-				conexion.setAutoCommit(false);
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return new Conexion();
-	}
+    public static Connection getSQLConexion() {
+        if (conexion == null) {
+            try {
+            	Class.forName("com.mysql.jdbc.Driver");
 
-	public Connection getSQLConexion() {
-		return conexion;
-	}
+                String url = "jdbc:mysql://" + host + ":" + port + "/" + db + "?useSSL=false&serverTimezone=UTC";
+                conexion = DriverManager.getConnection(url, usuario, clave);
+
+                System.out.println("[Conexion]  Conexión a la base de datos establecida correctamente.");
+            } catch (Exception e) {
+                System.out.println("[Conexion]  Error al conectar con la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        return conexion;
+    }
 }
