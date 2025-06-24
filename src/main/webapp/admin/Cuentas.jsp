@@ -2,16 +2,16 @@
          import="java.util.List, entidades.Cuenta" %>
 
 <!-- Encabezado -->
-<jsp:include page="componentes/Encabezado.jsp" />
+<jsp:include page="../componentes/Encabezado.jsp" />
 
 <!-- Sidebar -->
-<jsp:include page="componentes/MenuLateralAdmin.jsp" />
+<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
 
 <!-- Contenedor principal -->
 <div class="main-content">
 
   <!-- Navbar -->
-  <jsp:include page="componentes/BarraSuperiorAdmin.jsp" />
+  <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
 
   <!-- Contenido principal -->
   <div class="container-fluid content py-4">
@@ -66,7 +66,7 @@
   </div>
 
   <!-- Footer -->
-  <jsp:include page="componentes/Footer.jsp" />
+  <jsp:include page="../componentes/Footer.jsp" />
 
 </div>
 

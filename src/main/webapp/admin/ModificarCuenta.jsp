@@ -2,16 +2,16 @@
          import="entidades.Cuenta" %>
 
 <!-- Encabezado -->
-<jsp:include page="componentes/Encabezado.jsp" />
+<jsp:include page="../componentes/Encabezado.jsp" />
 
 <!-- Sidebar -->
-<jsp:include page="componentes/MenuLateralAdmin.jsp" />
+<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
 
 <!-- Contenedor principal -->
 <div class="main-content">
 
   <!-- Navbar -->
-  <jsp:include page="componentes/BarraSuperiorAdmin.jsp" />
+  <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
 
   <!-- Contenido principal -->
   <div class="container-fluid content py-4">
@@ -22,8 +22,10 @@
     <h2>Modificar Cuenta</h2>
 
     <%
-      Cuenta cuenta = (Cuenta) request.getAttribute("cuenta");
-      String tipo = cuenta.getTipoCuenta().toString();
+    Cuenta cuenta = (Cuenta) request.getAttribute("cuenta");
+	String tipo = "";
+	if (cuenta.getTipoCuenta() == 1) tipo = "Caja de ahorro";
+	else if (cuenta.getTipoCuenta() == 2) tipo = "Cuenta corriente";
     %>
 
     <form action="CuentasServlet" method="post">
@@ -38,8 +40,8 @@
       <!-- Tipo de cuenta -->
       <label for="tipo">Tipo de cuenta:</label>
       <select id="tipo" name="tipo" class="form-control mb-3" required>
-        <option value="1" <%= "Caja de ahorro".equals(tipo) ? "selected" : "" %>>Caja de ahorro</option>
-        <option value="2" <%= "Cuenta corriente".equals(tipo) ? "selected" : "" %>>Cuenta corriente</option>
+        <option value="1" <%= tipo.equals("Caja de ahorro") ? "selected" : "" %>>Caja de ahorro</option>
+		<option value="2" <%= tipo.equals("Cuenta corriente") ? "selected" : "" %>>Cuenta corriente</option>
       </select>
 
       <!-- CBU -->
@@ -59,5 +61,5 @@
   </div>
 
   <!-- Footer -->
-  <jsp:include page="componentes/Footer.jsp" />
+  <jsp:include page="../componentes/Footer.jsp" />
 </div>

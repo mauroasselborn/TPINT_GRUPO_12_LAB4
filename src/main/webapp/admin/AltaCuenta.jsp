@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.List, entidades.Cliente" %>
 
 <!-- Encabezado -->
-<jsp:include page="componentes/Encabezado.jsp" />
+<jsp:include page="../componentes/Encabezado.jsp" />
 
 <!-- Menú lateral -->
-<jsp:include page="componentes/MenuLateralAdmin.jsp" />
+<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
 
 <!-- Contenedor principal -->
 <div class="main-content">
 
   <!-- Barra superior -->
-  <jsp:include page="componentes/BarraSuperiorAdmin.jsp" />
+  <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
 
   <!-- Contenido -->
   <div class="container-fluid content py-4">
@@ -72,6 +72,6 @@
   </div>
 
   <!-- Footer -->
-  <jsp:include page="componentes/Footer.jsp" />
+  <jsp:include page="../componentes/Footer.jsp" />
 
 </div>
