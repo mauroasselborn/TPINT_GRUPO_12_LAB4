@@ -3,7 +3,7 @@ package negocio;
 import entidades.Cuenta;
 import java.util.List;
 
-public interface NegocioCuentas {
+public interface CuentaNegocio {
     List<Cuenta> listarCuentas();                        // Listar todas las cuentas activas
     Cuenta obtenerCuenta(int id) throws Exception;       // Obtener cuenta por ID
     void crearCuenta(Cuenta cuenta) throws Exception;    // Alta de cuenta (saldo inicial $10 000, límite 3, CBU y número únicos)

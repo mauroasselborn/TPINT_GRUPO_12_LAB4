@@ -3,9 +3,9 @@ package servlets;
 import entidades.Cuenta;
 import entidades.Cliente;
 import negocioImpl.CuentaNegocioImpl;
-import negocioImpl.ImpNegocioClientes;
-import negocio.NegocioCuentas;
-import negocio.NegocioClientes;
+import negocioImpl.ClienteNegocioImpl;
+import negocio.CuentaNegocio;
+import negocio.ClienteNegocio;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,8 +19,8 @@ public class CuentaServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final NegocioCuentas negocioCuentas = new CuentaNegocioImpl();
-    private final ClienteNegocio negocioClientes = new ImpNegocioClientes();
+	private final CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
+    private final ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,27 +29,27 @@ public class CuentaServlet extends HttpServlet {
             switch (accion) {
                 case "nuevo":
                     // Cargar lista de clientes para el combo
-                    List<Cliente> clientes = negocioClientes.listarClientes();
+                    List<Cliente> clientes = negocioCliente.listarClientes();
                     req.setAttribute("clientes", clientes);
                     req.getRequestDispatcher("jsp/admin/AltaCuenta.jsp").forward(req, resp);
                     break;
 
                 case "editar":
                     int idEd = Integer.parseInt(req.getParameter("id"));
-                    Cuenta cuentaEd = negocioCuentas.obtenerCuenta(idEd);
+                    Cuenta cuentaEd = cuentaNegocio.obtenerCuenta(idEd);
                     req.setAttribute("cuenta", cuentaEd);
                     req.getRequestDispatcher("jsp/admin/ModificarCuenta.jsp").forward(req, resp);
                     break;
 
                 case "borrar":
                     int idB = Integer.parseInt(req.getParameter("id"));
-                    negocioCuentas.eliminarCuenta(idB);
+                    cuentaNegocio.eliminarCuenta(idB);
                     resp.sendRedirect("CuentasServlet?accion=listar");
                     break;
 
                 case "listar":
                 default:
-                    List<Cuenta> cuentas = negocioCuentas.listarCuentas();
+                    List<Cuenta> cuentas = cuentaNegocio.listarCuentas();
                     req.setAttribute("cuentas", cuentas);
                     req.getRequestDispatcher("jsp/admin/Cuentas.jsp").forward(req, resp);
                     break;
@@ -72,7 +72,7 @@ public class CuentaServlet extends HttpServlet {
                 nueva.setCbu(req.getParameter("cbu"));
                 //nueva.setTipo(req.getParameter("tipo"));
                 // La lógica de negocio asigna saldo inicial y valida
-                negocioCuentas.crearCuenta(nueva);
+                cuentaNegocio.crearCuenta(nueva);
 
             } else if ("guardarModificacion".equals(accion)) {
                 // Recoger parámetros para modificación
@@ -81,7 +81,7 @@ public class CuentaServlet extends HttpServlet {
                 mod.setTipoCuenta(req.getParameter("tipo"));
                 mod.setCbu(req.getParameter("cbu"));
                 mod.setSaldo(Double.parseDouble(req.getParameter("saldo")));
-                negocioCuentas.modificarCuenta(mod);
+                cuentaNegocio.modificarCuenta(mod);
             }
             // Tras alta o modificación, vuelvo al listado
             resp.sendRedirect("CuentasServlet?accion=listar");

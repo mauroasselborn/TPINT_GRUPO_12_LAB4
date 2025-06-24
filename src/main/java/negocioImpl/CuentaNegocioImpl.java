@@ -4,10 +4,10 @@ import dao.CuentaDao;
 import daoImpl.CuentaDaoImpl;
 import entidades.Cliente;
 import entidades.Cuenta;
-import negocio.NegocioCuentas;
+import negocio.CuentaNegocio;
 import java.util.List;
 
-public class CuentaNegocioImpl implements NegocioCuentas {
+public class CuentaNegocioImpl implements CuentaNegocio {
     private CuentaDao dao = new CuentaDaoImpl();
 
     @Override

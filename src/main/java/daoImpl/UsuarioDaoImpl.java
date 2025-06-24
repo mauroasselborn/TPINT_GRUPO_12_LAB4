@@ -16,7 +16,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	    ResultSet rs = null;
 
 	    try {
-	        conexion = Conexion.getSQLConexion();
+	        conexion = Conexion.getConexion();
 	        System.out.println("[DAO] Obteniendo usuario con: " + nombreUsuario + " / " + contrasena);
 
 	        String query = "SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena = ? AND activo = 1";
