@@ -1,15 +1,14 @@
 package negocioImpl;
 
-import dao.DaoCuentas;
-import dao.ImpDaoCuentas;
+import dao.CuentaDao;
+import daoImpl.CuentaDaoImpl;
 import entidades.Cliente;
 import entidades.Cuenta;
 import negocio.NegocioCuentas;
-import java.math.BigDecimal;
 import java.util.List;
 
-public class ImpNegocioCuentas implements NegocioCuentas {
-    private DaoCuentas dao = new ImpDaoCuentas();
+public class CuentaNegocioImpl implements NegocioCuentas {
+    private CuentaDao dao = new CuentaDaoImpl();
 
     @Override
     public List<Cuenta> listarCuentas() {

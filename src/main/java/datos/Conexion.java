@@ -14,7 +14,7 @@ public class Conexion {
 
     private Conexion() {}
 
-    public static Connection getSQLConexion() {
+    public static Connection getConexion() {
         if (conexion == null) {
             try {
             	Class.forName("com.mysql.jdbc.Driver");

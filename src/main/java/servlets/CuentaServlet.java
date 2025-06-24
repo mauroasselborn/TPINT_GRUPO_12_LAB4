@@ -2,7 +2,7 @@ package servlets;
 
 import entidades.Cuenta;
 import entidades.Cliente;
-import negocioImpl.ImpNegocioCuentas;
+import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.ImpNegocioClientes;
 import negocio.NegocioCuentas;
 import negocio.NegocioClientes;
@@ -14,9 +14,13 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/CuentasServlet")
-public class CuentasServlet extends HttpServlet {
-    private final NegocioCuentas negocioCuentas = new ImpNegocioCuentas();
-    private final NegocioClientes negocioClientes = new ImpNegocioClientes();
+public class CuentaServlet extends HttpServlet {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final NegocioCuentas negocioCuentas = new CuentaNegocioImpl();
+    private final ClienteNegocio negocioClientes = new ImpNegocioClientes();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
