@@ -14,23 +14,21 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/CuentasServlet")
-public class CuentaServlet extends HttpServlet {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private final CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
+public class CuentasServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    private final CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
     private final ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String accion = req.getParameter("accion");
+
         try {
             switch (accion) {
                 case "nuevo":
-                    // Cargar lista de clientes para el combo
-                    //List<Cliente> clientes = clienteNegocio.listarClientes();
-                  //  req.setAttribute("clientes", clientes);
+                    List<Cliente> clientes = clienteNegocio.listarClientes();
+                    req.setAttribute("clientes", clientes);
                     req.getRequestDispatcher("jsp/admin/AltaCuenta.jsp").forward(req, resp);
                     break;
 
@@ -63,28 +61,27 @@ public class CuentaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String accion = req.getParameter("accion");
+
         try {
             if ("crear".equals(accion)) {
-                // Recoger parámetros para alta
                 Cuenta nueva = new Cuenta();
-                //nueva.setCliente(new Cliente(Integer.parseInt(req.getParameter("clienteId"))));
-                //nueva.setNumero(req.getParameter("numero"));
+                nueva.setCliente(new Cliente(Integer.parseInt(req.getParameter("clienteId"))));
+                nueva.setNumeroCuenta(req.getParameter("numero"));
                 nueva.setCbu(req.getParameter("cbu"));
-                //nueva.setTipo(req.getParameter("tipo"));
-                // La lógica de negocio asigna saldo inicial y valida
+                nueva.setTipoCuenta(Integer.parseInt(req.getParameter("tipo")));
                 cuentaNegocio.crearCuenta(nueva);
 
             } else if ("guardarModificacion".equals(accion)) {
-                // Recoger parámetros para modificación
                 Cuenta mod = new Cuenta();
                 mod.setId(Integer.parseInt(req.getParameter("id")));
-                //mod.setTipoCuenta(req.getParameter("tipo"));
+                mod.setTipoCuenta(Integer.parseInt(req.getParameter("tipo")));
                 mod.setCbu(req.getParameter("cbu"));
                 mod.setSaldo(Double.parseDouble(req.getParameter("saldo")));
                 cuentaNegocio.modificarCuenta(mod);
             }
-            // Tras alta o modificación, vuelvo al listado
+
             resp.sendRedirect("CuentasServlet?accion=listar");
+
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
             req.getRequestDispatcher("jsp/admin/Error.jsp").forward(req, resp);

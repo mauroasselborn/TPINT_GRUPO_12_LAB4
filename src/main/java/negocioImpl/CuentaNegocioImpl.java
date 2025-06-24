@@ -19,7 +19,7 @@ public class CuentaNegocioImpl implements CuentaNegocio {
     public Cuenta obtenerCuenta(int id) throws Exception {
         Cuenta c = dao.obtenerPorId(id);
         if (c == null) {
-            throw new Exception("Cuenta no encontrada");
+            throw new Exception("Cuenta no encontrada.");
         }
         return c;
     }
@@ -31,21 +31,24 @@ public class CuentaNegocioImpl implements CuentaNegocio {
         if (activoCount >= 3) {
             throw new Exception("El cliente ya tiene " + activoCount + " cuentas activas.");
         }
-        // Validar CBU único
-        for (Cuenta c : dao.obtenerTodas()) {
+
+        // Validar CBU único y número de cuenta único
+        List<Cuenta> todas = dao.obtenerTodas();
+        for (Cuenta c : todas) {
             if (c.getCbu().equals(cuenta.getCbu())) {
                 throw new Exception("El CBU ya está registrado para otra cuenta.");
             }
         }
-        // Validar número de cuenta único
-        for (Cuenta c : dao.obtenerTodas()) {
+        for (Cuenta c : todas) {
             if (c.getNumeroCuenta().equals(cuenta.getNumeroCuenta())) {
-                throw new Exception("El número de cuenta ya existe.");
+                throw new Exception("El número de cuenta ya está registrado.");
             }
         }
-        // Asignar saldo inicial fijo de $10 000
+
+        // Asignar saldo inicial fijo de $10.000
         cuenta.setSaldo(10000);
-        // Persistir alta
+
+        // Alta
         if (!dao.alta(cuenta)) {
             throw new Exception("Ocurrió un error al crear la cuenta.");
         }
@@ -57,6 +60,7 @@ public class CuentaNegocioImpl implements CuentaNegocio {
         if (cuenta.getSaldo() < 0) {
             throw new Exception("El saldo no puede ser negativo.");
         }
+
         if (!dao.modificar(cuenta)) {
             throw new Exception("Ocurrió un error al modificar la cuenta.");
         }
@@ -69,11 +73,11 @@ public class CuentaNegocioImpl implements CuentaNegocio {
         }
     }
 
-    // Helper interno
+    // Contar cuentas activas por ID de cliente
     private int contarCuentasActivas(Cliente cliente) {
         int count = 0;
         for (Cuenta c : dao.obtenerTodas()) {
-            if (c.getCliente() == cliente) {
+            if (c.getCliente().getId() == cliente.getId()) {
                 count++;
             }
         }
