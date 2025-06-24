@@ -36,9 +36,6 @@ public class Login extends HttpServlet {
         } else {
             System.out.println("[Login] Login fallido");
             request.setAttribute("mensajeError", "Usuario o contraseña incorrectos");
-            request.setAttribute("usuario", usuario); 
-            request.setAttribute("password", contrasena); 
-
             RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
             rd.forward(request, response);
         }

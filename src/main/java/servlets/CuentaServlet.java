@@ -29,8 +29,8 @@ public class CuentaServlet extends HttpServlet {
             switch (accion) {
                 case "nuevo":
                     // Cargar lista de clientes para el combo
-                    List<Cliente> clientes = negocioCliente.listarClientes();
-                    req.setAttribute("clientes", clientes);
+                    //List<Cliente> clientes = clienteNegocio.listarClientes();
+                  //  req.setAttribute("clientes", clientes);
                     req.getRequestDispatcher("jsp/admin/AltaCuenta.jsp").forward(req, resp);
                     break;
 
@@ -78,7 +78,7 @@ public class CuentaServlet extends HttpServlet {
                 // Recoger parámetros para modificación
                 Cuenta mod = new Cuenta();
                 mod.setId(Integer.parseInt(req.getParameter("id")));
-                mod.setTipoCuenta(req.getParameter("tipo"));
+                //mod.setTipoCuenta(req.getParameter("tipo"));
                 mod.setCbu(req.getParameter("cbu"));
                 mod.setSaldo(Double.parseDouble(req.getParameter("saldo")));
                 cuentaNegocio.modificarCuenta(mod);
