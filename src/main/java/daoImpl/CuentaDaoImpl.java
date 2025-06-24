@@ -1,6 +1,6 @@
 package daoImpl;
 
-import dao.DaoCuentas;
+import dao.CuentaDao;
 import entidades.Cuenta;
 import entidades.TipoCuenta;
 import entidades.Cliente;
@@ -10,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImpDaoCuentas implements DaoCuentas {
+public class CuentaDaoImpl implements CuentaDao {
 
     @Override
     public List<Cuenta> obtenerTodas() {
@@ -24,7 +24,7 @@ public class ImpDaoCuentas implements DaoCuentas {
             "JOIN clientes cl   ON c.id_cliente     = cl.id " +
             "WHERE c.activo = 1";
         try (
-            Connection con = Conexion.getConexion().getSQLConexion();
+            Connection con = Conexion.getConexion();
             PreparedStatement ps   = con.prepareStatement(sql);
             ResultSet rs           = ps.executeQuery()
         ) {
@@ -69,7 +69,7 @@ public class ImpDaoCuentas implements DaoCuentas {
             "JOIN clientes cl   ON c.id_cliente     = cl.id " +
             "WHERE c.id = ?";
         try (
-            Connection con = Conexion.getConexion().getSQLConexion();
+        	Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement(sql)
         ) {
             ps.setInt(1, id);
@@ -107,7 +107,7 @@ public class ImpDaoCuentas implements DaoCuentas {
             "(id_cliente, numero_cuenta, cbu, id_tipo_cuenta, fecha_creacion, saldo, activo) " +
             "VALUES (?, ?, ?, ?, ?, ?, 1)";
         try (
-            Connection con = Conexion.getConexion().getSQLConexion();
+            Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement(sql)
         ) {
             ps.setInt(1, cuenta.getCliente().getId());
@@ -130,7 +130,7 @@ public class ImpDaoCuentas implements DaoCuentas {
             "SET id_tipo_cuenta = ?, saldo = ?, cbu = ? " +
             "WHERE id = ?";
         try (
-            Connection con = Conexion.getConexion().getSQLConexion();
+            Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement(sql)
         ) {
             ps.setInt(1, cuenta.getTipoCuenta().getId());
@@ -148,7 +148,7 @@ public class ImpDaoCuentas implements DaoCuentas {
     public boolean baja(int id) {
         String sql = "UPDATE cuentas SET activo = 0 WHERE id = ?";
         try (
-            Connection con = Conexion.getConexion().getSQLConexion();
+            Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement(sql)
         ) {
             ps.setInt(1, id);

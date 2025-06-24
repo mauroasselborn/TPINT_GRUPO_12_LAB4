@@ -4,28 +4,27 @@ public class Cuenta {
 	private int id;
 	private String numeroCuenta;
 	private String cbu;
-	private double saldo;
-	private String fechaCreacion;
 	private TipoCuenta tipoCuenta;
-	private Cliente cliente;
+	private String fechaCreacion;
+	private double saldo;
 	private boolean activo;
+	private Cliente cliente;
 
 	public Cuenta() {
 	}
 
-	public Cuenta(int id, String numeroCuenta, String cbu, double saldo, String fechaCreacion, TipoCuenta tipoCuenta,
-			Cliente cliente, boolean activo) {
+	public Cuenta(int id, String numeroCuenta, String cbu, TipoCuenta tipoCuenta, String fechaCreacion, double saldo, boolean activo, Cliente cliente) {
 		this.id = id;
 		this.numeroCuenta = numeroCuenta;
 		this.cbu = cbu;
-		this.saldo = saldo;
-		this.fechaCreacion = fechaCreacion;
 		this.tipoCuenta = tipoCuenta;
-		this.cliente = cliente;
+		this.fechaCreacion = fechaCreacion;
+		this.saldo = saldo;
 		this.activo = activo;
+		this.cliente = cliente;
 	}
 
-	// getters y setters
+	// Getters y Setters
 	public int getId() {
 		return id;
 	}
@@ -54,16 +53,8 @@ public class Cuenta {
 		return tipoCuenta;
 	}
 
-	public void setTipoCuenta(String tipo) {
-		this.tipoCuenta.setDescripcion(tipo); 
-	}
-
-	public double getSaldo() {
-		return saldo;
-	}
-
-	public void setSaldo(double saldo) {
-		this.saldo = saldo;
+	public void setTipoCuenta(TipoCuenta tipoCuenta) {
+		this.tipoCuenta = tipoCuenta;
 	}
 
 	public String getFechaCreacion() {
@@ -74,12 +65,12 @@ public class Cuenta {
 		this.fechaCreacion = fechaCreacion;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public double getSaldo() {
+		return saldo;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
 	}
 
 	public boolean isActivo() {
@@ -88,5 +79,13 @@ public class Cuenta {
 
 	public void setActivo(boolean activo) {
 		this.activo = activo;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 }
