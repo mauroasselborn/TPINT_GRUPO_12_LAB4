@@ -54,8 +54,8 @@ public class Cuenta {
 		return tipoCuenta;
 	}
 
-	public void setTipoCuenta(TipoCuenta tipoCuenta) {
-		this.tipoCuenta = tipoCuenta;
+	public void setTipoCuenta(String tipo) {
+		this.tipoCuenta.setDescripcion(tipo); 
 	}
 
 	public double getSaldo() {
