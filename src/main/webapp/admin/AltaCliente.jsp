@@ -76,8 +76,20 @@
 				</div>
 
 				<div class="mb-3">
-					<label>Localidad</label> <input type="text" class="form-control"
-						name="localidad" placeholder="Ingrese su localidad">
+					<label for="localidad" class="form-label">Localidad</label> 
+					<select id="localidad" name="localidad" class="form-select" required>
+						<option value="">Seleccione la localidad</option>
+						<%
+							ArrayList<Localidad> listaLocalidades = (ArrayList<Localidad>) request.getAttribute("listaLocalidades");
+							for(Localidad localidad : listaLocalidades){
+						
+						%>
+							<option value="" <%= localidad.getId() %><%= localidad.getNombre() %>></option>
+						<%
+							}
+						%>
+					
+					</select>
 				</div>
 
 				<div class="mb-3">

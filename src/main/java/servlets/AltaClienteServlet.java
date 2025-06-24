@@ -22,6 +22,8 @@ import entidades.TipoUsuario;
 import entidades.Usuario;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.NacionalidadNegocioImpl;
+import negocioImpl.ProvinciaNegocioImpl;
+import negocioImpl.LocalidadNegocioImpl;
 
 @WebServlet("/AltaClienteServlet")
 public class AltaClienteServlet extends HttpServlet {
@@ -67,6 +69,12 @@ public class AltaClienteServlet extends HttpServlet {
 		
 		//Obtener las entidades asociadas
 		NacionalidadNegocioImpl nacionalidadNegocio = new NacionalidadNegocioImpl();
+		ProvinciaNegocioImpl provinciaNegocio = new ProvinciaNegocioImpl();
+		LocalidadNegocioImpl localidadNegocio = new LocalidadNegocioImpl();
+		
+		Nacionalidad nacionalidad = nacionalidadNegocio.obtenerNacionalidadPorId(Integer.parseInt(nacionalidadId));
+		Provincia provincia = provinciaNegocio.obtenerProvinciaPorId(Integer.parseInt(provinciaId));
+		Localidad localidad = localidadNegocio.obtenerLocalidadPorId(Integer.parseInt(localidadId));
 		
 		//Crear el objeto Cliente
 		Cliente nuevoCliente = new Cliente();
@@ -79,6 +87,9 @@ public class AltaClienteServlet extends HttpServlet {
 		nuevoCliente.setDireccion(dirrecion);
 		nuevoCliente.setCorreoElectronico(email);
 		nuevoCliente.setTelefono(telefono);
+		nuevoCliente.setNacionalidad(nacionalidad);
+		nuevoCliente.setProvincia(provincia);
+		nuevoCliente.setLocalidad(localidad);
 		nuevoCliente.setActivo(true);
 		
 		ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
