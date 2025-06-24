@@ -1,67 +1,73 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+         import="java.util.List, entidades.Cuenta" %>
 
 <!-- Encabezado -->
-<jsp:include page="../componentes/Encabezado.jsp" />
+<jsp:include page="componentes/Encabezado.jsp" />
 
 <!-- Sidebar -->
-<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
+<jsp:include page="componentes/MenuLateralAdmin.jsp" />
 
 <!-- Contenedor principal -->
 <div class="main-content">
+
   <!-- Navbar -->
-  <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+  <jsp:include page="componentes/BarraSuperiorAdmin.jsp" />
+
   <!-- Contenido principal -->
   <div class="container-fluid content py-4">
     <div class="p-4">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="mb-0">Cuentas</h2>
-        <!-- Ahora llama al servlet para mostrar AltaCuenta.jsp -->
-        <a href="CuentasServlet?accion=nuevo" class="btn btn-primary">
-          Agregar nueva cuenta
-        </a>
+        <a href="CuentasServlet?accion=nuevo" class="btn btn-primary">Agregar nueva cuenta</a>
       </div>
 
       <div class="scroll-container">
         <table id="tablaCuentas" class="table table-bordered table-hover w-100">
           <thead class="table-dark">
             <tr>
-              <th>N° Cuenta</th><th>CBU</th><th>Tipo</th><th>Saldo</th>
-              <th>Fecha Alta</th><th>Cliente</th><th>Acciones</th>
+              <th>N° Cuenta</th>
+              <th>CBU</th>
+              <th>Tipo</th>
+              <th>Saldo</th>
+              <th>Fecha Alta</th>
+              <th>Cliente</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <!-- Reemplazo de la fila estática por un forEach -->
-            <c:forEach var="cuenta" items="${cuentas}">
+            <%
+              List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentas");
+              if (cuentas != null) {
+                for (int i = 0; i < cuentas.size(); i++) {
+                  Cuenta c = cuentas.get(i);
+            %>
               <tr>
-                <td>${cuenta.numero}</td>
-                <td>${cuenta.cbu}</td>
-                <td>${cuenta.tipo}</td>
-                <td>${cuenta.saldo}</td>
-                <td>${cuenta.fechaCreacion}</td>
-                <td>${cuenta.cliente.nombre} ${cuenta.cliente.apellido}</td>
+                <td><%= c.getNumeroCuenta() %></td>
+                <td><%= c.getCbu() %></td>
+                <td><%= c.getTipoCuenta() %></td>
+                <td><%= c.getSaldo() %></td>
+                <td><%= c.getFechaCreacion() %></td>
+                <td><%= c.getCliente().getApellido() %>, <%= c.getCliente().getNombre() %></td>
                 <td class="text-nowrap">
                   <div class="d-flex justify-content-center">
-                    <!-- Ahora llama al servlet para editar -->
-                    <a href="CuentasServlet?accion=editar&id=${cuenta.id}"
-                       class="btn btn-warning btn-sm btn-action">
-                      Modificar
-                    </a>
-                    <!-- Eliminar dispara el modal y luego GET al servlet -->
-                    <button class="btn btn-danger btn-sm"
-                            onclick="confirmarEliminacion(${cuenta.id})">
-                      Eliminar
-                    </button>
+                    <a href="CuentasServlet?accion=editar&id=<%= c.getId() %>" class="btn btn-warning btn-sm me-1">Modificar</a>
+                    <button class="btn btn-danger btn-sm" onclick="confirmarEliminacion(<%= c.getId() %>)">Eliminar</button>
                   </div>
                 </td>
               </tr>
-            </c:forEach>
+            <%
+                }
+              }
+            %>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-  <jsp:include page="../componentes/Footer.jsp" />
+
+  <!-- Footer -->
+  <jsp:include page="componentes/Footer.jsp" />
+
 </div>
 
 <!-- Modal de confirmación -->
@@ -77,7 +83,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <!-- Ahora el form va al mismo servlet con GET y accion=borrar -->
         <form id="formEliminar" action="CuentasServlet" method="get">
           <input type="hidden" name="accion" value="borrar"/>
           <input type="hidden" name="id" id="idCuentaEliminar"/>
@@ -103,7 +108,10 @@
         info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
         infoEmpty: "Mostrando 0 a 0 de 0 registros",
         infoFiltered: "(filtrado de _MAX_ registros totales)",
-        paginate: { first: "Primero", last: "Último", next: "Siguiente", previous: "Anterior" }
+        paginate: {
+          first: "Primero", last: "Último",
+          next: "Siguiente", previous: "Anterior"
+        }
       }
     });
   });

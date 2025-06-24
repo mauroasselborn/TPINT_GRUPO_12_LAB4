@@ -1,62 +1,77 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.List, entidades.Cliente" %>
 
 <!-- Encabezado -->
-<jsp:include page="../componentes/Encabezado.jsp" />
+<jsp:include page="componentes/Encabezado.jsp" />
 
-<!-- Sidebar -->
-<jsp:include page="../componentes/MenuLateralAdmin.jsp" />
+<!-- Menú lateral -->
+<jsp:include page="componentes/MenuLateralAdmin.jsp" />
 
+<!-- Contenedor principal -->
 <div class="main-content">
-  <!-- Navbar -->
-  <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
-  <!-- Contenido principal -->
+
+  <!-- Barra superior -->
+  <jsp:include page="componentes/BarraSuperiorAdmin.jsp" />
+
+  <!-- Contenido -->
   <div class="container-fluid content py-4">
     <div class="form-container">
-      <h2>Alta Cuenta</h2>
+      <h2>Alta de Cuenta</h2>
 
-      <!-- El servlet "CuentasServlet" en doGet, case "nuevo", debe haber cargado ${clientes} -->
+      <!-- Formulario -->
       <form action="CuentasServlet" method="post">
-        <input type="hidden" name="accion" value="crear"/>
+        <input type="hidden" name="accion" value="crear" />
 
+        <!-- Lista de clientes -->
         <div class="mb-3">
           <label for="clienteId" class="form-label">Cliente</label>
           <select id="clienteId" name="clienteId" class="form-select" required>
             <option value="" disabled selected>Seleccione un cliente</option>
-            <c:forEach var="cliente" items="${clientes}">
-              <option value="${cliente.id}">
-                ${cliente.nombre} ${cliente.apellido} (DNI: ${cliente.dni})
-              </option>
-            </c:forEach>
+            <%
+              List<Cliente> listaClientes = (List<Cliente>) request.getAttribute("clientes");
+              if (listaClientes != null) {
+                for (int i = 0; i < listaClientes.size(); i++) {
+                  Cliente c = listaClientes.get(i);
+            %>
+              <option value="<%= c.getId() %>"><%= c.getApellido() %>, <%= c.getNombre() %> - <%= c.getDni() %></option>
+            <%
+                }
+              }
+            %>
           </select>
         </div>
 
+        <!-- Tipo de cuenta -->
         <div class="mb-3">
           <label for="tipo" class="form-label">Tipo de cuenta</label>
           <select id="tipo" name="tipo" class="form-select" required>
             <option value="" disabled selected>Seleccione un tipo</option>
-            <option value="Caja de ahorro">Caja de ahorro</option>
-            <option value="Cuenta corriente">Cuenta corriente</option>
+            <option value="1">Caja de ahorro</option>
+            <option value="2">Cuenta corriente</option>
           </select>
         </div>
 
+        <!-- CBU -->
         <div class="mb-3">
           <label for="cbu" class="form-label">CBU</label>
-          <input type="text" id="cbu" name="cbu" class="form-control"
-                 maxlength="22" required placeholder="22 dígitos numéricos"/>
+          <input type="text" id="cbu" name="cbu" class="form-control" maxlength="22" required placeholder="22 dígitos numéricos" />
         </div>
 
+        <!-- Número de cuenta -->
         <div class="mb-3">
           <label for="numero" class="form-label">Número de cuenta</label>
-          <input type="text" id="numero" name="numero" class="form-control"
-                 maxlength="20" required placeholder="Máximo 20 caracteres"/>
+          <input type="text" id="numero" name="numero" class="form-control" maxlength="20" required placeholder="Máximo 20 caracteres" />
         </div>
 
-        <button type="submit" class="btn btn-primary">Agregar Cuenta</button>
-        <a href="CuentasServlet?accion=listar" class="btn btn-secondary">Cancelar</a>
+        <!-- Botones -->
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary">Agregar</button>
+          <a href="CuentasServlet?accion=listar" class="btn btn-secondary">Cancelar</a>
+        </div>
       </form>
     </div>
   </div>
 
-  <jsp:include page="../componentes/Footer.jsp" />
+  <!-- Footer -->
+  <jsp:include page="componentes/Footer.jsp" />
+
 </div>

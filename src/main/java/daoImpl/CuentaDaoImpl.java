@@ -2,7 +2,6 @@ package daoImpl;
 
 import dao.CuentaDao;
 import entidades.Cuenta;
-import entidades.TipoCuenta;
 import entidades.Cliente;
 import datos.Conexion;
 
@@ -17,16 +16,15 @@ public class CuentaDaoImpl implements CuentaDao {
         List<Cuenta> lista = new ArrayList<>();
         String sql =
             "SELECT c.id, c.numero_cuenta, c.cbu, c.saldo, c.fecha_creacion, " +
-            "       c.id_tipo_cuenta, tc.descripcion, " +
+            "       c.id_tipo_cuenta, " +
             "       c.id_cliente, cl.nombre, cl.apellido, c.activo " +
             "FROM cuentas c " +
-            "JOIN tipo_cuenta tc ON c.id_tipo_cuenta = tc.id " +
-            "JOIN clientes cl   ON c.id_cliente     = cl.id " +
+            "JOIN clientes cl ON c.id_cliente = cl.id " +
             "WHERE c.activo = 1";
         try (
             Connection con = Conexion.getConexion();
-            PreparedStatement ps   = con.prepareStatement(sql);
-            ResultSet rs           = ps.executeQuery()
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()
         ) {
             while (rs.next()) {
                 Cuenta c = new Cuenta();
@@ -35,19 +33,14 @@ public class CuentaDaoImpl implements CuentaDao {
                 c.setCbu(rs.getString("cbu"));
                 c.setSaldo(rs.getDouble("saldo"));
                 c.setFechaCreacion(rs.getString("fecha_creacion"));
-                // Tipo de cuenta
-                TipoCuenta tc = new TipoCuenta(
-                    rs.getInt("id_tipo_cuenta"),
-                    rs.getString("descripcion")
-                );
-                c.setTipoCuenta(tc);
-                // Cliente
+                c.setTipoCuenta(rs.getInt("id_tipo_cuenta"));
+
                 Cliente cli = new Cliente();
                 cli.setId(rs.getInt("id_cliente"));
                 cli.setNombre(rs.getString("nombre"));
                 cli.setApellido(rs.getString("apellido"));
                 c.setCliente(cli);
-                // Activo
+
                 c.setActivo(rs.getBoolean("activo"));
                 lista.add(c);
             }
@@ -62,14 +55,13 @@ public class CuentaDaoImpl implements CuentaDao {
         Cuenta c = null;
         String sql =
             "SELECT c.id, c.numero_cuenta, c.cbu, c.saldo, c.fecha_creacion, " +
-            "       c.id_tipo_cuenta, tc.descripcion, " +
+            "       c.id_tipo_cuenta, " +
             "       c.id_cliente, cl.nombre, cl.apellido, c.activo " +
             "FROM cuentas c " +
-            "JOIN tipo_cuenta tc ON c.id_tipo_cuenta = tc.id " +
-            "JOIN clientes cl   ON c.id_cliente     = cl.id " +
+            "JOIN clientes cl ON c.id_cliente = cl.id " +
             "WHERE c.id = ?";
         try (
-        	Connection con = Conexion.getConexion();
+            Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement(sql)
         ) {
             ps.setInt(1, id);
@@ -81,16 +73,14 @@ public class CuentaDaoImpl implements CuentaDao {
                     c.setCbu(rs.getString("cbu"));
                     c.setSaldo(rs.getDouble("saldo"));
                     c.setFechaCreacion(rs.getString("fecha_creacion"));
-                    TipoCuenta tc = new TipoCuenta(
-                        rs.getInt("id_tipo_cuenta"),
-                        rs.getString("descripcion")
-                    );
-                    c.setTipoCuenta(tc);
+                    c.setTipoCuenta(rs.getInt("id_tipo_cuenta"));
+
                     Cliente cli = new Cliente();
                     cli.setId(rs.getInt("id_cliente"));
                     cli.setNombre(rs.getString("nombre"));
                     cli.setApellido(rs.getString("apellido"));
                     c.setCliente(cli);
+
                     c.setActivo(rs.getBoolean("activo"));
                 }
             }
@@ -113,7 +103,7 @@ public class CuentaDaoImpl implements CuentaDao {
             ps.setInt(1, cuenta.getCliente().getId());
             ps.setString(2, cuenta.getNumeroCuenta());
             ps.setString(3, cuenta.getCbu());
-            ps.setInt(4, cuenta.getTipoCuenta().getId());
+            ps.setInt(4, cuenta.getTipoCuenta());
             ps.setString(5, cuenta.getFechaCreacion());
             ps.setDouble(6, cuenta.getSaldo());
             return ps.executeUpdate() > 0;
@@ -133,7 +123,7 @@ public class CuentaDaoImpl implements CuentaDao {
             Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement(sql)
         ) {
-            ps.setInt(1, cuenta.getTipoCuenta().getId());
+            ps.setInt(1, cuenta.getTipoCuenta());
             ps.setDouble(2, cuenta.getSaldo());
             ps.setString(3, cuenta.getCbu());
             ps.setInt(4, cuenta.getId());
