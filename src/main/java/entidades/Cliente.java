@@ -161,4 +161,10 @@ public class Cliente {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
+	public Cliente(int id) {
+	    this.id = id;
+	}
+	
+	
 }

@@ -13,7 +13,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/CuentasServlet")
+@WebServlet("/admin/CuentasServlet")
 public class CuentasServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -29,14 +29,14 @@ public class CuentasServlet extends HttpServlet {
                 case "nuevo":
                     List<Cliente> clientes = clienteNegocio.listarClientes();
                     req.setAttribute("clientes", clientes);
-                    req.getRequestDispatcher("jsp/admin/AltaCuenta.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/admin/AltaCuenta.jsp").forward(req, resp);
                     break;
 
                 case "editar":
                     int idEd = Integer.parseInt(req.getParameter("id"));
                     Cuenta cuentaEd = cuentaNegocio.obtenerCuenta(idEd);
                     req.setAttribute("cuenta", cuentaEd);
-                    req.getRequestDispatcher("jsp/admin/ModificarCuenta.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/jsp/admin/ModificarCuenta.jsp").forward(req, resp);
                     break;
 
                 case "borrar":
@@ -49,12 +49,12 @@ public class CuentasServlet extends HttpServlet {
                 default:
                     List<Cuenta> cuentas = cuentaNegocio.listarCuentas();
                     req.setAttribute("cuentas", cuentas);
-                    req.getRequestDispatcher("jsp/admin/Cuentas.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/admin/Cuentas.jsp").forward(req, resp);
                     break;
             }
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
-            req.getRequestDispatcher("jsp/admin/Error.jsp").forward(req, resp);
+            req.getRequestDispatcher("/admin/Error.jsp").forward(req, resp);
         }
     }
 
@@ -84,7 +84,7 @@ public class CuentasServlet extends HttpServlet {
 
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
-            req.getRequestDispatcher("jsp/admin/Error.jsp").forward(req, resp);
+            req.getRequestDispatcher("/admin/Error.jsp").forward(req, resp);
         }
     }
 }
