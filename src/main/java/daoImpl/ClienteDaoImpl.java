@@ -17,12 +17,15 @@ public class ClienteDaoImpl implements ClienteDao {
     public List<Cliente> obtenerTodos() {
         List<Cliente> lista = new ArrayList<>();
         String sql = "SELECT * FROM clientes WHERE activo = 1";
-
-        try (
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()
-        ) {
+        Connection con = null ;
+        PreparedStatement ps = null ;
+        ResultSet rs = null;
+        try 
+         {
+        	con = Conexion.getConexion();
+        	ps = con.prepareStatement(sql);
+        	rs = ps.executeQuery();
+        	
             while (rs.next()) {
                 Cliente c = new Cliente();
                 c.setId(rs.getInt("id"));
@@ -55,6 +58,11 @@ public class ClienteDaoImpl implements ClienteDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }     
+        finally {
+    	try { if (rs != null) rs.close(); } catch (Exception e) {}
+    	try { if (ps != null) ps.close(); } catch (Exception e) {}
+    	try { if (con != null) con.close(); } catch (Exception e) {}
         }
 
         return lista;
@@ -64,13 +72,15 @@ public class ClienteDaoImpl implements ClienteDao {
     public Cliente obtenerPorId(int id) {
         Cliente c = null;
         String sql = "SELECT * FROM clientes WHERE id = ?";
-
-        try (
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement(sql)
-        ) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs= null;
+        try  {
+        	con = Conexion.getConexion();
+            ps = con.prepareStatement(sql);
             ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
+            rs = ps.executeQuery();
+         
                 if (rs.next()) {
                     c = new Cliente();
                     c.setId(rs.getInt("id"));
@@ -98,25 +108,32 @@ public class ClienteDaoImpl implements ClienteDao {
                     c.setCorreoElectronico(rs.getString("correo_electronico"));
                     c.setTelefono(rs.getString("telefono"));
                     c.setActivo(rs.getBoolean("activo"));
-                }
-            }
+                }            
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }finally {
+        	try { if (rs != null) rs.close(); } catch (Exception e) {}
+        	try { if (ps != null) ps.close(); } catch (Exception e) {}
+        	try { if (con != null) con.close(); } catch (Exception e) {}
+            }
 
         return c;
     }
 
     @Override
     public boolean alta(Cliente cliente) {
+        boolean estado = false;
+        Connection con = null;
+        PreparedStatement ps = null;
+
         String sql = "INSERT INTO clientes " +
                 "(dni, cuil, nombre, apellido, sexo, id_nacionalidad, fecha_nacimiento, direccion, id_localidad, id_provincia, correo_electronico, telefono, activo) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
 
-        try (
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement(sql)
-        ) {
+        try {
+            con = Conexion.getConexion();
+            ps = con.prepareStatement(sql);
+
             ps.setString(1, cliente.getDni());
             ps.setString(2, cliente.getCuil());
             ps.setString(3, cliente.getNombre());
@@ -129,25 +146,37 @@ public class ClienteDaoImpl implements ClienteDao {
             ps.setInt(10, cliente.getProvincia().getId());
             ps.setString(11, cliente.getCorreoElectronico());
             ps.setString(12, cliente.getTelefono());
-            return ps.executeUpdate() > 0;
+
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                estado = true;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try { if (ps != null) ps.close(); } catch (Exception e) {}
+            try { if (con != null) con.close(); } catch (Exception e) {}
         }
 
-        return false;
+        return estado;
     }
 
     @Override
     public boolean modificar(Cliente cliente) {
+        boolean estado = false;
+        Connection con = null;
+        PreparedStatement ps = null;
+
         String sql = "UPDATE clientes SET " +
                 "dni = ?, cuil = ?, nombre = ?, apellido = ?, sexo = ?, id_nacionalidad = ?, fecha_nacimiento = ?, " +
                 "direccion = ?, id_localidad = ?, id_provincia = ?, correo_electronico = ?, telefono = ? " +
                 "WHERE id = ?";
 
-        try (
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement(sql)
-        ) {
+        try {
+            con = Conexion.getConexion();
+            ps = con.prepareStatement(sql);
+
             ps.setString(1, cliente.getDni());
             ps.setString(2, cliente.getCuil());
             ps.setString(3, cliente.getNombre());
@@ -161,28 +190,47 @@ public class ClienteDaoImpl implements ClienteDao {
             ps.setString(11, cliente.getCorreoElectronico());
             ps.setString(12, cliente.getTelefono());
             ps.setInt(13, cliente.getId());
-            return ps.executeUpdate() > 0;
+
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                estado = true;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try { if (ps != null) ps.close(); } catch (Exception e) {}
+            try { if (con != null) con.close(); } catch (Exception e) {}
         }
 
-        return false;
+        return estado;
     }
 
     @Override
     public boolean baja(int id) {
+        boolean estado = false;
+        Connection con = null;
+        PreparedStatement ps = null;
+
         String sql = "UPDATE clientes SET activo = 0 WHERE id = ?";
 
-        try (
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement(sql)
-        ) {
+        try {
+            con = Conexion.getConexion();
+            ps = con.prepareStatement(sql);
             ps.setInt(1, id);
-            return ps.executeUpdate() > 0;
+
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                estado = true;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try { if (ps != null) ps.close(); } catch (Exception e) {}
+            try { if (con != null) con.close(); } catch (Exception e) {}
         }
 
-        return false;
+        return estado;
     }
 }

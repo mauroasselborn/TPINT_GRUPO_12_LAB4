@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
          import="java.util.List, entidades.Cuenta" %>
+         
 
 <!-- Encabezado -->
 <jsp:include page="../componentes/Encabezado.jsp" />

@@ -34,15 +34,19 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	            usuario.setContrasena(rs.getString("contrasena"));
 	            usuario.setActivo(rs.getBoolean("activo"));
 
-	           
 	            TipoUsuario tipo = new TipoUsuario();
 	            tipo.setId(rs.getInt("id_tipo_usuario"));
-	            tipo.setDescripcion(""); 
+	            tipo.setDescripcion(""); // lo podés completar después si tenés JOIN o carga por separado
 	            usuario.setTipoUsuario(tipo);
 	        }
+
 	    } catch (Exception e) {
 	        System.out.println("[DAO] Error al obtener usuario: " + e.getMessage());
 	        e.printStackTrace();
+	    } finally {
+	        try { if (rs != null) rs.close(); } catch (Exception e) {}
+	        try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+	        try { if (conexion != null) conexion.close(); } catch (Exception e) {}
 	    }
 
 	    return usuario;

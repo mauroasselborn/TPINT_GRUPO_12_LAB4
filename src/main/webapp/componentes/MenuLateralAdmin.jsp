@@ -6,7 +6,7 @@
             <li><a href="MenuAdmin.jsp" class="nav-link text-white"><i class="bi bi-people-fill me-2"></i>Inicio</a></li>
             <li><a href="Clientes.jsp" class="nav-link text-white"><i class="bi bi-people-fill me-2"></i>Clientes</a></li>
             <li><a href="Usuarios.jsp" class="nav-link text-white"><i class="bi bi-person-lines-fill me-2"></i>Usuarios</a></li>
-            <li><a href="Cuentas.jsp" class="nav-link text-white"><i class="bi bi-credit-card-2-front-fill me-2"></i>Cuentas</a></li>
+            <li><a href="CuentasServlet?accion=listar" class="nav-link text-white"><i class="bi bi-credit-card-2-front-fill me-2"></i>Cuentas</a></li>
             <li><a href="Prestamos.jsp" class="nav-link text-white"><i class="bi bi-cash-stack me-2"></i>Préstamos</a></li>
             <li><a href="Reportes.jsp" class="nav-link text-white"><i class="bi bi-bar-chart-fill me-2"></i>Reportes</a></li>
         </ul>

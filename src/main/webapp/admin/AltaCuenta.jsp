@@ -35,7 +35,9 @@
               <option value="<%= c.getId() %>"><%= c.getApellido() %>, <%= c.getNombre() %> - <%= c.getDni() %></option>
             <%
                 }
-              }
+              }else{%>
+    <option disabled>No hay clientes cargados</option>
+<%}
             %>
           </select>
         </div>
