@@ -69,6 +69,8 @@ public class CuentasServlet extends HttpServlet {
                 nueva.setNumeroCuenta(req.getParameter("numero"));
                 nueva.setCbu(req.getParameter("cbu"));
                 nueva.setTipoCuenta(Integer.parseInt(req.getParameter("tipo")));
+                nueva.setFechaCreacion(java.time.LocalDate.now().toString());
+                nueva.setSaldo(10000); 
                 cuentaNegocio.crearCuenta(nueva);
 
             } else if ("guardarModificacion".equals(accion)) {
