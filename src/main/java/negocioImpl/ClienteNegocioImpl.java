@@ -1,15 +1,21 @@
+
+
+
 package negocioImpl;
 
 import negocio.ClienteNegocio;
+import dao.ClienteDao;
+import daoImpl.ClienteDaoImpl;
 import entidades.Cliente;
+
 import java.util.List;
-import java.util.ArrayList;
 
 public class ClienteNegocioImpl implements ClienteNegocio {
 
+    private final ClienteDao clienteDao = new ClienteDaoImpl();
+
     @Override
     public List<Cliente> listarClientes() {
-
-        return new ArrayList<>(); 
+        return clienteDao.obtenerTodos();
     }
 }

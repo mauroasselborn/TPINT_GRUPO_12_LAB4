@@ -36,7 +36,7 @@ public class CuentasServlet extends HttpServlet {
                     int idEd = Integer.parseInt(req.getParameter("id"));
                     Cuenta cuentaEd = cuentaNegocio.obtenerCuenta(idEd);
                     req.setAttribute("cuenta", cuentaEd);
-                    req.getRequestDispatcher("/jsp/admin/ModificarCuenta.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/admin/ModificarCuenta.jsp").forward(req, resp);
                     break;
 
                 case "borrar":
