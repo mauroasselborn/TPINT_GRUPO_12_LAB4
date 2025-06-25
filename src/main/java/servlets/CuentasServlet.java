@@ -74,12 +74,12 @@ public class CuentasServlet extends HttpServlet {
                 cuentaNegocio.crearCuenta(nueva);
 
             } else if ("guardarModificacion".equals(accion)) {
-                Cuenta mod = new Cuenta();
-                mod.setId(Integer.parseInt(req.getParameter("id")));
-                mod.setTipoCuenta(Integer.parseInt(req.getParameter("tipo")));
-                mod.setCbu(req.getParameter("cbu"));
-                mod.setSaldo(Double.parseDouble(req.getParameter("saldo")));
-                cuentaNegocio.modificarCuenta(mod);
+                Cuenta cuentamodificar = new Cuenta();
+                cuentamodificar.setId(Integer.parseInt(req.getParameter("id")));
+                cuentamodificar.setTipoCuenta(Integer.parseInt(req.getParameter("tipo")));
+                cuentamodificar.setCbu(req.getParameter("cbu"));
+                cuentamodificar.setSaldo(Double.parseDouble(req.getParameter("saldo")));
+                cuentaNegocio.modificarCuenta(cuentamodificar);
             }
 
             resp.sendRedirect("CuentasServlet?accion=listar");

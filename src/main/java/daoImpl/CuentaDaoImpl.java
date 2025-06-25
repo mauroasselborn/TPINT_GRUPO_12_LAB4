@@ -60,7 +60,7 @@ public class CuentaDaoImpl implements CuentaDao {
 
     @Override
     public Cuenta obtenerPorId(int id) {
-        Cuenta c = null;
+        Cuenta cuenta = null;
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -78,21 +78,21 @@ public class CuentaDaoImpl implements CuentaDao {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                c = new Cuenta();
-                c.setId(rs.getInt("id"));
-                c.setNumeroCuenta(rs.getString("numero_cuenta"));
-                c.setCbu(rs.getString("cbu"));
-                c.setSaldo(rs.getDouble("saldo"));
-                c.setFechaCreacion(rs.getString("fecha_creacion"));
-                c.setTipoCuenta(rs.getInt("id_tipo_cuenta"));
+                cuenta = new Cuenta();
+                cuenta.setId(rs.getInt("id"));
+                cuenta.setNumeroCuenta(rs.getString("numero_cuenta"));
+                cuenta.setCbu(rs.getString("cbu"));
+                cuenta.setSaldo(rs.getDouble("saldo"));
+                cuenta.setFechaCreacion(rs.getString("fecha_creacion"));
+                cuenta.setTipoCuenta(rs.getInt("id_tipo_cuenta"));
 
-                Cliente cli = new Cliente();
-                cli.setId(rs.getInt("id_cliente"));
-                cli.setNombre(rs.getString("nombre"));
-                cli.setApellido(rs.getString("apellido"));
-                c.setCliente(cli);
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+                cuenta.setCliente(cliente);
 
-                c.setActivo(rs.getBoolean("activo"));
+                cuenta.setActivo(rs.getBoolean("activo"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,7 +102,7 @@ public class CuentaDaoImpl implements CuentaDao {
             try { if (con != null) con.close(); } catch (Exception e) {}
         }
 
-        return c;
+        return cuenta;
     }
 
     @Override

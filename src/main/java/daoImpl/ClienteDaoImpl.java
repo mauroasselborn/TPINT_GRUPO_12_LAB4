@@ -27,34 +27,34 @@ public class ClienteDaoImpl implements ClienteDao {
         	rs = ps.executeQuery();
         	
             while (rs.next()) {
-                Cliente c = new Cliente();
-                c.setId(rs.getInt("id"));
-                c.setDni(rs.getString("dni"));
-                c.setCuil(rs.getString("cuil"));
-                c.setNombre(rs.getString("nombre"));
-                c.setApellido(rs.getString("apellido"));
-                c.setSexo(rs.getString("sexo"));
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id"));
+                cliente.setDni(rs.getString("dni"));
+                cliente.setCuil(rs.getString("cuil"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+                cliente.setSexo(rs.getString("sexo"));
 
                 Nacionalidad nac = new Nacionalidad();
                 nac.setId(rs.getInt("id_nacionalidad"));
-                c.setNacionalidad(nac);
+                cliente.setNacionalidad(nac);
 
-                c.setFechaNacimiento(rs.getString("fecha_nacimiento"));
-                c.setDireccion(rs.getString("direccion"));
+                cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+                cliente.setDireccion(rs.getString("direccion"));
 
                 Localidad loc = new Localidad();
                 loc.setId(rs.getInt("id_localidad"));
-                c.setLocalidad(loc);
+                cliente.setLocalidad(loc);
 
                 Provincia prov = new Provincia();
                 prov.setId(rs.getInt("id_provincia"));
-                c.setProvincia(prov);
+                cliente.setProvincia(prov);
 
-                c.setCorreoElectronico(rs.getString("correo_electronico"));
-                c.setTelefono(rs.getString("telefono"));
-                c.setActivo(rs.getBoolean("activo"));
+                cliente.setCorreoElectronico(rs.getString("correo_electronico"));
+                cliente.setTelefono(rs.getString("telefono"));
+                cliente.setActivo(rs.getBoolean("activo"));
 
-                lista.add(c);
+                lista.add(cliente);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,7 +70,7 @@ public class ClienteDaoImpl implements ClienteDao {
 
     @Override
     public Cliente obtenerPorId(int id) {
-        Cliente c = null;
+        Cliente cliente = null;
         String sql = "SELECT * FROM clientes WHERE id = ?";
         Connection con = null;
         PreparedStatement ps = null;
@@ -82,32 +82,32 @@ public class ClienteDaoImpl implements ClienteDao {
             rs = ps.executeQuery();
          
                 if (rs.next()) {
-                    c = new Cliente();
-                    c.setId(rs.getInt("id"));
-                    c.setDni(rs.getString("dni"));
-                    c.setCuil(rs.getString("cuil"));
-                    c.setNombre(rs.getString("nombre"));
-                    c.setApellido(rs.getString("apellido"));
-                    c.setSexo(rs.getString("sexo"));
+                    cliente = new Cliente();
+                    cliente.setId(rs.getInt("id"));
+                    cliente.setDni(rs.getString("dni"));
+                    cliente.setCuil(rs.getString("cuil"));
+                    cliente.setNombre(rs.getString("nombre"));
+                    cliente.setApellido(rs.getString("apellido"));
+                    cliente.setSexo(rs.getString("sexo"));
 
                     Nacionalidad nac = new Nacionalidad();
                     nac.setId(rs.getInt("id_nacionalidad"));
-                    c.setNacionalidad(nac);
+                    cliente.setNacionalidad(nac);
 
-                    c.setFechaNacimiento(rs.getString("fecha_nacimiento"));
-                    c.setDireccion(rs.getString("direccion"));
+                    cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+                    cliente.setDireccion(rs.getString("direccion"));
 
                     Localidad loc = new Localidad();
                     loc.setId(rs.getInt("id_localidad"));
-                    c.setLocalidad(loc);
+                    cliente.setLocalidad(loc);
 
                     Provincia prov = new Provincia();
                     prov.setId(rs.getInt("id_provincia"));
-                    c.setProvincia(prov);
+                    cliente.setProvincia(prov);
 
-                    c.setCorreoElectronico(rs.getString("correo_electronico"));
-                    c.setTelefono(rs.getString("telefono"));
-                    c.setActivo(rs.getBoolean("activo"));
+                    cliente.setCorreoElectronico(rs.getString("correo_electronico"));
+                    cliente.setTelefono(rs.getString("telefono"));
+                    cliente.setActivo(rs.getBoolean("activo"));
                 }            
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,7 +117,7 @@ public class ClienteDaoImpl implements ClienteDao {
         	try { if (con != null) con.close(); } catch (Exception e) {}
             }
 
-        return c;
+        return cliente;
     }
 
     @Override
