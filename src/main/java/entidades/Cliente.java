@@ -20,9 +20,8 @@ public class Cliente {
 	public Cliente() {
 	}
 
-	public Cliente(int id, String dni, String cuil, String nombre, String apellido, String sexo,
-			Nacionalidad nacionalidad, String fechaNacimiento, String direccion, Localidad localidad,
-			Provincia provincia, String correoElectronico, String telefono, boolean activo, Usuario usuario) {
+	public Cliente(int id, String dni, String cuil, String nombre, String apellido, String sexo, Nacionalidad nacionalidad, String fechaNacimiento, String direccion, Localidad localidad, Provincia provincia, String correoElectronico, String telefono,
+			boolean activo, Usuario usuario) {
 		this.id = id;
 		this.dni = dni;
 		this.cuil = cuil;
@@ -161,10 +160,9 @@ public class Cliente {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	public Cliente(int id) {
-	    this.id = id;
+		this.id = id;
 	}
-	
-	
+
 }

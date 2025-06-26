@@ -1,6 +1,4 @@
 
-
-
 package negocioImpl;
 
 import negocio.ClienteNegocio;
@@ -12,10 +10,10 @@ import java.util.List;
 
 public class ClienteNegocioImpl implements ClienteNegocio {
 
-    private final ClienteDao clienteDao = new ClienteDaoImpl();
+	private final ClienteDao clienteDao = new ClienteDaoImpl();
 
-    @Override
-    public List<Cliente> listarClientes() {
-        return clienteDao.obtenerTodos();
-    }
+	@Override
+	public List<Cliente> listarClientes() {
+		return clienteDao.obtenerTodos();
+	}
 }

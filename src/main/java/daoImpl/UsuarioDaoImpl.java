@@ -10,45 +10,57 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Override
 	public Usuario obtenerUsuario(String nombreUsuario, String contrasena) {
-	    Usuario usuario = null;
-	    Connection conexion = null;
-	    PreparedStatement stmt = null;
-	    ResultSet rs = null;
+		Usuario usuario = null;
+		Connection conexion = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
-	    try {
-	        conexion = Conexion.getConexion();
-	        System.out.println("[DAO] Obteniendo usuario con: " + nombreUsuario + " / " + contrasena);
+		try {
+			conexion = Conexion.getConexion();
+			System.out.println("[DAO] Obteniendo usuario con: " + nombreUsuario + " / " + contrasena);
 
-	        String query = "SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena = ? AND activo = 1";
+			String query = "SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena = ? AND activo = 1";
 
-	        stmt = conexion.prepareStatement(query);
-	        stmt.setString(1, nombreUsuario);
-	        stmt.setString(2, contrasena);
+			stmt = conexion.prepareStatement(query);
+			stmt.setString(1, nombreUsuario);
+			stmt.setString(2, contrasena);
 
-	        rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
-	        if (rs.next()) {
-	            usuario = new Usuario();
-	            usuario.setId(rs.getInt("id"));
-	            usuario.setNombreUsuario(rs.getString("nombre_usuario"));
-	            usuario.setContrasena(rs.getString("contrasena"));
-	            usuario.setActivo(rs.getBoolean("activo"));
+			if (rs.next()) {
+				usuario = new Usuario();
+				usuario.setId(rs.getInt("id"));
+				usuario.setNombreUsuario(rs.getString("nombre_usuario"));
+				usuario.setContrasena(rs.getString("contrasena"));
+				usuario.setActivo(rs.getBoolean("activo"));
 
-	            TipoUsuario tipo = new TipoUsuario();
-	            tipo.setId(rs.getInt("id_tipo_usuario"));
-	            tipo.setDescripcion(""); // lo podés completar después si tenés JOIN o carga por separado
-	            usuario.setTipoUsuario(tipo);
-	        }
+				TipoUsuario tipo = new TipoUsuario();
+				tipo.setId(rs.getInt("id_tipo_usuario"));
+				tipo.setDescripcion(""); // lo podés completar después si tenés JOIN o carga por separado
+				usuario.setTipoUsuario(tipo);
+			}
 
-	    } catch (Exception e) {
-	        System.out.println("[DAO] Error al obtener usuario: " + e.getMessage());
-	        e.printStackTrace();
-	    } finally {
-	        try { if (rs != null) rs.close(); } catch (Exception e) {}
-	        try { if (stmt != null) stmt.close(); } catch (Exception e) {}
-	        try { if (conexion != null) conexion.close(); } catch (Exception e) {}
-	    }
+		} catch (Exception e) {
+			System.out.println("[DAO] Error al obtener usuario: " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (conexion != null)
+					conexion.close();
+			} catch (Exception e) {
+			}
+		}
 
-	    return usuario;
+		return usuario;
 	}
 }

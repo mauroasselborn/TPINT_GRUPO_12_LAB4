@@ -8,15 +8,15 @@ import negocio.NacionalidadNegocio;
 
 public class NacionalidadNegocioImpl implements NacionalidadNegocio {
 
-    private NacionalidadDao nacionalidadDao = new NacionalidadDaoImpl();
+	private NacionalidadDao nacionalidadDao = new NacionalidadDaoImpl();
 
-    @Override
-    public List<Nacionalidad> obtenerTodos() {
-        return nacionalidadDao.obtenerTodos();
-    }
+	@Override
+	public List<Nacionalidad> obtenerTodos() {
+		return nacionalidadDao.obtenerTodos();
+	}
 
-    @Override
-    public Nacionalidad obtenerPorId(int idNacionalidad) {
-        return nacionalidadDao.obtenerPorId(idNacionalidad);
-    }
+	@Override
+	public Nacionalidad obtenerPorId(int idNacionalidad) {
+		return nacionalidadDao.obtenerPorId(idNacionalidad);
+	}
 }

@@ -5,14 +5,14 @@ import java.util.List;
 
 public interface ClienteDao {
 
-    public boolean alta(Cliente cliente); // Crear nuevo cliente
+	public boolean alta(Cliente cliente);
 
-    public boolean baja(int id); // Baja lógica del cliente
+	public boolean baja(int id);
 
-    public boolean modificar(Cliente cliente); // Modificar datos del cliente
+	public boolean modificar(Cliente cliente);
 
-    public List<Cliente> obtenerTodos(); // Listar todos los clientes activos
+	public List<Cliente> obtenerTodos();
 
-    public Cliente obtenerPorId(int id); // Obtener cliente por ID
+	public Cliente obtenerPorId(int id);
 
 }

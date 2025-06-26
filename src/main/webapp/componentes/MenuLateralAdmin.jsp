@@ -4,7 +4,7 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li><a href="MenuAdmin.jsp" class="nav-link text-white"><i class="bi bi-people-fill me-2"></i>Inicio</a></li>
-            <li><a href="Clientes.jsp" class="nav-link text-white"><i class="bi bi-people-fill me-2"></i>Clientes</a></li>
+            <li><a href="ClienteServlet" class="nav-link text-white"><i class="bi bi-people-fill me-2"></i>Clientes</a></li>
             <li><a href="Usuarios.jsp" class="nav-link text-white"><i class="bi bi-person-lines-fill me-2"></i>Usuarios</a></li>
             <li><a href="CuentasServlet?accion=listar" class="nav-link text-white"><i class="bi bi-credit-card-2-front-fill me-2"></i>Cuentas</a></li>
             <li><a href="Prestamos.jsp" class="nav-link text-white"><i class="bi bi-cash-stack me-2"></i>Préstamos</a></li>

@@ -13,224 +13,266 @@ import java.util.List;
 
 public class ClienteDaoImpl implements ClienteDao {
 
-    @Override
-    public List<Cliente> obtenerTodos() {
-        List<Cliente> lista = new ArrayList<>();
-        String sql = "SELECT * FROM clientes WHERE activo = 1";
-        Connection con = null ;
-        PreparedStatement ps = null ;
-        ResultSet rs = null;
-        try 
-         {
-        	con = Conexion.getConexion();
-        	ps = con.prepareStatement(sql);
-        	rs = ps.executeQuery();
-        	
-            while (rs.next()) {
-                Cliente cliente = new Cliente();
-                cliente.setId(rs.getInt("id"));
-                cliente.setDni(rs.getString("dni"));
-                cliente.setCuil(rs.getString("cuil"));
-                cliente.setNombre(rs.getString("nombre"));
-                cliente.setApellido(rs.getString("apellido"));
-                cliente.setSexo(rs.getString("sexo"));
+	@Override
+	public List<Cliente> obtenerTodos() {
+		List<Cliente> lista = new ArrayList<>();
+		String sql = "SELECT * FROM clientes WHERE activo = 1";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = Conexion.getConexion();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
 
-                Nacionalidad nac = new Nacionalidad();
-                nac.setId(rs.getInt("id_nacionalidad"));
-                cliente.setNacionalidad(nac);
+			while (rs.next()) {
+				Cliente cliente = new Cliente();
+				cliente.setId(rs.getInt("id"));
+				cliente.setDni(rs.getString("dni"));
+				cliente.setCuil(rs.getString("cuil"));
+				cliente.setNombre(rs.getString("nombre"));
+				cliente.setApellido(rs.getString("apellido"));
+				cliente.setSexo(rs.getString("sexo"));
 
-                cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
-                cliente.setDireccion(rs.getString("direccion"));
+				Nacionalidad nac = new Nacionalidad();
+				nac.setId(rs.getInt("id_nacionalidad"));
+				cliente.setNacionalidad(nac);
 
-                Localidad loc = new Localidad();
-                loc.setId(rs.getInt("id_localidad"));
-                cliente.setLocalidad(loc);
+				cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+				cliente.setDireccion(rs.getString("direccion"));
 
-                Provincia prov = new Provincia();
-                prov.setId(rs.getInt("id_provincia"));
-                cliente.setProvincia(prov);
+				Localidad loc = new Localidad();
+				loc.setId(rs.getInt("id_localidad"));
+				cliente.setLocalidad(loc);
 
-                cliente.setCorreoElectronico(rs.getString("correo_electronico"));
-                cliente.setTelefono(rs.getString("telefono"));
-                cliente.setActivo(rs.getBoolean("activo"));
+				Provincia prov = new Provincia();
+				prov.setId(rs.getInt("id_provincia"));
+				cliente.setProvincia(prov);
 
-                lista.add(cliente);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }     
-        finally {
-    	try { if (rs != null) rs.close(); } catch (Exception e) {}
-    	try { if (ps != null) ps.close(); } catch (Exception e) {}
-    	try { if (con != null) con.close(); } catch (Exception e) {}
-        }
+				cliente.setCorreoElectronico(rs.getString("correo_electronico"));
+				cliente.setTelefono(rs.getString("telefono"));
+				cliente.setActivo(rs.getBoolean("activo"));
 
-        return lista;
-    }
+				lista.add(cliente);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
 
-    @Override
-    public Cliente obtenerPorId(int id) {
-        Cliente cliente = null;
-        String sql = "SELECT * FROM clientes WHERE id = ?";
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs= null;
-        try  {
-        	con = Conexion.getConexion();
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-         
-                if (rs.next()) {
-                    cliente = new Cliente();
-                    cliente.setId(rs.getInt("id"));
-                    cliente.setDni(rs.getString("dni"));
-                    cliente.setCuil(rs.getString("cuil"));
-                    cliente.setNombre(rs.getString("nombre"));
-                    cliente.setApellido(rs.getString("apellido"));
-                    cliente.setSexo(rs.getString("sexo"));
+		return lista;
+	}
 
-                    Nacionalidad nac = new Nacionalidad();
-                    nac.setId(rs.getInt("id_nacionalidad"));
-                    cliente.setNacionalidad(nac);
+	@Override
+	public Cliente obtenerPorId(int id) {
+		Cliente cliente = null;
+		String sql = "SELECT * FROM clientes WHERE id = ?";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = Conexion.getConexion();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
 
-                    cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
-                    cliente.setDireccion(rs.getString("direccion"));
+			if (rs.next()) {
+				cliente = new Cliente();
+				cliente.setId(rs.getInt("id"));
+				cliente.setDni(rs.getString("dni"));
+				cliente.setCuil(rs.getString("cuil"));
+				cliente.setNombre(rs.getString("nombre"));
+				cliente.setApellido(rs.getString("apellido"));
+				cliente.setSexo(rs.getString("sexo"));
 
-                    Localidad loc = new Localidad();
-                    loc.setId(rs.getInt("id_localidad"));
-                    cliente.setLocalidad(loc);
+				Nacionalidad nac = new Nacionalidad();
+				nac.setId(rs.getInt("id_nacionalidad"));
+				cliente.setNacionalidad(nac);
 
-                    Provincia prov = new Provincia();
-                    prov.setId(rs.getInt("id_provincia"));
-                    cliente.setProvincia(prov);
+				cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+				cliente.setDireccion(rs.getString("direccion"));
 
-                    cliente.setCorreoElectronico(rs.getString("correo_electronico"));
-                    cliente.setTelefono(rs.getString("telefono"));
-                    cliente.setActivo(rs.getBoolean("activo"));
-                }            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-        	try { if (rs != null) rs.close(); } catch (Exception e) {}
-        	try { if (ps != null) ps.close(); } catch (Exception e) {}
-        	try { if (con != null) con.close(); } catch (Exception e) {}
-            }
+				Localidad loc = new Localidad();
+				loc.setId(rs.getInt("id_localidad"));
+				cliente.setLocalidad(loc);
 
-        return cliente;
-    }
+				Provincia prov = new Provincia();
+				prov.setId(rs.getInt("id_provincia"));
+				cliente.setProvincia(prov);
 
-    @Override
-    public boolean alta(Cliente cliente) {
-        boolean estado = false;
-        Connection con = null;
-        PreparedStatement ps = null;
+				cliente.setCorreoElectronico(rs.getString("correo_electronico"));
+				cliente.setTelefono(rs.getString("telefono"));
+				cliente.setActivo(rs.getBoolean("activo"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
 
-        String sql = "INSERT INTO clientes " +
-                "(dni, cuil, nombre, apellido, sexo, id_nacionalidad, fecha_nacimiento, direccion, id_localidad, id_provincia, correo_electronico, telefono, activo) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
+		return cliente;
+	}
 
-        try {
-            con = Conexion.getConexion();
-            ps = con.prepareStatement(sql);
+	@Override
+	public boolean alta(Cliente cliente) {
+		boolean estado = false;
+		Connection con = null;
+		PreparedStatement ps = null;
 
-            ps.setString(1, cliente.getDni());
-            ps.setString(2, cliente.getCuil());
-            ps.setString(3, cliente.getNombre());
-            ps.setString(4, cliente.getApellido());
-            ps.setString(5, cliente.getSexo());
-            ps.setInt(6, cliente.getNacionalidad().getId());
-            ps.setString(7, cliente.getFechaNacimiento());
-            ps.setString(8, cliente.getDireccion());
-            ps.setInt(9, cliente.getLocalidad().getId());
-            ps.setInt(10, cliente.getProvincia().getId());
-            ps.setString(11, cliente.getCorreoElectronico());
-            ps.setString(12, cliente.getTelefono());
+		String sql = "INSERT INTO clientes " + "(dni, cuil, nombre, apellido, sexo, id_nacionalidad, fecha_nacimiento, direccion, id_localidad, id_provincia, correo_electronico, telefono, activo) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
 
-            int filas = ps.executeUpdate();
-            if (filas > 0) {
-                estado = true;
-            }
+		try {
+			con = Conexion.getConexion();
+			ps = con.prepareStatement(sql);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try { if (ps != null) ps.close(); } catch (Exception e) {}
-            try { if (con != null) con.close(); } catch (Exception e) {}
-        }
+			ps.setString(1, cliente.getDni());
+			ps.setString(2, cliente.getCuil());
+			ps.setString(3, cliente.getNombre());
+			ps.setString(4, cliente.getApellido());
+			ps.setString(5, cliente.getSexo());
+			ps.setInt(6, cliente.getNacionalidad().getId());
+			ps.setString(7, cliente.getFechaNacimiento());
+			ps.setString(8, cliente.getDireccion());
+			ps.setInt(9, cliente.getLocalidad().getId());
+			ps.setInt(10, cliente.getProvincia().getId());
+			ps.setString(11, cliente.getCorreoElectronico());
+			ps.setString(12, cliente.getTelefono());
 
-        return estado;
-    }
+			int filas = ps.executeUpdate();
+			if (filas > 0) {
+				estado = true;
+			}
 
-    @Override
-    public boolean modificar(Cliente cliente) {
-        boolean estado = false;
-        Connection con = null;
-        PreparedStatement ps = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
 
-        String sql = "UPDATE clientes SET " +
-                "dni = ?, cuil = ?, nombre = ?, apellido = ?, sexo = ?, id_nacionalidad = ?, fecha_nacimiento = ?, " +
-                "direccion = ?, id_localidad = ?, id_provincia = ?, correo_electronico = ?, telefono = ? " +
-                "WHERE id = ?";
+		return estado;
+	}
 
-        try {
-            con = Conexion.getConexion();
-            ps = con.prepareStatement(sql);
+	@Override
+	public boolean modificar(Cliente cliente) {
+		boolean estado = false;
+		Connection con = null;
+		PreparedStatement ps = null;
 
-            ps.setString(1, cliente.getDni());
-            ps.setString(2, cliente.getCuil());
-            ps.setString(3, cliente.getNombre());
-            ps.setString(4, cliente.getApellido());
-            ps.setString(5, cliente.getSexo());
-            ps.setInt(6, cliente.getNacionalidad().getId());
-            ps.setString(7, cliente.getFechaNacimiento());
-            ps.setString(8, cliente.getDireccion());
-            ps.setInt(9, cliente.getLocalidad().getId());
-            ps.setInt(10, cliente.getProvincia().getId());
-            ps.setString(11, cliente.getCorreoElectronico());
-            ps.setString(12, cliente.getTelefono());
-            ps.setInt(13, cliente.getId());
+		String sql = "UPDATE clientes SET " + "dni = ?, cuil = ?, nombre = ?, apellido = ?, sexo = ?, id_nacionalidad = ?, fecha_nacimiento = ?, " + "direccion = ?, id_localidad = ?, id_provincia = ?, correo_electronico = ?, telefono = ? "
+				+ "WHERE id = ?";
 
-            int filas = ps.executeUpdate();
-            if (filas > 0) {
-                estado = true;
-            }
+		try {
+			con = Conexion.getConexion();
+			ps = con.prepareStatement(sql);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try { if (ps != null) ps.close(); } catch (Exception e) {}
-            try { if (con != null) con.close(); } catch (Exception e) {}
-        }
+			ps.setString(1, cliente.getDni());
+			ps.setString(2, cliente.getCuil());
+			ps.setString(3, cliente.getNombre());
+			ps.setString(4, cliente.getApellido());
+			ps.setString(5, cliente.getSexo());
+			ps.setInt(6, cliente.getNacionalidad().getId());
+			ps.setString(7, cliente.getFechaNacimiento());
+			ps.setString(8, cliente.getDireccion());
+			ps.setInt(9, cliente.getLocalidad().getId());
+			ps.setInt(10, cliente.getProvincia().getId());
+			ps.setString(11, cliente.getCorreoElectronico());
+			ps.setString(12, cliente.getTelefono());
+			ps.setInt(13, cliente.getId());
 
-        return estado;
-    }
+			int filas = ps.executeUpdate();
+			if (filas > 0) {
+				estado = true;
+			}
 
-    @Override
-    public boolean baja(int id) {
-        boolean estado = false;
-        Connection con = null;
-        PreparedStatement ps = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
 
-        String sql = "UPDATE clientes SET activo = 0 WHERE id = ?";
+		return estado;
+	}
 
-        try {
-            con = Conexion.getConexion();
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+	@Override
+	public boolean baja(int id) {
+		boolean estado = false;
+		Connection con = null;
+		PreparedStatement ps = null;
 
-            int filas = ps.executeUpdate();
-            if (filas > 0) {
-                estado = true;
-            }
+		String sql = "UPDATE clientes SET activo = 0 WHERE id = ?";
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try { if (ps != null) ps.close(); } catch (Exception e) {}
-            try { if (con != null) con.close(); } catch (Exception e) {}
-        }
+		try {
+			con = Conexion.getConexion();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
 
-        return estado;
-    }
+			int filas = ps.executeUpdate();
+			if (filas > 0) {
+				estado = true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return estado;
+	}
 }

@@ -8,15 +8,15 @@ import negocio.ProvinciaNegocio;
 
 public class ProvinciaNegocioImpl implements ProvinciaNegocio {
 
-    private ProvinciaDao provinciaDao = new ProvinciaDaoImpl();
+	private ProvinciaDao provinciaDao = new ProvinciaDaoImpl();
 
-    @Override
-    public List<Provincia> obtenerTodos() {
-        return provinciaDao.obtenerTodos();
-    }
+	@Override
+	public List<Provincia> obtenerTodos() {
+		return provinciaDao.obtenerTodos();
+	}
 
-    @Override
-    public Provincia obtenerPorId(int id) {
-        return provinciaDao.obtenerPorId(id);
-    }
+	@Override
+	public Provincia obtenerPorId(int id) {
+		return provinciaDao.obtenerPorId(id);
+	}
 }

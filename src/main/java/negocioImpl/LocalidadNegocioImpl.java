@@ -8,15 +8,15 @@ import negocio.LocalidadNegocio;
 
 public class LocalidadNegocioImpl implements LocalidadNegocio {
 
-    private LocalidadDao localidadDao = new LocalidadDaoImpl();
+	private LocalidadDao localidadDao = new LocalidadDaoImpl();
 
-    @Override
-    public List<Localidad> obtenerTodos() {
-        return localidadDao.obtenerTodos();
-    }
+	@Override
+	public List<Localidad> obtenerTodos() {
+		return localidadDao.obtenerTodos();
+	}
 
-    @Override
-    public Localidad obtenerPorId(int idLocalidad) {
-        return localidadDao.obtenerPorId(idLocalidad);
-    }
+	@Override
+	public Localidad obtenerPorId(int idLocalidad) {
+		return localidadDao.obtenerPorId(idLocalidad);
+	}
 }
