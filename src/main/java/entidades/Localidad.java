@@ -3,12 +3,12 @@ package entidades;
 public class Localidad {
 	private int id;
 	private String nombre;
-	private Provincia provincia;
+	private int provincia;
 
 	public Localidad() {
 	}
 
-	public Localidad(int id, String nombre, Provincia provincia) {
+	public Localidad(int id, String nombre, int provincia) {
 		this.id = id;
 		this.nombre = nombre;
 		this.provincia = provincia;
@@ -30,11 +30,11 @@ public class Localidad {
 		this.nombre = nombre;
 	}
 
-	public Provincia getProvincia() {
+	public int getProvincia() {
 		return provincia;
 	}
 
-	public void setProvincia(Provincia provincia) {
+	public void setProvincia(int provincia) {
 		this.provincia = provincia;
 	}
 }

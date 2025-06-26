@@ -13,7 +13,7 @@ public class LocalidadDaoImpl implements LocalidadDao {
 	@Override
 	public List<Localidad> obtenerTodos() {
 		List<Localidad> listaLocalidades = new ArrayList<>();
-		String consultaSQL = "SELECT id, descripcion FROM localidades ORDER BY descripcion";
+		String consultaSQL = "SELECT * FROM localidades ORDER BY nombre";
 		Connection conexion = null;
 		PreparedStatement statement = null;
 		ResultSet resultado = null;
@@ -26,7 +26,8 @@ public class LocalidadDaoImpl implements LocalidadDao {
 			while (resultado.next()) {
 				Localidad localidad = new Localidad();
 				localidad.setId(resultado.getInt("id"));
-				localidad.setNombre(resultado.getString("descripcion"));
+				localidad.setNombre(resultado.getString("nombre"));
+				localidad.setProvincia(resultado.getInt("id_provincia"));
 				listaLocalidades.add(localidad);
 			}
 		} catch (SQLException e) {
@@ -55,7 +56,7 @@ public class LocalidadDaoImpl implements LocalidadDao {
 	@Override
 	public Localidad obtenerPorId(int idLocalidad) {
 		Localidad localidad = null;
-		String consultaSQL = "SELECT id, descripcion FROM localidades WHERE id = ?";
+		String consultaSQL = "SELECT * FROM localidades WHERE id = ?";
 		Connection conexion = null;
 		PreparedStatement statement = null;
 		ResultSet resultado = null;
@@ -69,7 +70,7 @@ public class LocalidadDaoImpl implements LocalidadDao {
 			if (resultado.next()) {
 				localidad = new Localidad();
 				localidad.setId(resultado.getInt("id"));
-				localidad.setNombre(resultado.getString("descripcion"));
+				localidad.setNombre(resultado.getString("nombre"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

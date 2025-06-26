@@ -13,7 +13,7 @@ public class ProvinciaDaoImpl implements ProvinciaDao {
 	@Override
 	public List<Provincia> obtenerTodos() {
 		List<Provincia> listaProvincias = new ArrayList<>();
-		String consultaSQL = "SELECT id, descripcion FROM provincias ORDER BY descripcion";
+		String consultaSQL = "SELECT * FROM provincias ORDER BY nombre";
 		Connection conexion = null;
 		PreparedStatement statement = null;
 		ResultSet resultado = null;
@@ -26,7 +26,7 @@ public class ProvinciaDaoImpl implements ProvinciaDao {
 			while (resultado.next()) {
 				Provincia provincia = new Provincia();
 				provincia.setId(resultado.getInt("id"));
-				provincia.setNombre(resultado.getString("descripcion"));
+				provincia.setNombre(resultado.getString("nombre"));
 				listaProvincias.add(provincia);
 			}
 		} catch (SQLException e) {
@@ -55,7 +55,7 @@ public class ProvinciaDaoImpl implements ProvinciaDao {
 	@Override
 	public Provincia obtenerPorId(int idProvincia) {
 		Provincia provincia = null;
-		String consultaSQL = "SELECT id, descripcion FROM provincias WHERE id = ?";
+		String consultaSQL = "SELECT * FROM provincias WHERE id = ?";
 		Connection conexion = null;
 		PreparedStatement statement = null;
 		ResultSet resultado = null;
@@ -69,7 +69,7 @@ public class ProvinciaDaoImpl implements ProvinciaDao {
 			if (resultado.next()) {
 				provincia = new Provincia();
 				provincia.setId(resultado.getInt("id"));
-				provincia.setNombre(resultado.getString("descripcion"));
+				provincia.setNombre(resultado.getString("nombre"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

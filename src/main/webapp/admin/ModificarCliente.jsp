@@ -59,7 +59,8 @@ Cliente cliente = (Cliente) request.getAttribute("cliente");
 				</div>
 
 				<div class="mb-3">
-					<label>Nacionalidad</label> <select class="form-select"	name="idNacionalidad" required>
+					<label>Nacionalidad</label> <select class="form-select"
+						name="idNacionalidad" required>
 						<%
 						List<Nacionalidad> nacionalidades = (List<Nacionalidad>) request.getAttribute("nacionalidades");
 						if (nacionalidades != null) {
@@ -72,11 +73,8 @@ Cliente cliente = (Cliente) request.getAttribute("cliente");
 						</option>
 						<%
 						}
-						}else{
+						}
 						%>
-						no hay nada
-						<%} %>
-
 					</select>
 				</div>
 

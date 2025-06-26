@@ -46,18 +46,10 @@ public class ClientesServlet extends HttpServlet {
 			LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
 			NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
 			
-			List<Provincia> listaProvicias = provinciaNegocio.obtenerTodos(); 
-			List<Localidad> listaLocalidades = localidadNegocio.obtenerTodos(); 
-			List<Nacionalidad> listaNacionalidades = nacionalidadNegocio.obtenerTodos(); 
-			
-			System.out.println(listaProvicias);
-			System.out.println(listaLocalidades);
-			System.out.println(listaNacionalidades);
-			
 			request.setAttribute("cliente", cliente);
-			request.setAttribute("provincias", listaProvicias);
-			request.setAttribute("localidades", listaLocalidades);
-			request.setAttribute("nacionalidades", listaNacionalidades);
+			request.setAttribute("provincias", provinciaNegocio.obtenerTodos());
+			request.setAttribute("localidades", localidadNegocio.obtenerTodos());
+			request.setAttribute("nacionalidades", nacionalidadNegocio.obtenerTodos());
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/ModificarCliente.jsp");
 			dispatcher.forward(request, response);
@@ -123,9 +115,9 @@ public class ClientesServlet extends HttpServlet {
 		cliente.setCorreoElectronico(request.getParameter("correoElectronico"));
 		cliente.setTelefono(request.getParameter("telefono"));
 
-		//cliente.setNacionalidad(new entidades.Nacionalidad(Integer.parseInt(request.getParameter("idNacionalidad"))));
-		//cliente.setLocalidad(new entidades.Localidad(Integer.parseInt(request.getParameter("idLocalidad"))));
-		//cliente.setProvincia(new entidades.Provincia(Integer.parseInt(request.getParameter("idProvincia"))));
+		cliente.setNacionalidad(new Nacionalidad(Integer.parseInt(request.getParameter("idNacionalidad"))));
+		cliente.setLocalidad(new Localidad(Integer.parseInt(request.getParameter("idLocalidad"))));
+		cliente.setProvincia(new Provincia(Integer.parseInt(request.getParameter("idProvincia"))));
 
 		return cliente;
 	}
