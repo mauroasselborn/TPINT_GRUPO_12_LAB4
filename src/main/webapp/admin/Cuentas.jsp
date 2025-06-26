@@ -89,8 +89,8 @@
 				<button type="button" class="btn btn-secondary"
 					data-bs-dismiss="modal">Cancelar</button>
 				<form id="formEliminar" action="CuentasServlet" method="get">
-					<input type="hidden" name="accion" value="borrar" /> <input
-						type="hidden" name="id" id="idCuentaEliminar" />
+					<input type="hidden" name="accion" value="borrar" /> 
+					<input type="hidden" name="id" id="idCuentaEliminar" />
 					<button type="submit" class="btn btn-danger">Eliminar</button>
 				</form>
 			</div>

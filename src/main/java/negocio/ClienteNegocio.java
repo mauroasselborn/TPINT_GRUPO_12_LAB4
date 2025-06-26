@@ -8,9 +8,13 @@ public interface ClienteNegocio {
 
 	public Cliente obtenerPorId(int id);
 
+	public Cliente obtenerPorDni(String dni);
+
 	public boolean insertar(Cliente cliente);
 
 	public boolean modificar(Cliente cliente);
 
 	public boolean eliminar(int id);
+
+	public boolean altaLogica(int id);
 }

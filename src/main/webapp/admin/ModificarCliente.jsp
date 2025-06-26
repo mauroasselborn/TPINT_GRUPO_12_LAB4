@@ -2,10 +2,12 @@
 <%@ page import="entidades.Provincia"%>
 <%@ page import="entidades.Localidad"%>
 <%@ page import="entidades.Nacionalidad"%>
+<%@ page import="entidades.Usuario"%>
 <%@ page import="java.util.List"%>
 
 <%
 Cliente cliente = (Cliente) request.getAttribute("cliente");
+Usuario usuario = (Usuario) request.getAttribute("usuario");
 %>
 
 <!-- Encabezado -->
@@ -20,36 +22,33 @@ Cliente cliente = (Cliente) request.getAttribute("cliente");
 		<div class="w-75 mx-auto">
 			<h2 class="text-center mb-4">Modificar Cliente</h2>
 
-			<form action="ClientesServlet?accion=modificar" method="post">
+			<form action="ClientesServlet" method="post">
 				<input type="hidden" name="id" value="<%=cliente.getId()%>" />
+			    <input type="hidden" name="accion" value="modificar" />
 
 				<div class="mb-3">
-					<label for="dni">DNI</label> <input type="text"
-						class="form-control" name="dni" value="<%=cliente.getDni()%>"
-						disabled>
+					<label for="dni">DNI</label> 
+					<input type="text" class="form-control" name="dni" value="<%=cliente.getDni()%>" readonly>
 				</div>
 
 				<div class="mb-3">
-					<label for="cuil">CUIL</label> <input type="text"
-						class="form-control" name="cuil" value="<%=cliente.getCuil()%>"
-						disabled>
+					<label for="cuil">CUIL</label> 
+					<input type="text"	class="form-control" name="cuil" value="<%=cliente.getCuil()%>"	readonly>
 				</div>
 
 				<div class="mb-3">
-					<label for="nombre">Nombre</label> <input type="text"
-						class="form-control" name="nombre"
-						value="<%=cliente.getNombre()%>" required>
+					<label for="nombre">Nombre</label> 
+					<input type="text"	class="form-control" name="nombre"	value="<%=cliente.getNombre()%>" required>
 				</div>
 
 				<div class="mb-3">
-					<label for="apellido">Apellido</label> <input type="text"
-						class="form-control" name="apellido"
-						value="<%=cliente.getApellido()%>" required>
+					<label for="apellido">Apellido</label> 
+					<input type="text"	class="form-control" name="apellido" value="<%=cliente.getApellido()%>" required>
 				</div>
 
 				<div class="mb-3">
-					<label>Sexo</label> <select class="form-select" name="sexo"
-						required>
+					<label>Sexo</label> 
+					<select class="form-select" name="sexo"	required>
 						<option
 							<%=cliente.getSexo().equals("Masculino") ? "selected" : ""%>>Masculino</option>
 						<option
@@ -59,8 +58,8 @@ Cliente cliente = (Cliente) request.getAttribute("cliente");
 				</div>
 
 				<div class="mb-3">
-					<label>Nacionalidad</label> <select class="form-select"
-						name="idNacionalidad" required>
+					<label>Nacionalidad</label> 
+					<select class="form-select"	name="idNacionalidad" required>
 						<%
 						List<Nacionalidad> nacionalidades = (List<Nacionalidad>) request.getAttribute("nacionalidades");
 						if (nacionalidades != null) {
@@ -79,20 +78,19 @@ Cliente cliente = (Cliente) request.getAttribute("cliente");
 				</div>
 
 				<div class="mb-3">
-					<label>Fecha de nacimiento</label> <input type="date"
-						class="form-control" name="fechaNacimiento"
-						value="<%=cliente.getFechaNacimiento()%>">
+					<label>Fecha de nacimiento</label> 
+					<input type="date"	class="form-control" name="fechaNacimiento"	value="<%=cliente.getFechaNacimiento()%>">
 				</div>
 
 				<div class="mb-3">
-					<label>Dirección</label> <input type="text" class="form-control"
-						name="direccion" value="<%=cliente.getDireccion()%>">
+					<label>Dirección</label> 
+					<input type="text" class="form-control"	name="direccion" value="<%=cliente.getDireccion()%>">
 				</div>
 
 
 				<div class="mb-3">
-					<label>Provincia</label> <select class="form-select"
-						name="idProvincia" required>
+					<label>Provincia</label> 
+					<select class="form-select"	name="idProvincia" required>
 						<%
 						List<Provincia> provincias = (List<Provincia>) request.getAttribute("provincias");
 						if (provincias != null) {
@@ -112,8 +110,8 @@ Cliente cliente = (Cliente) request.getAttribute("cliente");
 				</div>
 
 				<div class="mb-3">
-					<label>Localidad</label> <select class="form-select"
-						name="idLocalidad" required>
+					<label>Localidad</label> 
+					<select class="form-select"	name="idLocalidad" required>
 						<%
 						List<Localidad> localidades = (List<Localidad>) request.getAttribute("localidades");
 						if (localidades != null) {
@@ -135,20 +133,20 @@ Cliente cliente = (Cliente) request.getAttribute("cliente");
 
 
 				<div class="mb-3">
-					<label>Email</label> <input type="email" class="form-control"
-						name="correoElectronico"
-						value="<%=cliente.getCorreoElectronico()%>" required>
+					<label>Email</label> 
+					<input type="email" class="form-control" name="correoElectronico" value="<%=cliente.getCorreoElectronico()%>" required>
 				</div>
 
 				<div class="mb-3">
-					<label>Teléfono</label> <input type="text" class="form-control"
-						name="telefono" value="<%=cliente.getTelefono()%>">
+					<label>Teléfono</label> 
+					<input type="text" class="form-control"	name="telefono" value="<%=cliente.getTelefono()%>">
 				</div>
+				
+				
 
 				<div class="text-center">
 					<a href="ClientesServlet?accion=listar" class="btn btn-primary">Volver</a>
-					<button type="submit" class="btn btn-primary">Guardar
-						cambios</button>
+					<button type="submit" class="btn btn-primary">Guardar cambios</button>
 				</div>
 			</form>
 		</div>

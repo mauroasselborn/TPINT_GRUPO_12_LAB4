@@ -1,10 +1,10 @@
-package dao;
+package negocio;
 
 import java.util.List;
 import entidades.Usuario;
 
-public interface UsuarioDao {
-
+public interface UsuarioNegocio {
+	// public boolean modificarUsuario(Usuario usuario);
 	public boolean insertarUsuario(Usuario usuario);
 
 	public boolean eliminarUsuario(int idUsuario); // baja lógica
@@ -17,7 +17,7 @@ public interface UsuarioDao {
 
 	public boolean validarCredenciales(String nombreUsuario, String contrasenia);
 
-	Usuario obtenerUsuarioPorIdCliente(int idCliente);
+	public Usuario obtenerUsuarioPorIdCliente(int idCliente);
 
-	Usuario obtenerUsuarioPorNombre(String nombreUsuario);
+	public Usuario obtenerUsuarioPorNombre(String nombreUsuario);
 }

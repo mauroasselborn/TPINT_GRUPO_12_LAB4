@@ -21,7 +21,7 @@
 
 		<div class="d-flex justify-content-between align-items-center mb-3">
 			<h2 class="mb-0">Clientes</h2>
-			<a href="AltaCliente.jsp" class="btn btn-primary">Agregar nuevo
+			<a href="ClientesServlet?accion=alta" class="btn btn-primary">Agregar nuevo
 				cliente</a>
 		</div>
 		<div class="scroll-x">
@@ -59,9 +59,11 @@
 						<td><%=cliente.getFechaNacimiento()%></td>
 						<td>
 							<div class="d-flex justify-content-center">
-								<button class="btn btn-info btn-sm me-2" onclick="abrirModalCliente('detalle')">Detalle</button>
+								<a href="ClientesServlet?accion=detalle&id=<%=cliente.getId()%>" class="btn btn-info btn-sm me-2">Detalle</a> 
 								<a href="ClientesServlet?accion=editar&id=<%=cliente.getId()%>" class="btn btn-warning btn-sm me-2">Modificar</a>
-								<button class="btn btn-danger btn-sm" onclick="abrirModalEliminarCliente()">Eliminar</button>
+								<button
+									class="btn btn-<%=cliente.isActivo() ? "danger" : "success"%> btn-sm"
+									onclick="confirmar(<%=cliente.getId()%>,<%=cliente.isActivo()%>)"><%=cliente.isActivo() ? "Eliminar" : "Activar"%></button>
 							</div>
 						</td>
 					</tr>
@@ -75,117 +77,42 @@
 		</div>
 	</div>
 
-	<!-- Modal Detalle/Modificar Cliente -->
-	<div class="modal fade" id="modalCliente" tabindex="-1"
-		aria-labelledby="modalClienteLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="modalClienteLabel">Detalle del Cliente</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<form id="formCliente">
-						<div class="row g-3">
-							<div class="col-md-6">
-								<label class="form-label">DNI</label> <input type="text"
-									class="form-control" value="" name="dni">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">CUIL</label> <input type="text"
-									class="form-control" value="" name="cuil">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Nombre</label> <input type="text"
-									class="form-control" value="" name="nombre">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Apellido</label> <input type="text"
-									class="form-control" value="" name="apellido">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Sexo</label> <input type="text"
-									class="form-control" value="" name="sexo">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Nacionalidad</label> <input
-									type="text" class="form-control" value=""
-									name="nacionalidad">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Fecha Nacimiento</label> <input
-									type="date" class="form-control" value=""
-									name="fechaNac">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Email</label> <input type="email"
-									class="form-control" value="" name="email">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Teléfono</label> <input type="text"
-									class="form-control" value="" name="telefono">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Dirección</label> <input type="text"
-									class="form-control" value="" name="direccion">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Localidad</label> <input type="text"
-									class="form-control" value="" name="localidad">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Provincia</label> <input type="text"
-									class="form-control" value="" name="provincia">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Usuario</label> <input type="text"
-									class="form-control" value="" name="usuario">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Contraseña</label> <input
-									type="password" class="form-control" value=""
-									name="contraseña">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Repetir Contraseña</label> <input
-									type="password" class="form-control" value=""
-									name="RepContraseña">
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Cerrar</button>
-					<button type="submit" class="btn btn-success"
-						id="btnGuardarCliente">Guardar Cambios</button>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<!-- Modal Confirmar Eliminación Cliente -->
-	<div class="modal fade" id="modalEliminarCliente" tabindex="-1"
-		aria-labelledby="modalEliminarClienteLabel" aria-hidden="true">
+	<jsp:include page="../componentes/Footer.jsp" />
+
+	<!-- Modal de confirmación -->
+	<div class="modal fade" id="modalConfirmacion" tabindex="-1"
+		aria-labelledby="modalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="modalEliminarClienteLabel">Confirmar
-						Eliminación</h5>
+					<h5 class="modal-title" id="modalLabel"></h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+						aria-label="Cerrar"></button>
 				</div>
-				<div class="modal-body">¿Estás seguro que querés eliminar este
-					cliente?</div>
+				<div class="modal-body" id="mensaje"></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">Cancelar</button>
-					<button type="button" class="btn btn-danger">Aceptar</button>
+					<form id="formEliminar" action="ClientesServlet" method="post"
+						style="display: none;">
+						<input type="hidden" name="accion" value="eliminar" /> 
+						<input type="hidden" name="id" id="idClienteEliminar" />
+						<button type="submit" class="btn btn-danger">Eliminar</button>
+					</form>
+
+					<form id="formAlta" action="ClientesServlet" method="post"
+						style="display: none;">
+						<input type="hidden" name="accion" value="altaLogica" /> 
+						<input type="hidden" name="id" id="idClienteAlta" />
+						<button type="submit" class="btn btn-success">Dar de Alta</button>
+					</form>
+
+
 				</div>
 			</div>
 		</div>
 	</div>
-	<jsp:include page="../componentes/Footer.jsp" />
 </div>
 
 
@@ -211,30 +138,32 @@ $(document).ready(function () {
     });
 });
 
-function abrirModalCliente(modo) {
-  const modal = new bootstrap.Modal(document.getElementById('modalCliente'));
-  const form = document.getElementById('formCliente');
-  const inputs = form.querySelectorAll('input');
-  const btnGuardar = document.getElementById('btnGuardarCliente');
-  const titulo = document.getElementById('modalClienteLabel');
 
-  if (modo === 'detalle') {
-    inputs.forEach(input => input.disabled = true);
-    btnGuardar.style.display = 'none';
-    titulo.innerText = 'Detalle del Cliente';
-  } else {
-    inputs.forEach(input => input.disabled = false);
-    btnGuardar.style.display = 'inline-block';
-    titulo.innerText = 'Modificar Cliente';
-  }
+function confirmar(id, activo) {
+    let modal = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
+    let label = document.getElementById('modalLabel');
+    let mensaje = document.getElementById('mensaje');
+    let formAlta = document.getElementById('formAlta');
+    let formEliminar = document.getElementById('formEliminar');
 
-  modal.show();
+    document.getElementById('idClienteEliminar').value = id;
+    document.getElementById('idClienteAlta').value = id;
+
+    if (activo) {
+        label.innerText = "Confirmar eliminación";
+        mensaje.innerText = "¿Estás seguro que deseas eliminar este cliente?";
+        formEliminar.style.display = 'block';
+        formAlta.style.display = 'none';
+    } else {
+        label.innerText = "Confirmar activación";
+        mensaje.innerText = "¿Deseas volver a activar este cliente?";
+        formEliminar.style.display = 'none';
+        formAlta.style.display = 'block';
+    }
+
+    modal.show();
 }
 
-function abrirModalEliminarCliente() {
-  const modal = new bootstrap.Modal(document.getElementById('modalEliminarCliente'));
-  modal.show();
-}
 </script>
 </body>
 </html>

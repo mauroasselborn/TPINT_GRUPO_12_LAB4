@@ -1,3 +1,8 @@
+<%@ page import="entidades.Provincia" %>
+<%@ page import="entidades.Localidad" %>
+<%@ page import="entidades.Nacionalidad" %>
+<%@ page import="java.util.List" %>
+
 <!-- Encabezado -->
 <jsp:include page="../componentes/Encabezado.jsp" />
 
@@ -13,7 +18,9 @@
   <div class="container content py-4">
     <div class="w-75 mx-auto">
       <h2 class="text-center mb-4">Alta Cliente</h2>
-      <form action="ClienteServlet?accion=agregar" method="post">
+      <form action="ClientesServlet" method="post">
+        <input type="hidden" name="accion" value="alta" />
+
         <div class="mb-3">
           <label>DNI</label>
           <input type="number" class="form-control" name="dni" placeholder="Ingrese el DNI" required>
@@ -46,23 +53,11 @@
         <div class="mb-3">
           <label>Nacionalidad</label>
           <select class="form-select" name="idNacionalidad" required>
-            <option value="1">Argentina</option>
-            <option value="2">Bolivia</option>
-            <option value="3">Brasil</option>
-            <option value="4">China</option>
-            <option value="5">Chile</option>
-            <option value="6">Colombia</option>
-            <option value="7">Ecuador</option>
-            <option value="8">Estados Unidos</option>
-            <option value="9">España</option>
-            <option value="10">Italia</option>
-            <option value="11">Japón</option>
-            <option value="12">Paraguay</option>
-            <option value="13">Perú</option>
-            <option value="14">Rusia</option>
-            <option value="15">Ucrania</option>
-            <option value="16">Uruguay</option>
-            <option value="17">Venezuela</option>
+            <% List<Nacionalidad> nacionalidades = (List<Nacionalidad>) request.getAttribute("nacionalidades");
+               if (nacionalidades != null) {
+                 for (Nacionalidad nac : nacionalidades) { %>
+              <option value="<%=nac.getId()%>"><%=nac.getDescripcion()%></option>
+            <% }} %>
           </select>
         </div>
 
@@ -76,49 +71,31 @@
           <input type="text" class="form-control" name="direccion" placeholder="Ingrese su dirección" required>
         </div>
 
-        <div class="mb-3">
-          <label>Localidad</label>
-          <select class="form-select" name="idLocalidad" required>
-            <option value="1">San Isidro</option>
-            <option value="2">Tigre</option>
-            <option value="3">Pacheco</option>
-            <!-- Agregá más localidades con su ID -->
+		<div class="mb-3">
+          <label>Provincia</label>
+          <select class="form-select" name="idProvincia" required>
+            <% List<Provincia> provincias = (List<Provincia>) request.getAttribute("provincias");
+               if (provincias != null) {
+                 for (Provincia prov : provincias) { %>
+              <option value="<%=prov.getId()%>"><%=prov.getNombre()%></option>
+            <% }} %>
           </select>
         </div>
 
         <div class="mb-3">
-          <label>Provincia</label>
-          <select class="form-select" name="idProvincia" required>
-            <option value="1">Buenos Aires</option>
-            <option value="2">Catamarca</option>
-            <option value="3">Chaco</option>
-            <option value="4">Chubut</option>
-            <option value="5">Córdoba</option>
-            <option value="6">Corrientes</option>
-            <option value="7">Entre Ríos</option>
-            <option value="8">Formosa</option>
-            <option value="9">Jujuy</option>
-            <option value="10">La Pampa</option>
-            <option value="11">La Rioja</option>
-            <option value="12">Mendoza</option>
-            <option value="13">Misiones</option>
-            <option value="14">Neuquén</option>
-            <option value="15">Río Negro</option>
-            <option value="16">Salta</option>
-            <option value="17">San Juan</option>
-            <option value="18">San Luis</option>
-            <option value="19">Santa Cruz</option>
-            <option value="20">Santa Fe</option>
-            <option value="21">Santiago del Estero</option>
-            <option value="22">Tierra del Fuego</option>
-            <option value="23">Antártida e Islas del Atlántico Sur</option>
-            <option value="24">Tucumán</option>
+          <label>Localidad</label>
+          <select class="form-select" name="idLocalidad" required>
+            <% List<Localidad> localidades = (List<Localidad>) request.getAttribute("localidades");
+               if (localidades != null) {
+                 for (Localidad loc : localidades) { %>
+              <option value="<%=loc.getId()%>"><%=loc.getNombre()%></option>
+            <% }} %>
           </select>
         </div>
 
         <div class="mb-3">
           <label>Email</label>
-          <input type="email" class="form-control" name="email" placeholder="Ingrese su correo" required>
+          <input type="email" class="form-control" name="correoElectronico" placeholder="Ingrese su correo" required>
         </div>
 
         <div class="mb-3">
@@ -128,20 +105,21 @@
 
         <div class="mb-3">
           <label>Usuario</label>
-          <input type="text" class="form-control" name="usuario" placeholder="Ingrese el Usuario" required>
+          <input type="text" class="form-control" name="usuario" placeholder="Ingrese el nombre de usuario" required>
         </div>
 
         <div class="mb-3">
           <label>Contraseña</label>
-          <input type="password" class="form-control" name="contrasena" placeholder="Ingrese la Contraseña" required>
+          <input type="password" class="form-control" name="contrasena" placeholder="Ingrese la contraseña" required>
         </div>
 
         <div class="mb-3">
-          <label>Repetir Contraseña</label>
-          <input type="password" class="form-control" name="repContrasena" placeholder="Repita la Contraseña" required>
+          <label>Repetir contraseña</label>
+          <input type="password" class="form-control" name="repContrasena" placeholder="Repita la contraseña" required>
         </div>
 
         <div class="text-center">
+          <a href="ClientesServlet?accion=listar" class="btn btn-secondary">Cancelar</a>
           <button type="submit" class="btn btn-primary">Crear Cliente</button>
         </div>
       </form>

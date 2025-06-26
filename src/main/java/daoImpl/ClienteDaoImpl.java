@@ -16,7 +16,7 @@ public class ClienteDaoImpl implements ClienteDao {
 	@Override
 	public List<Cliente> obtenerTodos() {
 		List<Cliente> lista = new ArrayList<>();
-		String sql = "SELECT * FROM clientes WHERE activo = 1";
+		String sql = "SELECT * FROM clientes";
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -196,8 +196,7 @@ public class ClienteDaoImpl implements ClienteDao {
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		String sql = "UPDATE clientes SET " + "dni = ?, cuil = ?, nombre = ?, apellido = ?, sexo = ?, id_nacionalidad = ?, fecha_nacimiento = ?, " + "direccion = ?, id_localidad = ?, id_provincia = ?, correo_electronico = ?, telefono = ? "
-				+ "WHERE id = ?";
+		String sql = "UPDATE clientes SET dni = ?, cuil = ?, nombre = ?, apellido = ?, sexo = ?, id_nacionalidad = ?, fecha_nacimiento = ?, " + "direccion = ?, id_localidad = ?, id_provincia = ?, correo_electronico = ?, telefono = ? WHERE id = ?";
 
 		try {
 			con = Conexion.getConexion();
@@ -275,4 +274,105 @@ public class ClienteDaoImpl implements ClienteDao {
 
 		return estado;
 	}
+
+	@Override
+	public boolean altaLogica(int id) {
+		boolean estado = false;
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		String sql = "UPDATE clientes SET activo = 1 WHERE id = ?";
+
+		try {
+			con = Conexion.getConexion();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
+
+			int filas = ps.executeUpdate();
+			if (filas > 0) {
+				estado = true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return estado;
+	}
+
+	@Override
+	public Cliente obtenerPorDni(String dni) {
+		Cliente cliente = null;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			conn = Conexion.getConexion();
+			ps = conn.prepareStatement("SELECT * FROM clientes WHERE dni = ?");
+			ps.setString(1, dni);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				cliente = new Cliente();
+				cliente.setId(rs.getInt("id"));
+				cliente.setDni(rs.getString("dni"));
+				cliente.setCuil(rs.getString("cuil"));
+				cliente.setNombre(rs.getString("nombre"));
+				cliente.setApellido(rs.getString("apellido"));
+				cliente.setSexo(rs.getString("sexo"));
+				cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+				cliente.setDireccion(rs.getString("direccion"));
+				cliente.setCorreoElectronico(rs.getString("correo_electronico"));
+				cliente.setTelefono(rs.getString("telefono"));
+				cliente.setActivo(rs.getBoolean("activo"));
+
+				
+				Nacionalidad nac = new Nacionalidad();
+				nac.setId(rs.getInt("id_nacionalidad"));
+				cliente.setNacionalidad(nac);
+
+				Provincia prov = new Provincia();
+				prov.setId(rs.getInt("id_provincia"));
+				cliente.setProvincia(prov);
+
+				Localidad loc = new Localidad();
+				loc.setId(rs.getInt("id_localidad"));
+				cliente.setLocalidad(loc);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return cliente;
+	}
+
 }

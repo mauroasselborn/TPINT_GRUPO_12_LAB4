@@ -9,10 +9,14 @@ public interface ClienteDao {
 
 	public boolean baja(int id);
 
+	public boolean altaLogica(int id);
+
 	public boolean modificar(Cliente cliente);
 
 	public List<Cliente> obtenerTodos();
 
 	public Cliente obtenerPorId(int id);
+
+	public Cliente obtenerPorDni(String dni);
 
 }
