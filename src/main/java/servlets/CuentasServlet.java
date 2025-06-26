@@ -27,7 +27,7 @@ public class CuentasServlet extends HttpServlet {
 		try {
 			switch (accion) {
 			case "nuevo":
-				List<Cliente> clientes = clienteNegocio.listarClientes();
+				List<Cliente> clientes = clienteNegocio.obtenerTodos();
 				req.setAttribute("clientes", clientes);
 				req.getRequestDispatcher("/admin/AltaCuenta.jsp").forward(req, resp);
 				break;

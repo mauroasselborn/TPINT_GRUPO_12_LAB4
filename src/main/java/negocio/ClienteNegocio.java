@@ -4,5 +4,13 @@ import java.util.List;
 import entidades.Cliente;
 
 public interface ClienteNegocio {
-	List<Cliente> listarClientes();
+	public List<Cliente> obtenerTodos();
+
+	public Cliente obtenerPorId(int id);
+
+	public boolean insertar(Cliente cliente);
+
+	public boolean modificar(Cliente cliente);
+
+	public boolean eliminar(int id);
 }

@@ -17,7 +17,7 @@
                 </div>
             <% } %>
 
-            <form action="Login" method="post">
+            <form action="LoginServlet" method="post">
                 <div class="mb-3">
                     <label for="usuario" class="form-label">Usuario</label>
                     <input type="text" class="form-control" id="usuario" name="usuario" required>

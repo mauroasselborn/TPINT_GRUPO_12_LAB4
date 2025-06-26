@@ -1,19 +1,37 @@
-
 package negocioImpl;
 
-import negocio.ClienteNegocio;
+import java.util.List;
 import dao.ClienteDao;
 import daoImpl.ClienteDaoImpl;
 import entidades.Cliente;
-
-import java.util.List;
+import negocio.ClienteNegocio;
 
 public class ClienteNegocioImpl implements ClienteNegocio {
 
-	private final ClienteDao clienteDao = new ClienteDaoImpl();
+    private ClienteDao clienteDao = new ClienteDaoImpl();
 
-	@Override
-	public List<Cliente> listarClientes() {
-		return clienteDao.obtenerTodos();
-	}
+    @Override
+    public List<Cliente> obtenerTodos() {
+        return clienteDao.obtenerTodos();
+    }
+
+    @Override
+    public Cliente obtenerPorId(int id) {
+        return clienteDao.obtenerPorId(id);
+    }
+
+    @Override
+    public boolean insertar(Cliente cliente) {
+        return clienteDao.alta(cliente);
+    }
+
+    @Override
+    public boolean modificar(Cliente cliente) {
+        return clienteDao.modificar(cliente);
+    }
+
+    @Override
+    public boolean eliminar(int id) {
+        return clienteDao.baja(id);
+    }
 }

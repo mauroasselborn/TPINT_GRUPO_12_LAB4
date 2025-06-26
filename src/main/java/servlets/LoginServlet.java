@@ -8,7 +8,7 @@ import javax.servlet.http.*;
 import entidades.Usuario;
 import daoImpl.UsuarioDaoImpl;
 
-@WebServlet("/Login")
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,6 +37,21 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("mensajeError", "Usuario o contraseña incorrectos");
 			RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
 			rd.forward(request, response);
+		}
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String accion = request.getParameter("accion");
+
+		if ("logout".equals(accion)) {
+			System.out.println("[Login] Cerrando sesión...");
+			HttpSession session = request.getSession(false);
+			if (session != null) {
+				session.invalidate();
+			}
+			response.sendRedirect("Login.jsp?logout=1");
+		} else {
+			response.sendRedirect("Login.jsp");
 		}
 	}
 }
