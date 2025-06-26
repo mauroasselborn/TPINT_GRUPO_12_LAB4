@@ -14,5 +14,10 @@ public interface CuentaDao {
 	public List<Cuenta> obtenerTodas();
 
 	public Cuenta obtenerPorId(int id);
+	
+	public boolean existeNumeroCuenta(String numeroCuenta);
+	
+	public boolean existeCBU(String cbu);
+	
 
 }

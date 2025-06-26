@@ -28,7 +28,7 @@
 				class="table table-bordered table-hover w-100">
 				<thead class="table-dark">
 					<tr>
-						<th>N° Cuenta</th>
+						<th>Nï¿½ Cuenta</th>
 						<th>CBU</th>
 						<th>Tipo</th>
 						<th>Saldo</th>
@@ -73,24 +73,24 @@
 
 </div>
 
-<!-- Modal de confirmación -->
+<!-- Modal de confirmaciï¿½n -->
 <div class="modal fade" id="modalEliminar" tabindex="-1"
 	aria-labelledby="modalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="modalLabel">Confirmar Eliminación</h5>
+				<h5 class="modal-title" id="modalLabel">Confirmar Eliminaciï¿½n</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal"
 					aria-label="Cerrar"></button>
 			</div>
-			<div class="modal-body">¿Estás seguro que querés eliminar esta
+			<div class="modal-body">ï¿½Estï¿½s seguro que querï¿½s eliminar esta
 				cuenta?</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary"
 					data-bs-dismiss="modal">Cancelar</button>
-				<form id="formEliminar" action="CuentasServlet" method="get">
-					<input type="hidden" name="accion" value="borrar" /> 
-					<input type="hidden" name="id" id="idCuentaEliminar" />
+				<form id="formEliminar" action="CuentasServlet" method="post">
+					<input type="hidden" name="accion" value="borrar" /> <input
+						type="hidden" name="id" id="idCuentaEliminar" />
 					<button type="submit" class="btn btn-danger">Eliminar</button>
 				</form>
 			</div>
@@ -109,13 +109,13 @@
       autoWidth: false,
       language: {
         search: "Filtrar:",
-        lengthMenu: "Mostrar _MENU_ registros por página",
+        lengthMenu: "Mostrar _MENU_ registros por pï¿½gina",
         zeroRecords: "No se encontraron resultados",
         info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
         infoEmpty: "Mostrando 0 a 0 de 0 registros",
         infoFiltered: "(filtrado de _MAX_ registros totales)",
         paginate: {
-          first: "Primero", last: "Último",
+          first: "Primero", last: "ï¿½ltimo",
           next: "Siguiente", previous: "Anterior"
         }
       }

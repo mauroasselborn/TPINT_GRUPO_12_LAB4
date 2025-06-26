@@ -27,10 +27,20 @@ public class CuentasServlet extends HttpServlet {
 		try {
 			switch (accion) {
 			case "nuevo":
-				List<Cliente> clientes = clienteNegocio.obtenerTodos();
-				req.setAttribute("clientes", clientes);
-				req.getRequestDispatcher("/admin/AltaCuenta.jsp").forward(req, resp);
-				break;
+			    List<Cliente> clientes = clienteNegocio.obtenerTodos();
+
+			    // Generar CBU y número de cuenta únicos
+			    String cbu = cuentaNegocio.generarCBUUnico();
+			    String numeroCuenta = cuentaNegocio.generarNumeroCuentaUnico();
+			    double saldoInicial = 10000;
+
+			    // Enviar al JSP
+			    req.setAttribute("clientes", clientes);
+			    req.setAttribute("cbu", cbu);
+			    req.setAttribute("numeroCuenta", numeroCuenta);
+			    req.setAttribute("saldo", saldoInicial);
+			    req.getRequestDispatcher("/admin/AltaCuenta.jsp").forward(req, resp);
+			    break;
 
 			case "editar":
 				int idEd = Integer.parseInt(req.getParameter("id"));
@@ -70,7 +80,7 @@ public class CuentasServlet extends HttpServlet {
 				nueva.setCbu(req.getParameter("cbu"));
 				nueva.setTipoCuenta(Integer.parseInt(req.getParameter("tipo")));
 				nueva.setFechaCreacion(java.time.LocalDate.now().toString());
-				nueva.setSaldo(10000);
+				nueva.setSaldo(Double.parseDouble(req.getParameter("saldo")));
 				cuentaNegocio.crearCuenta(nueva);
 
 			} else if ("guardarModificacion".equals(accion)) {
@@ -80,6 +90,9 @@ public class CuentasServlet extends HttpServlet {
 				cuentamodificar.setCbu(req.getParameter("cbu"));
 				cuentamodificar.setSaldo(Double.parseDouble(req.getParameter("saldo")));
 				cuentaNegocio.modificarCuenta(cuentamodificar);
+			}else if ("borrar".equals(accion)) {
+				int idB = Integer.parseInt(req.getParameter("id"));
+				cuentaNegocio.eliminarCuenta(idB);
 			}
 
 			resp.sendRedirect("CuentasServlet?accion=listar");

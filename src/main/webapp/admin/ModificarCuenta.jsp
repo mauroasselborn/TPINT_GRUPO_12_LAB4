@@ -37,10 +37,16 @@
 
       <!-- Tipo de cuenta -->
       <label for="tipo">Tipo de cuenta:</label>
-      <select id="tipo" name="tipo" class="form-control mb-3">
-        <option value="1" <%= tipo.equals("Caja de ahorro") ? "selected" : "" %>>Caja de ahorro</option>
-		<option value="2" <%= tipo.equals("Cuenta corriente") ? "selected" : "" %>>Cuenta corriente</option>
-      </select>
+		<p class="form-control mb-3">
+ 		 <%= tipo %>
+		</p>
+
+<!-- Campo oculto con el valor correspondiente (1 para Caja de ahorro, 2 para Cuenta corriente) -->
+		<% if (tipo.equals("Caja de ahorro")) { %>
+  		<input type="hidden" name="tipo" value="1">
+			<% } else if (tipo.equals("Cuenta corriente")) { %>
+  					<input type="hidden" name="tipo" value="2">
+		<% } %>
 
       <!-- CBU -->
       <label for="cbu">CBU:</label>
