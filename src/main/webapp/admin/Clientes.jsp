@@ -11,6 +11,7 @@
 	<!-- Contenido principal -->
 	<div class="container-fluid content py-4">
 
+
 		<div class="d-flex justify-content-between align-items-center mb-3">
 			<h2 class="mb-0">Clientes</h2>
 			<a href="AltaCliente.jsp" class="btn btn-primary">Agregar nuevo
@@ -24,7 +25,7 @@
 						<th>Nombre</th>
 						<th>Apellido</th>
 						<th>Email</th>
-						<th>Telï¿½fono</th>
+						<th>Teléfono</th>
 						<th>Fecha Nacimiento</th>
 						<th>Acciones</th>
 					</tr>
@@ -33,7 +34,7 @@
 					<tr>
 						<td>12345678</td>
 						<td>Juan</td>
-						<td>Pï¿½rez</td>
+						<td>Pérez</td>
 						<td>juan@mail.com</td>
 						<td>1122334455</td>
 						<td>1990-01-01</td>
@@ -50,6 +51,7 @@
 					</tr>
 				</tbody>
 			</table>
+
 		</div>
 	</div>
 
@@ -81,7 +83,7 @@
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Apellido</label> <input type="text"
-									class="form-control" value="Pï¿½rez" name="apellido">
+									class="form-control" value="Pérez" name="apellido">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Sexo</label> <input type="text"
@@ -102,11 +104,11 @@
 									class="form-control" value="juan@mail.com" name="email">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Telï¿½fono</label> <input type="text"
+								<label class="form-label">Teléfono</label> <input type="text"
 									class="form-control" value="1122334455" name="telefono">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Direcciï¿½n</label> <input type="text"
+								<label class="form-label">Dirección</label> <input type="text"
 									class="form-control" value="Calle Falsa 123" name="direccion">
 							</div>
 							<div class="col-md-6">
@@ -122,14 +124,14 @@
 									class="form-control" value="usuario01" name="usuario">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Contraseï¿½a</label> <input
+								<label class="form-label">Contraseña</label> <input
 									type="password" class="form-control" value="1234"
-									name="contraseï¿½a">
+									name="contraseña">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Repetir Contraseï¿½a</label> <input
+								<label class="form-label">Repetir Contraseña</label> <input
 									type="password" class="form-control" value="1234"
-									name="RepContraseï¿½a">
+									name="RepContraseña">
 							</div>
 						</div>
 					</form>
@@ -144,23 +146,23 @@
 		</div>
 	</div>
 
-	<!-- Modal Confirmar Eliminaciï¿½n Cliente -->
+	<!-- Modal Confirmar Eliminación Cliente -->
 	<div class="modal fade" id="modalEliminarCliente" tabindex="-1"
 		aria-labelledby="modalEliminarClienteLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="modalEliminarClienteLabel">Confirmar
-						EliminaciÃ³n</h5>
+						Eliminación</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">ï¿½EstÃ¡s seguro que querÃ©s eliminar este
+				<div class="modal-body">¿Estás seguro que querés eliminar este
 					cliente?</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">Cancelar</button>
-					<a href="ClientesServlet?accion=eliminar" type="button" class="btn btn-danger">Aceptar</a>
+					<button type="button" class="btn btn-danger">Aceptar</button>
 				</div>
 			</div>
 		</div>
@@ -176,14 +178,14 @@ $(document).ready(function () {
         autoWidth: false,
         language: {
             search: "Filtrar:",
-            lengthMenu: "Mostrar _MENU_ registros por pï¿½gina",
+            lengthMenu: "Mostrar _MENU_ registros por página",
             zeroRecords: "No se encontraron resultados",
             info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
             infoEmpty: "Mostrando 0 a 0 de 0 registros",
             infoFiltered: "(filtrado de _MAX_ registros totales)",
             paginate: {
                 first: "Primero",
-                last: "ï¿½ltimo",
+                last: "Último",
                 next: "Siguiente",
                 previous: "Anterior"
             }
