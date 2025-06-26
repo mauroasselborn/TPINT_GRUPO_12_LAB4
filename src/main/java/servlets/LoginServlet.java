@@ -9,10 +9,10 @@ import entidades.Usuario;
 import daoImpl.UsuarioDaoImpl;
 
 @WebServlet("/Login")
-public class Login extends HttpServlet {
+public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public Login() {
+    public LoginServlet() {
         super();
     }
 
