@@ -233,4 +233,50 @@ public class CuentaDaoImpl implements CuentaDao {
 
 		return estado;
 	}
+	
+	public boolean existeNumeroCuenta(String numeroCuenta) {
+	    Connection con = null;
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    boolean existe = false;
+
+	    try {
+	        con = Conexion.getConexion();
+	        stmt = con.prepareStatement("SELECT 1 FROM cuentas WHERE numero_cuenta = ?");
+	        stmt.setString(1, numeroCuenta);
+	        rs = stmt.executeQuery();
+	        existe = rs.next();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try { if (rs != null) rs.close(); } catch (Exception e) {}
+	        try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+	        try { if (con != null) con.close(); } catch (Exception e) {}
+	    }
+
+	    return existe;
+	}
+	
+	public boolean existeCBU(String cbu) {
+	    Connection con = null;
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    boolean existe = false;
+
+	    try {
+	        con = Conexion.getConexion();
+	        stmt = con.prepareStatement("SELECT 1 FROM cuentas WHERE cbu = ?");
+	        stmt.setString(1, cbu);
+	        rs = stmt.executeQuery();
+	        existe = rs.next();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try { if (rs != null) rs.close(); } catch (Exception e) {}
+	        try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+	        try { if (con != null) con.close(); } catch (Exception e) {}
+	    }
+
+	    return existe;
+	}
 }

@@ -44,10 +44,7 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 				throw new Exception("El número de cuenta ya está registrado.");
 			}
 		}
-
-		// Asignar saldo inicial fijo de $10.000
-		cuenta.setSaldo(10000);
-
+		
 		// Alta
 		if (!dao.alta(cuenta)) {
 			throw new Exception("Ocurrió un error al crear la cuenta.");
@@ -83,4 +80,26 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		}
 		return count;
 	}
+	 public  String generarNumeroCuentaUnico() {
+	        String numeroCuenta;
+	        do {
+	            numeroCuenta = String.valueOf((int)(Math.random() * 90000000) + 10000000); // 8 dígitos
+	        } while (dao.existeNumeroCuenta(numeroCuenta));
+
+	        return numeroCuenta;
+	    }
+
+	    public  String generarCBUUnico() {
+	        String cbu;
+
+	        do {
+	            StringBuilder sb = new StringBuilder();
+	            for (int i = 0; i < 22; i++) {
+	                sb.append((int)(Math.random() * 10)); // Genera número aleatorio del 0 al 9
+	            }
+	            cbu = sb.toString();
+	        } while (dao.existeCBU(cbu));
+
+	        return cbu;
+	    }
 }

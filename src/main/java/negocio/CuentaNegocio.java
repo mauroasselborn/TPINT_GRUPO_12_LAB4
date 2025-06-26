@@ -13,4 +13,8 @@ public interface CuentaNegocio {
 	void modificarCuenta(Cuenta cuenta) throws Exception;// Modificación (saldo ≥ 0)
 
 	void eliminarCuenta(int id) throws Exception; // Baja lógica (estado = 0)
+	
+	public  String generarNumeroCuentaUnico(); //Genera nro aleatorio
+	
+	public  String generarCBUUnico();
 }
