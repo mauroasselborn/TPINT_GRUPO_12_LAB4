@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.List, entidades.Cuenta"%>
+<%@ page import="java.util.List" %>
+<%@ page import="entidades.Cuenta" %>
+
 
 
 <!-- Encabezado -->
@@ -27,7 +28,7 @@
 				class="table table-bordered table-hover w-100">
 				<thead class="table-dark">
 					<tr>
-						<th>NÂ° Cuenta</th>
+						<th>N° Cuenta</th>
 						<th>CBU</th>
 						<th>Tipo</th>
 						<th>Saldo</th>
@@ -52,10 +53,8 @@
 						<td><%=c.getCliente().getApellido()%>, <%=c.getCliente().getNombre()%></td>
 						<td class="text-nowrap">
 							<div class="d-flex justify-content-center">
-								<a href="CuentasServlet?accion=editar&id=<%=c.getId()%>"
-									class="btn btn-warning btn-sm me-1">Modificar</a>
-								<button class="btn btn-danger btn-sm"
-									onclick="confirmarEliminacion(<%=c.getId()%>)">Eliminar</button>
+								<a href="CuentasServlet?accion=editar&id=<%=c.getId()%>" class="btn btn-warning btn-sm me-1">Modificar</a>
+								<button class="btn btn-danger btn-sm" onclick="confirmarEliminacion(<%=c.getId()%>)">Eliminar</button>
 							</div>
 						</td>
 					</tr>
@@ -74,17 +73,17 @@
 
 </div>
 
-<!-- Modal de confirmaciÃ³n -->
+<!-- Modal de confirmación -->
 <div class="modal fade" id="modalEliminar" tabindex="-1"
 	aria-labelledby="modalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="modalLabel">Confirmar EliminaciÃ³n</h5>
+				<h5 class="modal-title" id="modalLabel">Confirmar Eliminación</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal"
 					aria-label="Cerrar"></button>
 			</div>
-			<div class="modal-body">Â¿EstÃ¡s seguro que querÃ©s eliminar esta
+			<div class="modal-body">¿Estás seguro que querés eliminar esta
 				cuenta?</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary"
@@ -110,13 +109,13 @@
       autoWidth: false,
       language: {
         search: "Filtrar:",
-        lengthMenu: "Mostrar _MENU_ registros por pÃ¡gina",
+        lengthMenu: "Mostrar _MENU_ registros por página",
         zeroRecords: "No se encontraron resultados",
         info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
         infoEmpty: "Mostrando 0 a 0 de 0 registros",
         infoFiltered: "(filtrado de _MAX_ registros totales)",
         paginate: {
-          first: "Primero", last: "Ãšltimo",
+          first: "Primero", last: "Último",
           next: "Siguiente", previous: "Anterior"
         }
       }

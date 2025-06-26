@@ -1,3 +1,10 @@
+<%@ page import="entidades.Cliente"%>
+<%@ page import="entidades.Provincia"%>
+<%@ page import="entidades.Localidad"%>
+<%@ page import="entidades.Nacionalidad"%>
+<%@ page import="java.util.List"%>
+
+
 <!-- Encabezado -->
 <jsp:include page="../componentes/Encabezado.jsp" />
 
@@ -18,6 +25,9 @@
 				cliente</a>
 		</div>
 		<div class="scroll-x">
+
+
+
 			<table id="tablaClientes" class="table table-bordered table-hover">
 				<thead class="table-dark">
 					<tr>
@@ -30,25 +40,35 @@
 						<th>Acciones</th>
 					</tr>
 				</thead>
+
+
+
 				<tbody>
+					<%
+					List<Cliente> listaClientes = (List<Cliente>) request.getAttribute("listaClientes");
+					if (listaClientes != null) {
+						for (int i = 0; i < listaClientes.size(); i++) {
+							Cliente cliente = listaClientes.get(i);
+					%>
 					<tr>
-						<td>12345678</td>
-						<td>Juan</td>
-						<td>Pérez</td>
-						<td>juan@mail.com</td>
-						<td>1122334455</td>
-						<td>1990-01-01</td>
+						<td><%=cliente.getDni()%></td>
+						<td><%=cliente.getNombre()%></td>
+						<td><%=cliente.getApellido()%></td>
+						<td><%=cliente.getCorreoElectronico()%></td>
+						<td><%=cliente.getTelefono()%></td>
+						<td><%=cliente.getFechaNacimiento()%></td>
 						<td>
 							<div class="d-flex justify-content-center">
-								<button class="btn btn-info btn-sm me-2"
-									onclick="abrirModalCliente('detalle')">Detalle</button>
-								<button class="btn btn-warning btn-sm me-2"
-									onclick="abrirModalCliente('modificar')">Modificar</button>
-								<button class="btn btn-danger btn-sm"
-									onclick="abrirModalEliminarCliente()">Eliminar</button>
+								<button class="btn btn-info btn-sm me-2" onclick="abrirModalCliente('detalle')">Detalle</button>
+								<a href="ClientesServlet?accion=editar&id=<%=cliente.getId()%>" class="btn btn-warning btn-sm me-2">Modificar</a>
+								<button class="btn btn-danger btn-sm" onclick="abrirModalEliminarCliente()">Eliminar</button>
 							</div>
 						</td>
 					</tr>
+					<%
+					}
+					}
+					%>
 				</tbody>
 			</table>
 
@@ -61,76 +81,74 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="modalClienteLabel">Detalle del
-						Cliente</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<h5 class="modal-title" id="modalClienteLabel">Detalle del Cliente</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<form id="formCliente">
 						<div class="row g-3">
 							<div class="col-md-6">
 								<label class="form-label">DNI</label> <input type="text"
-									class="form-control" value="12345678" name="dni">
+									class="form-control" value="" name="dni">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">CUIL</label> <input type="text"
-									class="form-control" value="20-12345678-3" name="cuil">
+									class="form-control" value="" name="cuil">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Nombre</label> <input type="text"
-									class="form-control" value="Juan" name="nombre">
+									class="form-control" value="" name="nombre">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Apellido</label> <input type="text"
-									class="form-control" value="Pérez" name="apellido">
+									class="form-control" value="" name="apellido">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Sexo</label> <input type="text"
-									class="form-control" value="M" name="sexo">
+									class="form-control" value="" name="sexo">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Nacionalidad</label> <input
-									type="text" class="form-control" value="Argentina"
+									type="text" class="form-control" value=""
 									name="nacionalidad">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Fecha Nacimiento</label> <input
-									type="date" class="form-control" value="1990-01-01"
+									type="date" class="form-control" value=""
 									name="fechaNac">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Email</label> <input type="email"
-									class="form-control" value="juan@mail.com" name="email">
+									class="form-control" value="" name="email">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Teléfono</label> <input type="text"
-									class="form-control" value="1122334455" name="telefono">
+									class="form-control" value="" name="telefono">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Dirección</label> <input type="text"
-									class="form-control" value="Calle Falsa 123" name="direccion">
+									class="form-control" value="" name="direccion">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Localidad</label> <input type="text"
-									class="form-control" value="Tigre" name="localidad">
+									class="form-control" value="" name="localidad">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Provincia</label> <input type="text"
-									class="form-control" value="Buenos Aires" name="provincia">
+									class="form-control" value="" name="provincia">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Usuario</label> <input type="text"
-									class="form-control" value="usuario01" name="usuario">
+									class="form-control" value="" name="usuario">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Contraseña</label> <input
-									type="password" class="form-control" value="1234"
+									type="password" class="form-control" value=""
 									name="contraseña">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Repetir Contraseña</label> <input
-									type="password" class="form-control" value="1234"
+									type="password" class="form-control" value=""
 									name="RepContraseña">
 							</div>
 						</div>
