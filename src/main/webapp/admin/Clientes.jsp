@@ -11,43 +11,45 @@
 	<!-- Contenido principal -->
 	<div class="container-fluid content py-4">
 
-		<div class="container-fluid content">
-			<div class="d-flex justify-content-between align-items-center mb-3">
-				<h2 class="mb-0">Clientes</h2>
-				<a href="AltaCliente.jsp" class="btn btn-primary">Agregar nuevo	cliente</a>
-			</div>
-			<div class="scroll-x">
-				<table id="tablaClientes" class="table table-bordered table-hover">
-					<thead class="table-dark">
-						<tr>
-							<th>DNI</th>
-							<th>Nombre</th>
-							<th>Apellido</th>
-							<th>Email</th>
-							<th>Teléfono</th>
-							<th>Fecha Nacimiento</th>
-							<th>Acciones</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>12345678</td>
-							<td>Juan</td>
-							<td>Pérez</td>
-							<td>juan@mail.com</td>
-							<td>1122334455</td>
-							<td>1990-01-01</td>
-							<td>
-								<div class="d-flex justify-content-center">
-									<button class="btn btn-info btn-sm me-2" onclick="abrirModalCliente('detalle')">Detalle</button>
-									<button class="btn btn-warning btn-sm me-2"	onclick="abrirModalCliente('modificar')">Modificar</button>
-									<button class="btn btn-danger btn-sm" onclick="abrirModalEliminarCliente()">Eliminar</button>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h2 class="mb-0">Clientes</h2>
+			<a href="AltaCliente.jsp" class="btn btn-primary">Agregar nuevo
+				cliente</a>
+		</div>
+		<div class="scroll-x">
+			<table id="tablaClientes" class="table table-bordered table-hover">
+				<thead class="table-dark">
+					<tr>
+						<th>DNI</th>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>Email</th>
+						<th>Teléfono</th>
+						<th>Fecha Nacimiento</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>12345678</td>
+						<td>Juan</td>
+						<td>Pérez</td>
+						<td>juan@mail.com</td>
+						<td>1122334455</td>
+						<td>1990-01-01</td>
+						<td>
+							<div class="d-flex justify-content-center">
+								<button class="btn btn-info btn-sm me-2"
+									onclick="abrirModalCliente('detalle')">Detalle</button>
+								<button class="btn btn-warning btn-sm me-2"
+									onclick="abrirModalCliente('modificar')">Modificar</button>
+								<button class="btn btn-danger btn-sm"
+									onclick="abrirModalEliminarCliente()">Eliminar</button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 

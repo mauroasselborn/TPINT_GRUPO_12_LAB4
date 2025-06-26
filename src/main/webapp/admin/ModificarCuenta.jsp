@@ -14,10 +14,8 @@
   <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
 
   <!-- Contenido principal -->
-  <div class="container-fluid content py-4">
-    <div class="info mb-3">
-      Usuario logueado: <strong>adminBanco</strong>
-    </div>
+  <div class="container content py-4">
+    
 
     <h2>Modificar Cuenta</h2>
 
@@ -39,14 +37,14 @@
 
       <!-- Tipo de cuenta -->
       <label for="tipo">Tipo de cuenta:</label>
-      <select id="tipo" name="tipo" class="form-control mb-3" required>
+      <select id="tipo" name="tipo" class="form-control mb-3">
         <option value="1" <%= tipo.equals("Caja de ahorro") ? "selected" : "" %>>Caja de ahorro</option>
 		<option value="2" <%= tipo.equals("Cuenta corriente") ? "selected" : "" %>>Cuenta corriente</option>
       </select>
 
       <!-- CBU -->
       <label for="cbu">CBU:</label>
-      <input type="text" id="cbu" name="cbu" maxlength="22" required
+      <input type="text" id="cbu" name="cbu" maxlength="22" readonly
              value="<%= cuenta.getCbu() %>" class="form-control mb-3"/>
 
       <!-- Saldo -->
