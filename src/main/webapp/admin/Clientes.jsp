@@ -24,7 +24,7 @@
 						<th>Nombre</th>
 						<th>Apellido</th>
 						<th>Email</th>
-						<th>Teléfono</th>
+						<th>Telï¿½fono</th>
 						<th>Fecha Nacimiento</th>
 						<th>Acciones</th>
 					</tr>
@@ -33,7 +33,7 @@
 					<tr>
 						<td>12345678</td>
 						<td>Juan</td>
-						<td>Pérez</td>
+						<td>Pï¿½rez</td>
 						<td>juan@mail.com</td>
 						<td>1122334455</td>
 						<td>1990-01-01</td>
@@ -81,7 +81,7 @@
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Apellido</label> <input type="text"
-									class="form-control" value="Pérez" name="apellido">
+									class="form-control" value="Pï¿½rez" name="apellido">
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Sexo</label> <input type="text"
@@ -102,11 +102,11 @@
 									class="form-control" value="juan@mail.com" name="email">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Teléfono</label> <input type="text"
+								<label class="form-label">Telï¿½fono</label> <input type="text"
 									class="form-control" value="1122334455" name="telefono">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Dirección</label> <input type="text"
+								<label class="form-label">Direcciï¿½n</label> <input type="text"
 									class="form-control" value="Calle Falsa 123" name="direccion">
 							</div>
 							<div class="col-md-6">
@@ -122,14 +122,14 @@
 									class="form-control" value="usuario01" name="usuario">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Contraseña</label> <input
+								<label class="form-label">Contraseï¿½a</label> <input
 									type="password" class="form-control" value="1234"
-									name="contraseña">
+									name="contraseï¿½a">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Repetir Contraseña</label> <input
+								<label class="form-label">Repetir Contraseï¿½a</label> <input
 									type="password" class="form-control" value="1234"
-									name="RepContraseña">
+									name="RepContraseï¿½a">
 							</div>
 						</div>
 					</form>
@@ -144,23 +144,23 @@
 		</div>
 	</div>
 
-	<!-- Modal Confirmar Eliminación Cliente -->
+	<!-- Modal Confirmar Eliminaciï¿½n Cliente -->
 	<div class="modal fade" id="modalEliminarCliente" tabindex="-1"
 		aria-labelledby="modalEliminarClienteLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="modalEliminarClienteLabel">Confirmar
-						Eliminación</h5>
+						EliminaciÃ³n</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">¿Estás seguro que querés eliminar este
+				<div class="modal-body">ï¿½EstÃ¡s seguro que querÃ©s eliminar este
 					cliente?</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">Cancelar</button>
-					<button type="button" class="btn btn-danger">Aceptar</button>
+					<a href="ClientesServlet?accion=eliminar" type="button" class="btn btn-danger">Aceptar</a>
 				</div>
 			</div>
 		</div>
@@ -176,14 +176,14 @@ $(document).ready(function () {
         autoWidth: false,
         language: {
             search: "Filtrar:",
-            lengthMenu: "Mostrar _MENU_ registros por página",
+            lengthMenu: "Mostrar _MENU_ registros por pï¿½gina",
             zeroRecords: "No se encontraron resultados",
             info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
             infoEmpty: "Mostrando 0 a 0 de 0 registros",
             infoFiltered: "(filtrado de _MAX_ registros totales)",
             paginate: {
                 first: "Primero",
-                last: "Último",
+                last: "ï¿½ltimo",
                 next: "Siguiente",
                 previous: "Anterior"
             }
