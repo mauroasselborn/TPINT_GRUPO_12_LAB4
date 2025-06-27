@@ -47,7 +47,7 @@
 					<tr>
 						<td><%=c.getNumeroCuenta()%></td>
 						<td><%=c.getCbu()%></td>
-						<td><%=c.getTipoCuenta()%></td>
+						<td><%=c.getTipoCuenta().getDescripcion()%></td>
 						<td><%=c.getSaldo()%></td>
 						<td><%=c.getFechaCreacion()%></td>
 						<td><%=c.getCliente().getApellido()%>, <%=c.getCliente().getNombre()%></td>

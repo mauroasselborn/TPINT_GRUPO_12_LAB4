@@ -22,8 +22,8 @@
     <%
     Cuenta cuenta = (Cuenta) request.getAttribute("cuenta");
 	String tipo = "";
-	if (cuenta.getTipoCuenta() == 1) tipo = "Caja de ahorro";
-	else if (cuenta.getTipoCuenta() == 2) tipo = "Cuenta corriente";
+	if (cuenta.getTipoCuenta().getId() == 1) tipo = "Caja de ahorro";
+	else if (cuenta.getTipoCuenta().getId() == 2) tipo = "Cuenta corriente";
     %>
 
     <form action="CuentasServlet" method="post">
