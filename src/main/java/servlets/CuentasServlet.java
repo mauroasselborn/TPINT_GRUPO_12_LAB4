@@ -2,10 +2,13 @@ package servlets;
 
 import entidades.Cuenta;
 import entidades.Cliente;
+import entidades.TipoCuenta;
 import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.ClienteNegocioImpl;
+import negocioImpl.TipoCuentaNegocioImpl;
 import negocio.CuentaNegocio;
 import negocio.ClienteNegocio;
+import negocio.TipoCuentaNegocio;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -75,10 +78,11 @@ public class CuentasServlet extends HttpServlet {
 		try {
 			if ("crear".equals(accion)) {
 				Cuenta nueva = new Cuenta();
+				TipoCuentaNegocio tipocuenta = new TipoCuentaNegocioImpl();
 				nueva.setCliente(new Cliente(Integer.parseInt(req.getParameter("clienteId"))));
 				nueva.setNumeroCuenta(req.getParameter("numero"));
 				nueva.setCbu(req.getParameter("cbu"));
-				nueva.setTipoCuenta(Integer.parseInt(req.getParameter("tipo")));
+				nueva.setTipoCuenta(tipocuenta.obtenerPorId(Integer.parseInt(req.getParameter("tipo"))));
 				nueva.setFechaCreacion(java.time.LocalDate.now().toString());
 				nueva.setSaldo(Double.parseDouble(req.getParameter("saldo")));
 				cuentaNegocio.crearCuenta(nueva);
@@ -86,7 +90,12 @@ public class CuentasServlet extends HttpServlet {
 			} else if ("guardarModificacion".equals(accion)) {
 				Cuenta cuentamodificar = new Cuenta();
 				cuentamodificar.setId(Integer.parseInt(req.getParameter("id")));
-				cuentamodificar.setTipoCuenta(Integer.parseInt(req.getParameter("tipo")));
+				
+				TipoCuenta tipocuenta = new TipoCuenta();
+				tipocuenta.setId(Integer.parseInt(req.getParameter("tipo")));
+				cuentamodificar.setTipoCuenta(tipocuenta);
+				
+				
 				cuentamodificar.setCbu(req.getParameter("cbu"));
 				cuentamodificar.setSaldo(Double.parseDouble(req.getParameter("saldo")));
 				cuentaNegocio.modificarCuenta(cuentamodificar);

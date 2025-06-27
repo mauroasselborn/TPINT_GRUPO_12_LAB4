@@ -17,11 +17,11 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 
 	@Override
 	public Cuenta obtenerCuenta(int id) throws Exception {
-		Cuenta c = dao.obtenerPorId(id);
-		if (c == null) {
+		Cuenta cuenta = dao.obtenerPorId(id);
+		if (cuenta == null) {
 			throw new Exception("Cuenta no encontrada.");
 		}
-		return c;
+		return cuenta;
 	}
 
 	@Override
@@ -33,15 +33,16 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		}
 
 		// Validar CBU único y número de cuenta único
+		
 		List<Cuenta> todas = dao.obtenerTodas();
-		for (Cuenta c : todas) {
-			if (c.getCbu().equals(cuenta.getCbu())) {
-				throw new Exception("El CBU ya está registrado para otra cuenta.");
+		for (Cuenta cuentarep : todas) {
+			if (cuentarep.getCbu().equals(cuentarep.getCbu())) {
+				generarCBUUnico();
 			}
 		}
-		for (Cuenta c : todas) {
-			if (c.getNumeroCuenta().equals(cuenta.getNumeroCuenta())) {
-				throw new Exception("El número de cuenta ya está registrado.");
+		for (Cuenta cuentarep : todas) {
+			if (cuentarep.getNumeroCuenta().equals(cuenta.getNumeroCuenta())) {
+				generarNumeroCuentaUnico();
 			}
 		}
 		
@@ -73,8 +74,8 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	// Contar cuentas activas por ID de cliente
 	private int contarCuentasActivas(Cliente cliente) {
 		int count = 0;
-		for (Cuenta c : dao.obtenerTodas()) {
-			if (c.getCliente().getId() == cliente.getId()) {
+		for (Cuenta cuenta : dao.obtenerTodas()) {
+			if (cuenta.getCliente().getId() == cliente.getId()) {
 				count++;
 			}
 		}

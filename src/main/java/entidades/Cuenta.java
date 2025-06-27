@@ -4,7 +4,7 @@ public class Cuenta {
 	private int id;
 	private String numeroCuenta;
 	private String cbu;
-	private int tipoCuenta;
+	private TipoCuenta tipoCuenta;
 	private String fechaCreacion;
 	private double saldo;
 	private boolean activo;
@@ -13,7 +13,7 @@ public class Cuenta {
 	public Cuenta() {
 	}
 
-	public Cuenta(int id, String numeroCuenta, String cbu, int tipoCuenta, String fechaCreacion, double saldo, boolean activo, Cliente cliente) {
+	public Cuenta(int id, String numeroCuenta, String cbu, TipoCuenta tipoCuenta, String fechaCreacion, double saldo, boolean activo, Cliente cliente) {
 		this.id = id;
 		this.numeroCuenta = numeroCuenta;
 		this.cbu = cbu;
@@ -49,12 +49,12 @@ public class Cuenta {
 		this.cbu = cbu;
 	}
 
-	public int getTipoCuenta() {
+	public TipoCuenta getTipoCuenta() {
 		return tipoCuenta;
 	}
 
-	public void setTipoCuenta(int tipoCuenta) {
-		this.tipoCuenta = tipoCuenta;
+	public void setTipoCuenta(TipoCuenta tipocuenta) {
+		this.tipoCuenta = tipocuenta;
 	}
 
 	public String getFechaCreacion() {

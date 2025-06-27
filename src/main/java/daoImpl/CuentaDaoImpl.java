@@ -3,6 +3,8 @@ package daoImpl;
 import dao.CuentaDao;
 import entidades.Cuenta;
 import entidades.Cliente;
+import negocio.TipoCuentaNegocio;
+import negocioImpl.TipoCuentaNegocioImpl;
 import datos.Conexion;
 
 import java.sql.*;
@@ -27,22 +29,24 @@ public class CuentaDaoImpl implements CuentaDao {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Cuenta c = new Cuenta();
-				c.setId(rs.getInt("id"));
-				c.setNumeroCuenta(rs.getString("numero_cuenta"));
-				c.setCbu(rs.getString("cbu"));
-				c.setSaldo(rs.getDouble("saldo"));
-				c.setFechaCreacion(rs.getString("fecha_creacion"));
-				c.setTipoCuenta(rs.getInt("id_tipo_cuenta"));
-
+				Cuenta cuenta = new Cuenta();
+				cuenta.setId(rs.getInt("id"));
+				cuenta.setNumeroCuenta(rs.getString("numero_cuenta"));
+				cuenta.setCbu(rs.getString("cbu"));
+				cuenta.setSaldo(rs.getDouble("saldo"));
+				cuenta.setFechaCreacion(rs.getString("fecha_creacion"));
+				
+				TipoCuentaNegocio tipocuenta = new TipoCuentaNegocioImpl();				
+				cuenta.setTipoCuenta(tipocuenta.obtenerPorId(rs.getInt("id_tipo_cuenta")));
+				
 				Cliente cli = new Cliente();
 				cli.setId(rs.getInt("id_cliente"));
 				cli.setNombre(rs.getString("nombre"));
 				cli.setApellido(rs.getString("apellido"));
-				c.setCliente(cli);
+				cuenta.setCliente(cli);
 
-				c.setActivo(rs.getBoolean("activo"));
-				lista.add(c);
+				cuenta.setActivo(rs.getBoolean("activo"));
+				lista.add(cuenta);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -89,7 +93,10 @@ public class CuentaDaoImpl implements CuentaDao {
 				cuenta.setCbu(rs.getString("cbu"));
 				cuenta.setSaldo(rs.getDouble("saldo"));
 				cuenta.setFechaCreacion(rs.getString("fecha_creacion"));
-				cuenta.setTipoCuenta(rs.getInt("id_tipo_cuenta"));
+				
+				TipoCuentaNegocio tipocuenta = new TipoCuentaNegocioImpl();				
+				cuenta.setTipoCuenta(tipocuenta.obtenerPorId(id));
+				
 
 				Cliente cliente = new Cliente();
 				cliente.setId(rs.getInt("id_cliente"));
@@ -137,7 +144,7 @@ public class CuentaDaoImpl implements CuentaDao {
 			ps.setInt(1, cuenta.getCliente().getId());
 			ps.setString(2, cuenta.getNumeroCuenta());
 			ps.setString(3, cuenta.getCbu());
-			ps.setInt(4, cuenta.getTipoCuenta());
+			ps.setInt(4, cuenta.getTipoCuenta().getId());
 			ps.setString(5, cuenta.getFechaCreacion());
 			ps.setDouble(6, cuenta.getSaldo());
 
@@ -174,7 +181,7 @@ public class CuentaDaoImpl implements CuentaDao {
 			con = Conexion.getConexion();
 			ps = con.prepareStatement(sql);
 
-			ps.setInt(1, cuenta.getTipoCuenta());
+			ps.setInt(1, cuenta.getTipoCuenta().getId());
 			ps.setDouble(2, cuenta.getSaldo());
 			ps.setString(3, cuenta.getCbu());
 			ps.setInt(4, cuenta.getId());

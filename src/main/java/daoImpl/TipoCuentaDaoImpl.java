@@ -55,7 +55,7 @@ public class TipoCuentaDaoImpl implements TipoCuentaDao {
 	}
 
 	@Override
-	public TipoCuenta obtenerPorId(int idLocalidad) {
+	public TipoCuenta obtenerPorId(int idtipocuenta) {
 		TipoCuenta tipocuenta = null;
 		String consultaSQL = "SELECT * FROM tipo_cuenta WHERE id = ?";
 		Connection conexion = null;
@@ -65,13 +65,13 @@ public class TipoCuentaDaoImpl implements TipoCuentaDao {
 		try {
 			conexion = Conexion.getConexion();
 			statement = conexion.prepareStatement(consultaSQL);
-			statement.setInt(1, idLocalidad);
+			statement.setInt(1, idtipocuenta);
 			resultado = statement.executeQuery();
 
 			if (resultado.next()) {
 				tipocuenta = new TipoCuenta();
 				tipocuenta.setId(resultado.getInt("id"));
-				tipocuenta.setDescripcion(resultado.getString("nombre"));
+				tipocuenta.setDescripcion(resultado.getString("descripcion"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
