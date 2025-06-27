@@ -16,7 +16,7 @@ Usuario usuario = (Usuario) request.getAttribute("usuario");
 <jsp:include page="../componentes/MenuLateralAdmin.jsp" />
 <!-- Contenedor principal -->
 <div class="main-content">
-	<jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+	<jsp:include page="../componentes/BarraSuperior.jsp" />
 
 	<div class="container content py-4">
 		<div class="w-75 mx-auto">

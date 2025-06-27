@@ -7,7 +7,7 @@
   <!-- Contenedor principal -->
   <div class="main-content">
     <!-- Navbar -->
-    <jsp:include page="../componentes/BarraSuperiorCliente.jsp" />
+    <jsp:include page="../componentes/BarraSuperior.jsp" />
     <!-- Contenido principal -->
     <div class="container-fluid content py-4">
 	<h1 class="text-primary mb-3">Mis Cuentas</h1>

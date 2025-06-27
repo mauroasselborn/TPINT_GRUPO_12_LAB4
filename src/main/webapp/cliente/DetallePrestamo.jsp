@@ -6,9 +6,9 @@
   <!-- Contenedor principal -->
   <div class="main-content">
     <!-- Navbar -->
-    <jsp:include page="../componentes/BarraSuperiorCliente.jsp" />
+    <jsp:include page="../componentes/BarraSuperior.jsp" />
     <!-- Contenido principal -->
-  <div class="container-fluid content py-4">
+  <div class="container content py-4">
     <h2 class="mb-4">Detalle del Préstamo</h2>
 
     <div class="table-responsive mb-4">

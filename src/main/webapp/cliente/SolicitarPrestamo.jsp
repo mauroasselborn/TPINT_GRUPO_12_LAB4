@@ -7,14 +7,11 @@
 <!-- Contenedor principal -->
 <div class="main-content">
   <!-- Navbar -->
-  <jsp:include page="../componentes/BarraSuperiorCliente.jsp" />
+  <jsp:include page="../componentes/BarraSuperior.jsp" />
   
   <!-- Contenido principal -->
-  <div class="container-fluid content py-4">
-    <div class="alert alert-info" role="alert">
-      Usuario logueado: <strong>usuario123</strong>
-    </div>
-
+  <div class="container content py-4">
+    
     <h2 class="mb-4">Solicitud de Préstamo</h2>
 
     <form action="#" method="post" class="border p-4 rounded bg-light">

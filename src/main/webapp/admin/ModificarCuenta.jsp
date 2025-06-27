@@ -11,7 +11,7 @@
 <div class="main-content">
 
   <!-- Navbar -->
-  <jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+  <jsp:include page="../componentes/BarraSuperior.jsp" />
 
   <!-- Contenido principal -->
   <div class="container content py-4">

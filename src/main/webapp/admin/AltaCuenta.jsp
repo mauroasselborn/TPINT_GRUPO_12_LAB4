@@ -11,7 +11,7 @@
 <div class="main-content">
 
 	<!-- Barra superior -->
-	<jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+	<jsp:include page="../componentes/BarraSuperior.jsp" />
 
 	<!-- Contenido -->
 	<div class="container-fluid content py-4">

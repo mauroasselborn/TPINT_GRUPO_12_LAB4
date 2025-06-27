@@ -13,12 +13,12 @@
             </li>
             <li>
                 <a href="GestionarPrestamos.jsp" class="nav-link text-white"
-                    ><i class="bi bi-cash-stack me-2"></i>Gestiï¿½n de Prï¿½stamos</a
+                    ><i class="bi bi-cash-stack me-2"></i>Gestión de Préstamos</a
                 >
             </li>
             <li>
                 <a href="SolicitarPrestamo.jsp" class="nav-link text-white"
-                    ><i class="bi bi-cash-stack me-2"></i>Solicitar Prï¿½stamos</a
+                    ><i class="bi bi-cash-stack me-2"></i>Solicitar Préstamos</a
                 >
             </li>
             <li>
@@ -28,6 +28,6 @@
     </div>
     <div>
         <hr />
-        <a href="../Login.jsp" class="btn btn-outline-light w-100"> <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesiï¿½n </a>
+        <a href="../Login.jsp" class="btn btn-outline-light w-100"> <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión </a>
     </div>
 </div>

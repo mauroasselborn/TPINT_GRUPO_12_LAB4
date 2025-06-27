@@ -7,7 +7,7 @@
 <!-- Contenedor principal -->
 <div class="main-content">
 	<!-- Navbar -->
-	<jsp:include page="../componentes/BarraSuperiorAdmin.jsp" />
+	<jsp:include page="../componentes/BarraSuperior.jsp" />
 	<!-- Contenido principal -->
 	<div class="container-fluid content py-4">
 		<h2>Gestión de Préstamos</h2>
