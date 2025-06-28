@@ -1,3 +1,9 @@
+<%@ page import="entidades.Cliente"%>
+<%@ page import="entidades.Provincia"%>
+<%@ page import="entidades.Localidad"%>
+<%@ page import="entidades.Nacionalidad"%>
+<%@ page import="java.util.List"%>
+
 <!-- Encabezado -->
   <jsp:include page="../componentes/Encabezado.jsp" />
 
@@ -26,7 +32,6 @@
 							<th>Apellido</th>
 							<th>Email</th>
 							<th>Rol</th>
-							<th>Estado</th>
 							<th>Acciones</th>
 						</tr>
 					</thead>
@@ -37,7 +42,6 @@
 							<td>Pérez</td>
 							<td>juan@mail.com</td>
 							<td>Administrador</td>
-							<td>Activo</td>
 							<td>
 								<div class="d-flex justify-content-center">
 									<button class="btn btn-warning btn-sm me-2"

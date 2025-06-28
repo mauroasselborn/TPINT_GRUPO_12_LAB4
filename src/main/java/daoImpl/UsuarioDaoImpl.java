@@ -161,7 +161,8 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 		try {
 			conn = Conexion.getConexion();
-			ps = conn.prepareStatement("SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena = ? AND activo = 1");
+			ps = conn.prepareStatement(
+					"SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena = ? AND activo = 1");
 			ps.setString(1, nombreUsuario);
 			ps.setString(2, contrasenia);
 			rs = ps.executeQuery();
@@ -282,7 +283,8 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 		try {
 			conn = Conexion.getConexion();
-			ps = conn.prepareStatement("INSERT INTO usuarios (id_cliente, id_tipo_usuario, nombre_usuario, contrasena, activo) VALUES (?, ?, ?, ?, 1)");
+			ps = conn.prepareStatement(
+					"INSERT INTO usuarios (id_cliente, id_tipo_usuario, nombre_usuario, contrasena, activo) VALUES (?, ?, ?, ?, 1)");
 
 			ps.setInt(1, usuario.getIdCliente());
 			ps.setInt(2, usuario.getTipoUsuario().getId());
@@ -307,6 +309,54 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		}
 
 		return resultado;
+	}
+
+	@Override
+	public List<Usuario> obtenerTodosLosUsuariosAdmin() {
+		List<Usuario> listaUsuariosAdmin = new ArrayList<>();
+		Connection conexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultado = null;
+
+		try {
+			conexion = Conexion.getConexion();
+
+			String consultaSQL = "SELECT * FROM usuarios WHERE id_tipo_usuario = ?";
+			preparedStatement = conexion.prepareStatement(consultaSQL);
+			preparedStatement.setInt(1, 1);
+
+			resultado = preparedStatement.executeQuery();
+
+			while (resultado.next()) {
+				Usuario usuario = new Usuario();
+				usuario.setId(resultado.getInt("id"));
+				usuario.setNombreUsuario(resultado.getString("nombre_usuario"));
+				usuario.setContrasena(resultado.getString("contrasena"));
+				usuario.setActivo(resultado.getBoolean("activo"));
+
+				TipoUsuario tipoUsuario = new TipoUsuario();
+				tipoUsuario.setId(resultado.getInt("id_tipo_usuario"));
+				usuario.setTipoUsuario(tipoUsuario);
+
+				listaUsuariosAdmin.add(usuario);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (resultado != null)
+					resultado.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+				if (conexion != null)
+					conexion.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return listaUsuariosAdmin;
 	}
 
 }

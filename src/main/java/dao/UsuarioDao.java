@@ -15,6 +15,8 @@ public interface UsuarioDao {
 
 	public List<Usuario> obtenerTodosLosUsuarios();
 
+	public List<Usuario> obtenerTodosLosUsuariosAdmin();
+
 	public boolean validarCredenciales(String nombreUsuario, String contrasenia);
 
 	Usuario obtenerUsuarioPorIdCliente(int idCliente);
