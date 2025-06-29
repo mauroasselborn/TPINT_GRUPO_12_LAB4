@@ -12,14 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDaoImpl implements ClienteDao {
+	
+	private final String CONSULTA = "SELECT C.*"
+			+ " FROM clientes C"
+			+ " JOIN usuarios U ON U.id_cliente = C.id"
+			+ " WHERE U.id_tipo_usuario = ?";
 
 	@Override
 	public List<Cliente> obtenerTodos() {
 	    List<Cliente> lista = new ArrayList<>();
-	    String sql = "SELECT C.*"
-	    			+ " FROM clientes C"
-	    			+ " JOIN usuarios U ON U.id_cliente = C.id"
-	    			+ " WHERE U.id_tipo_usuario = ?";
+	    
 
 
 	    Connection con = null;
@@ -27,7 +29,7 @@ public class ClienteDaoImpl implements ClienteDao {
 	    ResultSet rs = null;
 	    try {
 	        con = Conexion.getConexion();
-	        ps = con.prepareStatement(sql);
+	        ps = con.prepareStatement(CONSULTA);
 	        ps.setInt(1, 2);
 	        rs = ps.executeQuery();
 
@@ -82,14 +84,15 @@ public class ClienteDaoImpl implements ClienteDao {
 	@Override
 	public Cliente obtenerPorId(int id) {
 		Cliente cliente = null;
-		String sql = "SELECT * FROM clientes WHERE id = ?";
+		
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			con = Conexion.getConexion();
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, id);
+			ps = con.prepareStatement(CONSULTA + " AND C.id = ?");
+			ps.setInt(1, 2);
+			ps.setInt(2, id);
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -321,8 +324,9 @@ public class ClienteDaoImpl implements ClienteDao {
 
 		try {
 			conn = Conexion.getConexion();
-			ps = conn.prepareStatement("SELECT * FROM clientes WHERE dni = ?");
-			ps.setString(1, dni);
+			ps = conn.prepareStatement(CONSULTA + " AND C.dni = ?");
+			ps.setInt(1, 2);
+			ps.setString(2, dni);
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
