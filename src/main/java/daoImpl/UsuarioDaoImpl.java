@@ -37,8 +37,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		    "JOIN clientes c ON u.id_cliente = c.id " +
 		    "JOIN nacionalidades n ON c.id_nacionalidad = n.id " +
 		    "JOIN localidades l ON c.id_localidad = l.id " +
-		    "JOIN provincias p ON c.id_provincia = p.id " +
-		    "WHERE u.id_tipo_usuario = 1";
+		    "JOIN provincias p ON c.id_provincia = p.id ";
 
 	
 	private Usuario llenarUsuario(ResultSet resultado) throws SQLException {
@@ -155,7 +154,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	    try {
 	        conn = Conexion.getConexion();
-	        String sql = CONSULTA + " AND u.id = ?";
+	        String sql = CONSULTA + "WHERE u.id = ?";
 	        ps = conn.prepareStatement(sql);
 	        ps.setInt(1, idUsuario);
 	        rs = ps.executeQuery();
@@ -189,7 +188,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	    try {
 	        conn = Conexion.getConexion();
-	        ps = conn.prepareStatement(CONSULTA);
+	        ps = conn.prepareStatement(CONSULTA + "WHERE u.id_tipo_usuario = 1");
 	        rs = ps.executeQuery();
 
 	        while (rs.next()) {
@@ -222,7 +221,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	    try {
 	        conn = Conexion.getConexion();
-	        String sql = CONSULTA + " AND c.id = ?";
+	        String sql = CONSULTA + " WHERE c.id = ?";
 	        ps = conn.prepareStatement(sql);
 	        ps.setInt(1, idCliente);
 	        rs = ps.executeQuery();
@@ -256,7 +255,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	    try {
 	        conn = Conexion.getConexion();
-	        String sql = CONSULTA + " AND u.nombre_usuario = ?";
+	        String sql = CONSULTA + " WHERE u.nombre_usuario = ?";
 	        ps = conn.prepareStatement(sql);
 	        ps.setString(1, nombreUsuario);
 	        rs = ps.executeQuery();
@@ -360,7 +359,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	    try {
 	        conn = Conexion.getConexion();
-	        ps = conn.prepareStatement(CONSULTA);
+	        ps = conn.prepareStatement(CONSULTA + "WHERE u.id_tipo_usuario = 1");
 	        rs = ps.executeQuery();
 
 	        while (rs.next()) {

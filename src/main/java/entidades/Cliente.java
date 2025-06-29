@@ -15,13 +15,12 @@ public class Cliente {
 	private String correoElectronico;
 	private String telefono;
 	private boolean activo;
-	private Usuario usuario;
 
 	public Cliente() {
 	}
 
 	public Cliente(int id, String dni, String cuil, String nombre, String apellido, String sexo, Nacionalidad nacionalidad, String fechaNacimiento, String direccion, Localidad localidad, Provincia provincia, String correoElectronico, String telefono,
-			boolean activo, Usuario usuario) {
+			boolean activo) {
 		this.id = id;
 		this.dni = dni;
 		this.cuil = cuil;
@@ -36,7 +35,7 @@ public class Cliente {
 		this.correoElectronico = correoElectronico;
 		this.telefono = telefono;
 		this.activo = activo;
-		this.usuario = usuario;
+		
 	}
 
 	// getters y Setters
@@ -153,13 +152,6 @@ public class Cliente {
 		this.activo = activo;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	public Cliente(int id) {
 		this.id = id;

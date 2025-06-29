@@ -15,68 +15,69 @@ public class ClienteDaoImpl implements ClienteDao {
 
 	@Override
 	public List<Cliente> obtenerTodos() {
-		List<Cliente> lista = new ArrayList<>();
-		String sql = "SELECT * FROM clientes";
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			con = Conexion.getConexion();
-			ps = con.prepareStatement(sql);
-			rs = ps.executeQuery();
+	    List<Cliente> lista = new ArrayList<>();
+	    String sql = "SELECT C.*"
+	    			+ " FROM clientes C"
+	    			+ " JOIN usuarios U ON U.id_cliente = C.id"
+	    			+ " WHERE U.id_tipo_usuario = ?";
 
-			while (rs.next()) {
-				Cliente cliente = new Cliente();
-				cliente.setId(rs.getInt("id"));
-				cliente.setDni(rs.getString("dni"));
-				cliente.setCuil(rs.getString("cuil"));
-				cliente.setNombre(rs.getString("nombre"));
-				cliente.setApellido(rs.getString("apellido"));
-				cliente.setSexo(rs.getString("sexo"));
 
-				Nacionalidad nac = new Nacionalidad();
-				nac.setId(rs.getInt("id_nacionalidad"));
-				cliente.setNacionalidad(nac);
+	    Connection con = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    try {
+	        con = Conexion.getConexion();
+	        ps = con.prepareStatement(sql);
+	        ps.setInt(1, 2);
+	        rs = ps.executeQuery();
 
-				cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
-				cliente.setDireccion(rs.getString("direccion"));
+	        while (rs.next()) {
+	            Cliente cliente = new Cliente();
+	            cliente.setId(rs.getInt("id"));
+	            cliente.setDni(rs.getString("dni"));
+	            cliente.setCuil(rs.getString("cuil"));
+	            cliente.setNombre(rs.getString("nombre"));
+	            cliente.setApellido(rs.getString("apellido"));
+	            cliente.setSexo(rs.getString("sexo"));
 
-				Localidad loc = new Localidad();
-				loc.setId(rs.getInt("id_localidad"));
-				cliente.setLocalidad(loc);
+	            Nacionalidad nac = new Nacionalidad();
+	            nac.setId(rs.getInt("id_nacionalidad"));
+	            cliente.setNacionalidad(nac);
 
-				Provincia prov = new Provincia();
-				prov.setId(rs.getInt("id_provincia"));
-				cliente.setProvincia(prov);
+	            cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+	            cliente.setDireccion(rs.getString("direccion"));
 
-				cliente.setCorreoElectronico(rs.getString("correo_electronico"));
-				cliente.setTelefono(rs.getString("telefono"));
-				cliente.setActivo(rs.getBoolean("activo"));
+	            Localidad loc = new Localidad();
+	            loc.setId(rs.getInt("id_localidad"));
+	            cliente.setLocalidad(loc);
 
-				lista.add(cliente);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-			} catch (Exception e) {
-			}
-			try {
-				if (ps != null)
-					ps.close();
-			} catch (Exception e) {
-			}
-			try {
-				if (con != null)
-					con.close();
-			} catch (Exception e) {
-			}
-		}
+	            Provincia prov = new Provincia();
+	            prov.setId(rs.getInt("id_provincia"));
+	            cliente.setProvincia(prov);
 
-		return lista;
+	            cliente.setCorreoElectronico(rs.getString("correo_electronico"));
+	            cliente.setTelefono(rs.getString("telefono"));
+	            cliente.setActivo(rs.getBoolean("activo"));
+
+	            lista.add(cliente);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	        } catch (Exception e) {}
+	        try {
+	            if (ps != null) ps.close();
+	        } catch (Exception e) {}
+	        try {
+	            if (con != null) con.close();
+	        } catch (Exception e) {}
+	    }
+
+	    return lista;
 	}
+
 
 	@Override
 	public Cliente obtenerPorId(int id) {
