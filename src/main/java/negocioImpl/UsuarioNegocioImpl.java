@@ -51,4 +51,9 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
 		return usuarioDao.insertarUsuario(usuario);
 	}
 
+	@Override
+	public List<Usuario> obtenerTodosLosUsuariosAdmin() {
+		return usuarioDao.obtenerTodosLosUsuariosAdmin();
+	}
+
 }

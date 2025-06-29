@@ -20,4 +20,6 @@ public interface UsuarioNegocio {
 	public Usuario obtenerUsuarioPorIdCliente(int idCliente);
 
 	public Usuario obtenerUsuarioPorNombre(String nombreUsuario);
+
+	public List<Usuario> obtenerTodosLosUsuariosAdmin();
 }

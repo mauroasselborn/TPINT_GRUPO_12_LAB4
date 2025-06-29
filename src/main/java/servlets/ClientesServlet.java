@@ -155,7 +155,7 @@ public class ClientesServlet extends HttpServlet {
 				tipoCliente.setId(2); //siempre se crea un usuario  cliente
 				nuevoUsuario.setTipoUsuario(tipoCliente);
 
-				nuevoUsuario.setIdCliente(clienteRecienInsertado.getId());
+				nuevoUsuario.setCliente(clienteRecienInsertado);
 
 				if (usuarioNegocio.insertarUsuario(nuevoUsuario)) {
 					request.setAttribute("mensaje", "Cliente y usuario agregados correctamente.");

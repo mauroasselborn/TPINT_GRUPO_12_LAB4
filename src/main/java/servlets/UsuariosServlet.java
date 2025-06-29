@@ -38,14 +38,14 @@ public class UsuariosServlet extends HttpServlet {
 		String accion = request.getParameter("accion");
 		switch(accion) {
 			
-		case "listar":
-			
-			List<Usuario> listaUsuarios = usuarioNegocio.obtenerTodosLosUsuarios();
-			
-			request.setAttribute("listaUsuarios", listaUsuarios);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/Usuarios.jsp");
-			dispatcher.forward(request, response);
-			break;
+			case "listar":
+				
+				List<Usuario> listaUsuarios = usuarioNegocio.obtenerTodosLosUsuariosAdmin();
+	
+				request.setAttribute("listausuarios", listaUsuarios);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/Usuarios.jsp");
+				dispatcher.forward(request, response);
+				break;
 		}
 	}
 

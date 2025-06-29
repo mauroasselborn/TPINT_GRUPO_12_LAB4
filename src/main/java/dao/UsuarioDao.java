@@ -4,22 +4,21 @@ import java.util.List;
 import entidades.Usuario;
 
 public interface UsuarioDao {
+	boolean insertarUsuario(Usuario usuario);
 
-	public boolean insertarUsuario(Usuario usuario);
+	boolean eliminarUsuario(int idUsuario);
 
-	public boolean eliminarUsuario(int idUsuario); // baja lógica
+	boolean activarUsuario(int idUsuario);
 
-	public boolean activarUsuario(int idUsuario); // alta lógica
-
-	public Usuario obtenerUsuarioPorId(int idUsuario);
-
-	public List<Usuario> obtenerTodosLosUsuarios();
-
-	public List<Usuario> obtenerTodosLosUsuariosAdmin();
-
-	public boolean validarCredenciales(String nombreUsuario, String contrasenia);
+	Usuario obtenerUsuarioPorId(int idUsuario);
 
 	Usuario obtenerUsuarioPorIdCliente(int idCliente);
 
 	Usuario obtenerUsuarioPorNombre(String nombreUsuario);
+
+	List<Usuario> obtenerTodosLosUsuarios();
+
+	List<Usuario> obtenerTodosLosUsuariosAdmin();
+
+	boolean validarCredenciales(String nombreUsuario, String contrasenia);
 }

@@ -6,8 +6,7 @@ public class Usuario {
 	private String contrasena;
 	private TipoUsuario tipoUsuario;
 	private boolean activo;
-	private int idTipoUsuario;
-	private int idCliente;
+	private Cliente cliente;
 
 	public Usuario() {
 	}
@@ -60,19 +59,12 @@ public class Usuario {
 		this.activo = activo;
 	}
 
-	public int getIdTipoUsuario() {
-		return idTipoUsuario;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setIdTipoUsuario(int idTipoUsuario) {
-		this.idTipoUsuario = idTipoUsuario;
-	}
-
-	public int getIdCliente() {
-		return idCliente;
-	}
-
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 }
+	
