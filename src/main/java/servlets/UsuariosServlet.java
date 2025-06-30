@@ -129,32 +129,37 @@ public class UsuariosServlet extends HttpServlet {
 				break;
 			}
 
-			boolean clienteInsertado = clienteNegocio.insertar(nuevoCliente);
+			boolean clienteInsertado;
+			try {
+				clienteInsertado = clienteNegocio.insertar(nuevoCliente);
+				if (clienteInsertado) {
+					
+					Cliente clienteRecienInsertado = clienteNegocio.obtenerPorDni(nuevoCliente.getDni());
 
-			if (clienteInsertado) {
-				
-				Cliente clienteRecienInsertado = clienteNegocio.obtenerPorDni(nuevoCliente.getDni());
+					Usuario nuevoUsuario = new Usuario();
+					nuevoUsuario.setNombreUsuario(usuarioNombre);
+					nuevoUsuario.setContrasena(contrasena);
+					nuevoUsuario.setActivo(true);
+					
+					TipoUsuario tipoCliente = new TipoUsuario();
+					tipoCliente.setId(1); //siempre se crea un usuario admin
+					nuevoUsuario.setTipoUsuario(tipoCliente);
 
-				Usuario nuevoUsuario = new Usuario();
-				nuevoUsuario.setNombreUsuario(usuarioNombre);
-				nuevoUsuario.setContrasena(contrasena);
-				nuevoUsuario.setActivo(true);
-				
-				TipoUsuario tipoCliente = new TipoUsuario();
-				tipoCliente.setId(1); //siempre se crea un usuario admin
-				nuevoUsuario.setTipoUsuario(tipoCliente);
+					nuevoUsuario.setCliente(clienteRecienInsertado);
 
-				nuevoUsuario.setCliente(clienteRecienInsertado);
-
-				if (usuarioNegocio.insertarUsuario(nuevoUsuario)) {
-					request.setAttribute("mensaje", "Cliente y usuario agregados correctamente.");
+					if (usuarioNegocio.insertarUsuario(nuevoUsuario)) {
+						request.setAttribute("mensaje", "Cliente y usuario agregados correctamente.");
+					} else {
+						request.setAttribute("mensajeError", "Cliente creado, pero no se pudo agregar el usuario.");
+					}
 				} else {
-					request.setAttribute("mensajeError", "Cliente creado, pero no se pudo agregar el usuario.");
+					request.setAttribute("mensajeError", "Error al agregar el cliente.");
 				}
-			} else {
-				request.setAttribute("mensajeError", "Error al agregar el cliente.");
+				break;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			break;
 
 		case "eliminar":
 			int idEliminar = Integer.parseInt(request.getParameter("id"));

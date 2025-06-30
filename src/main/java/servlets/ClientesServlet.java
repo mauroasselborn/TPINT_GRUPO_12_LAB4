@@ -112,67 +112,72 @@ public class ClientesServlet extends HttpServlet {
 
 	    switch (accion) {
 	    case "alta":
-	        // Alta de cliente
-	        Cliente nuevoCliente = new Cliente();
-	        nuevoCliente.setDni(request.getParameter("dni"));
-	        nuevoCliente.setCuil(request.getParameter("cuil"));
-	        nuevoCliente.setNombre(request.getParameter("nombre"));
-	        nuevoCliente.setApellido(request.getParameter("apellido"));
-	        nuevoCliente.setSexo(request.getParameter("sexo"));
-	        nuevoCliente.setFechaNacimiento(request.getParameter("fechaNacimiento"));
-	        nuevoCliente.setDireccion(request.getParameter("direccion"));
-	        nuevoCliente.setCorreoElectronico(request.getParameter("correoElectronico"));
-	        nuevoCliente.setTelefono(request.getParameter("telefono"));
+	        try {
+	            // Alta de cliente
+	            Cliente nuevoCliente = new Cliente();
+	            nuevoCliente.setDni(request.getParameter("dni"));
+	            nuevoCliente.setCuil(request.getParameter("cuil"));
+	            nuevoCliente.setNombre(request.getParameter("nombre"));
+	            nuevoCliente.setApellido(request.getParameter("apellido"));
+	            nuevoCliente.setSexo(request.getParameter("sexo"));
+	            nuevoCliente.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+	            nuevoCliente.setDireccion(request.getParameter("direccion"));
+	            nuevoCliente.setCorreoElectronico(request.getParameter("correoElectronico"));
+	            nuevoCliente.setTelefono(request.getParameter("telefono"));
 
-	        Nacionalidad nac = new Nacionalidad();
-	        nac.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
-	        nuevoCliente.setNacionalidad(nac);
+	            Nacionalidad nac = new Nacionalidad();
+	            nac.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
+	            nuevoCliente.setNacionalidad(nac);
 
-	        Provincia prov = new Provincia();
-	        prov.setId(Integer.parseInt(request.getParameter("idProvincia")));
-	        nuevoCliente.setProvincia(prov);
+	            Provincia prov = new Provincia();
+	            prov.setId(Integer.parseInt(request.getParameter("idProvincia")));
+	            nuevoCliente.setProvincia(prov);
 
-	        Localidad loc = new Localidad();
-	        loc.setId(Integer.parseInt(request.getParameter("idLocalidad")));
-	        nuevoCliente.setLocalidad(loc);
+	            Localidad loc = new Localidad();
+	            loc.setId(Integer.parseInt(request.getParameter("idLocalidad")));
+	            nuevoCliente.setLocalidad(loc);
 
-	        String usuarioNombre = request.getParameter("usuario");
-	        String contrasena = request.getParameter("contrasena");
-	        String repContrasena = request.getParameter("repContrasena");
+	            String usuarioNombre = request.getParameter("usuario");
+	            String contrasena = request.getParameter("contrasena");
+	            String repContrasena = request.getParameter("repContrasena");
 
-	        if (!contrasena.equals(repContrasena)) {
-	            toastMensaje = "Las contraseñas no coinciden.";
-	            toastTitulo = "Error";
-	            toastTipo = "error";
-	            break;
-	        }
-
-	        boolean clienteInsertado = clienteNegocio.insertar(nuevoCliente);
-
-	        if (clienteInsertado) {
-	            Cliente clienteRecienInsertado = clienteNegocio.obtenerPorDni(nuevoCliente.getDni());
-
-	            Usuario nuevoUsuario = new Usuario();
-	            nuevoUsuario.setNombreUsuario(usuarioNombre);
-	            nuevoUsuario.setContrasena(contrasena);
-	            nuevoUsuario.setActivo(true);
-
-	            TipoUsuario tipoCliente = new TipoUsuario();
-	            tipoCliente.setId(2);
-	            nuevoUsuario.setTipoUsuario(tipoCliente);
-	            nuevoUsuario.setCliente(clienteRecienInsertado);
-
-	            if (usuarioNegocio.insertarUsuario(nuevoUsuario)) {
-	                toastMensaje = "Cliente y usuario agregados correctamente.";
-	                toastTitulo = "Éxito";
-	                toastTipo = "success";
-	            } else {
-	                toastMensaje = "Cliente creado, pero no se pudo agregar el usuario.";
-	                toastTitulo = "Advertencia";
-	                toastTipo = "warning";
+	            if (!contrasena.equals(repContrasena)) {
+	                toastMensaje = "Las contraseñas no coinciden.";
+	                toastTitulo = "Error";
+	                toastTipo = "error";
+	                break;
 	            }
-	        } else {
-	            toastMensaje = "Error al agregar el cliente.";
+
+	            boolean clienteInsertado = clienteNegocio.insertar(nuevoCliente);
+	            if (clienteInsertado) {
+	                Cliente clienteRecienInsertado = clienteNegocio.obtenerPorDni(nuevoCliente.getDni());
+
+	                Usuario nuevoUsuario = new Usuario();
+	                nuevoUsuario.setNombreUsuario(usuarioNombre);
+	                nuevoUsuario.setContrasena(contrasena);
+	                nuevoUsuario.setActivo(true);
+
+	                TipoUsuario tipoCliente = new TipoUsuario();
+	                tipoCliente.setId(2);
+	                nuevoUsuario.setTipoUsuario(tipoCliente);
+	                nuevoUsuario.setCliente(clienteRecienInsertado);
+
+	                if (usuarioNegocio.insertarUsuario(nuevoUsuario)) {
+	                    toastMensaje = "Cliente y usuario agregados correctamente.";
+	                    toastTitulo = "Éxito";
+	                    toastTipo = "success";
+	                } else {
+	                    toastMensaje = "Cliente creado, pero no se pudo agregar el usuario.";
+	                    toastTitulo = "Advertencia";
+	                    toastTipo = "warning";
+	                }
+	            } else {
+	                toastMensaje = "Error al agregar el cliente.";
+	                toastTitulo = "Error";
+	                toastTipo = "error";
+	            }
+	        } catch (Exception ex) {
+	            toastMensaje = ex.getMessage();
 	            toastTitulo = "Error";
 	            toastTipo = "error";
 	        }
@@ -251,4 +256,5 @@ public class ClientesServlet extends HttpServlet {
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/Clientes.jsp");
 	    dispatcher.forward(request, response);
 	}
+
 }

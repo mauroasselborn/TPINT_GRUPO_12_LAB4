@@ -21,7 +21,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	}
 
 	@Override
-	public boolean insertar(Cliente cliente) {
+	public boolean insertar(Cliente cliente) throws Exception {
 		return clienteDao.alta(cliente);
 	}
 

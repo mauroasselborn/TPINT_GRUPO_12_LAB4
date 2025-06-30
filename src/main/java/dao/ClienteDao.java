@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ClienteDao {
 
-	public boolean alta(Cliente cliente);
+	public boolean alta(Cliente cliente) throws Exception;;
 
 	public boolean baja(int id);
 

@@ -10,7 +10,7 @@ public interface ClienteNegocio {
 
 	public Cliente obtenerPorDni(String dni);
 
-	public boolean insertar(Cliente cliente);
+	public boolean insertar(Cliente cliente) throws Exception;;
 
 	public boolean modificar(Cliente cliente);
 

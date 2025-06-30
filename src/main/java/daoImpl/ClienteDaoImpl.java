@@ -6,85 +6,87 @@ import entidades.Cliente;
 import entidades.Nacionalidad;
 import entidades.Localidad;
 import entidades.Provincia;
+import java.lang.Exception;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDaoImpl implements ClienteDao {
-	
-	private final String CONSULTA = "SELECT C.*"
-			+ " FROM clientes C"
-			+ " JOIN usuarios U ON U.id_cliente = C.id"
+
+	private final String CONSULTA = "SELECT C.*" + " FROM clientes C" + " JOIN usuarios U ON U.id_cliente = C.id"
 			+ " WHERE U.id_tipo_usuario = ?";
 
 	@Override
 	public List<Cliente> obtenerTodos() {
-	    List<Cliente> lista = new ArrayList<>();
-	    
+		List<Cliente> lista = new ArrayList<>();
 
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = Conexion.getConexion();
+			ps = con.prepareStatement(CONSULTA);
+			ps.setInt(1, 2);
+			rs = ps.executeQuery();
 
-	    Connection con = null;
-	    PreparedStatement ps = null;
-	    ResultSet rs = null;
-	    try {
-	        con = Conexion.getConexion();
-	        ps = con.prepareStatement(CONSULTA);
-	        ps.setInt(1, 2);
-	        rs = ps.executeQuery();
+			while (rs.next()) {
+				Cliente cliente = new Cliente();
+				cliente.setId(rs.getInt("id"));
+				cliente.setDni(rs.getString("dni"));
+				cliente.setCuil(rs.getString("cuil"));
+				cliente.setNombre(rs.getString("nombre"));
+				cliente.setApellido(rs.getString("apellido"));
+				cliente.setSexo(rs.getString("sexo"));
 
-	        while (rs.next()) {
-	            Cliente cliente = new Cliente();
-	            cliente.setId(rs.getInt("id"));
-	            cliente.setDni(rs.getString("dni"));
-	            cliente.setCuil(rs.getString("cuil"));
-	            cliente.setNombre(rs.getString("nombre"));
-	            cliente.setApellido(rs.getString("apellido"));
-	            cliente.setSexo(rs.getString("sexo"));
+				Nacionalidad nac = new Nacionalidad();
+				nac.setId(rs.getInt("id_nacionalidad"));
+				cliente.setNacionalidad(nac);
 
-	            Nacionalidad nac = new Nacionalidad();
-	            nac.setId(rs.getInt("id_nacionalidad"));
-	            cliente.setNacionalidad(nac);
+				cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+				cliente.setDireccion(rs.getString("direccion"));
 
-	            cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
-	            cliente.setDireccion(rs.getString("direccion"));
+				Localidad loc = new Localidad();
+				loc.setId(rs.getInt("id_localidad"));
+				cliente.setLocalidad(loc);
 
-	            Localidad loc = new Localidad();
-	            loc.setId(rs.getInt("id_localidad"));
-	            cliente.setLocalidad(loc);
+				Provincia prov = new Provincia();
+				prov.setId(rs.getInt("id_provincia"));
+				cliente.setProvincia(prov);
 
-	            Provincia prov = new Provincia();
-	            prov.setId(rs.getInt("id_provincia"));
-	            cliente.setProvincia(prov);
+				cliente.setCorreoElectronico(rs.getString("correo_electronico"));
+				cliente.setTelefono(rs.getString("telefono"));
+				cliente.setActivo(rs.getBoolean("activo"));
 
-	            cliente.setCorreoElectronico(rs.getString("correo_electronico"));
-	            cliente.setTelefono(rs.getString("telefono"));
-	            cliente.setActivo(rs.getBoolean("activo"));
+				lista.add(cliente);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
 
-	            lista.add(cliente);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        try {
-	            if (rs != null) rs.close();
-	        } catch (Exception e) {}
-	        try {
-	            if (ps != null) ps.close();
-	        } catch (Exception e) {}
-	        try {
-	            if (con != null) con.close();
-	        } catch (Exception e) {}
-	    }
-
-	    return lista;
+		return lista;
 	}
-
 
 	@Override
 	public Cliente obtenerPorId(int id) {
 		Cliente cliente = null;
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -147,12 +149,14 @@ public class ClienteDaoImpl implements ClienteDao {
 	}
 
 	@Override
-	public boolean alta(Cliente cliente) {
+	public boolean alta(Cliente cliente) throws Exception {
 		boolean estado = false;
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		String sql = "INSERT INTO clientes " + "(dni, cuil, nombre, apellido, sexo, id_nacionalidad, fecha_nacimiento, direccion, id_localidad, id_provincia, correo_electronico, telefono, activo) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
+		String sql = "INSERT INTO clientes "
+				+ "(dni, cuil, nombre, apellido, sexo, id_nacionalidad, fecha_nacimiento, direccion, id_localidad, id_provincia, correo_electronico, telefono, activo) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
 
 		try {
 			con = Conexion.getConexion();
@@ -177,17 +181,29 @@ public class ClienteDaoImpl implements ClienteDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+
+			String mensajeBD = e.getMessage().toLowerCase();
+
+			if (mensajeBD.contains("dni")) {
+				throw new Exception("El DNI ingresado ya existe en el sistema.");
+			} else if (mensajeBD.contains("cuil")) {
+				throw new Exception("El CUIL ingresado ya existe en el sistema.");
+			} else {
+				throw new Exception("Error al agregar cliente: " + e.getMessage());
+			}
+
 		} finally {
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 
@@ -200,7 +216,8 @@ public class ClienteDaoImpl implements ClienteDao {
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		String sql = "UPDATE clientes SET dni = ?, cuil = ?, nombre = ?, apellido = ?, sexo = ?, id_nacionalidad = ?, fecha_nacimiento = ?, " + "direccion = ?, id_localidad = ?, id_provincia = ?, correo_electronico = ?, telefono = ? WHERE id = ?";
+		String sql = "UPDATE clientes SET dni = ?, cuil = ?, nombre = ?, apellido = ?, sexo = ?, id_nacionalidad = ?, fecha_nacimiento = ?, "
+				+ "direccion = ?, id_localidad = ?, id_provincia = ?, correo_electronico = ?, telefono = ? WHERE id = ?";
 
 		try {
 			con = Conexion.getConexion();
@@ -343,7 +360,6 @@ public class ClienteDaoImpl implements ClienteDao {
 				cliente.setTelefono(rs.getString("telefono"));
 				cliente.setActivo(rs.getBoolean("activo"));
 
-				
 				Nacionalidad nac = new Nacionalidad();
 				nac.setId(rs.getInt("id_nacionalidad"));
 				cliente.setNacionalidad(nac);
