@@ -58,7 +58,7 @@ public class ClientesServlet extends HttpServlet {
 			request.setAttribute("localidades", localidadNegocio.obtenerTodos());
 			request.setAttribute("nacionalidades", nacionalidadNegocio.obtenerTodos());
 			request.setAttribute("usuario", usuario);
-
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/ModificarCliente.jsp");
 			dispatcher.forward(request, response);
 		}
@@ -99,131 +99,156 @@ public class ClientesServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String accion = request.getParameter("accion");
+	    String accion = request.getParameter("accion");
 
-		if (accion == null) {
-			response.sendRedirect("ClientesServlet?accion=listar");
-			return;
-		}
+	    if (accion == null) {
+	        response.sendRedirect("ClientesServlet?accion=listar");
+	        return;
+	    }
 
-		switch (accion) {
-		case "alta":
-			Cliente nuevoCliente = new Cliente();
-			nuevoCliente.setDni(request.getParameter("dni"));
-			nuevoCliente.setCuil(request.getParameter("cuil"));
-			nuevoCliente.setNombre(request.getParameter("nombre"));
-			nuevoCliente.setApellido(request.getParameter("apellido"));
-			nuevoCliente.setSexo(request.getParameter("sexo"));
-			nuevoCliente.setFechaNacimiento(request.getParameter("fechaNacimiento"));
-			nuevoCliente.setDireccion(request.getParameter("direccion"));
-			nuevoCliente.setCorreoElectronico(request.getParameter("correoElectronico"));
-			nuevoCliente.setTelefono(request.getParameter("telefono"));
+	    String toastMensaje = "";
+	    String toastTitulo = "";
+	    String toastTipo = "";
 
-			Nacionalidad nac = new Nacionalidad();
-			nac.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
-			nuevoCliente.setNacionalidad(nac);
+	    switch (accion) {
+	    case "alta":
+	        // Alta de cliente
+	        Cliente nuevoCliente = new Cliente();
+	        nuevoCliente.setDni(request.getParameter("dni"));
+	        nuevoCliente.setCuil(request.getParameter("cuil"));
+	        nuevoCliente.setNombre(request.getParameter("nombre"));
+	        nuevoCliente.setApellido(request.getParameter("apellido"));
+	        nuevoCliente.setSexo(request.getParameter("sexo"));
+	        nuevoCliente.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+	        nuevoCliente.setDireccion(request.getParameter("direccion"));
+	        nuevoCliente.setCorreoElectronico(request.getParameter("correoElectronico"));
+	        nuevoCliente.setTelefono(request.getParameter("telefono"));
 
-			Provincia prov = new Provincia();
-			prov.setId(Integer.parseInt(request.getParameter("idProvincia")));
-			nuevoCliente.setProvincia(prov);
+	        Nacionalidad nac = new Nacionalidad();
+	        nac.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
+	        nuevoCliente.setNacionalidad(nac);
 
-			Localidad loc = new Localidad();
-			loc.setId(Integer.parseInt(request.getParameter("idLocalidad")));
-			nuevoCliente.setLocalidad(loc);
+	        Provincia prov = new Provincia();
+	        prov.setId(Integer.parseInt(request.getParameter("idProvincia")));
+	        nuevoCliente.setProvincia(prov);
 
-			String usuarioNombre = request.getParameter("usuario");
-			String contrasena = request.getParameter("contrasena");
-			String repContrasena = request.getParameter("repContrasena");
+	        Localidad loc = new Localidad();
+	        loc.setId(Integer.parseInt(request.getParameter("idLocalidad")));
+	        nuevoCliente.setLocalidad(loc);
 
-			if (!contrasena.equals(repContrasena)) {
-				request.setAttribute("mensajeError", "Las contraseñas no coinciden.");
-				break;
-			}
+	        String usuarioNombre = request.getParameter("usuario");
+	        String contrasena = request.getParameter("contrasena");
+	        String repContrasena = request.getParameter("repContrasena");
 
-			boolean clienteInsertado = clienteNegocio.insertar(nuevoCliente);
+	        if (!contrasena.equals(repContrasena)) {
+	            toastMensaje = "Las contraseñas no coinciden.";
+	            toastTitulo = "Error";
+	            toastTipo = "error";
+	            break;
+	        }
 
-			if (clienteInsertado) {
-				
-				Cliente clienteRecienInsertado = clienteNegocio.obtenerPorDni(nuevoCliente.getDni());
+	        boolean clienteInsertado = clienteNegocio.insertar(nuevoCliente);
 
-				Usuario nuevoUsuario = new Usuario();
-				nuevoUsuario.setNombreUsuario(usuarioNombre);
-				nuevoUsuario.setContrasena(contrasena);
-				nuevoUsuario.setActivo(true);
-				
-				TipoUsuario tipoCliente = new TipoUsuario();
-				tipoCliente.setId(2); //siempre se crea un usuario  cliente
-				nuevoUsuario.setTipoUsuario(tipoCliente);
+	        if (clienteInsertado) {
+	            Cliente clienteRecienInsertado = clienteNegocio.obtenerPorDni(nuevoCliente.getDni());
 
-				nuevoUsuario.setCliente(clienteRecienInsertado);
+	            Usuario nuevoUsuario = new Usuario();
+	            nuevoUsuario.setNombreUsuario(usuarioNombre);
+	            nuevoUsuario.setContrasena(contrasena);
+	            nuevoUsuario.setActivo(true);
 
-				if (usuarioNegocio.insertarUsuario(nuevoUsuario)) {
-					request.setAttribute("mensaje", "Cliente y usuario agregados correctamente.");
-				} else {
-					request.setAttribute("mensajeError", "Cliente creado, pero no se pudo agregar el usuario.");
-				}
-			} else {
-				request.setAttribute("mensajeError", "Error al agregar el cliente.");
-			}
-			break;
+	            TipoUsuario tipoCliente = new TipoUsuario();
+	            tipoCliente.setId(2);
+	            nuevoUsuario.setTipoUsuario(tipoCliente);
+	            nuevoUsuario.setCliente(clienteRecienInsertado);
 
+	            if (usuarioNegocio.insertarUsuario(nuevoUsuario)) {
+	                toastMensaje = "Cliente y usuario agregados correctamente.";
+	                toastTitulo = "Éxito";
+	                toastTipo = "success";
+	            } else {
+	                toastMensaje = "Cliente creado, pero no se pudo agregar el usuario.";
+	                toastTitulo = "Advertencia";
+	                toastTipo = "warning";
+	            }
+	        } else {
+	            toastMensaje = "Error al agregar el cliente.";
+	            toastTitulo = "Error";
+	            toastTipo = "error";
+	        }
+	        break;
 
-		case "modificar":
-			Cliente clienteModificado = new Cliente();
-			clienteModificado.setId(Integer.parseInt(request.getParameter("id")));
-			clienteModificado.setDni(request.getParameter("dni"));
-			clienteModificado.setCuil(request.getParameter("cuil"));
-			clienteModificado.setNombre(request.getParameter("nombre"));
-			clienteModificado.setApellido(request.getParameter("apellido"));
-			clienteModificado.setSexo(request.getParameter("sexo"));
-			clienteModificado.setFechaNacimiento(request.getParameter("fechaNacimiento"));
-			clienteModificado.setDireccion(request.getParameter("direccion"));
-			clienteModificado.setCorreoElectronico(request.getParameter("correoElectronico"));
-			clienteModificado.setTelefono(request.getParameter("telefono"));
+	    case "modificar":
+	        Cliente clienteModificado = new Cliente();
+	        clienteModificado.setId(Integer.parseInt(request.getParameter("id")));
+	        clienteModificado.setDni(request.getParameter("dni"));
+	        clienteModificado.setCuil(request.getParameter("cuil"));
+	        clienteModificado.setNombre(request.getParameter("nombre"));
+	        clienteModificado.setApellido(request.getParameter("apellido"));
+	        clienteModificado.setSexo(request.getParameter("sexo"));
+	        clienteModificado.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+	        clienteModificado.setDireccion(request.getParameter("direccion"));
+	        clienteModificado.setCorreoElectronico(request.getParameter("correoElectronico"));
+	        clienteModificado.setTelefono(request.getParameter("telefono"));
 
-			Nacionalidad nacMod = new Nacionalidad();
-			nacMod.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
-			clienteModificado.setNacionalidad(nacMod);
+	        Nacionalidad nacMod = new Nacionalidad();
+	        nacMod.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
+	        clienteModificado.setNacionalidad(nacMod);
 
-			Provincia provMod = new Provincia();
-			provMod.setId(Integer.parseInt(request.getParameter("idProvincia")));
-			clienteModificado.setProvincia(provMod);
+	        Provincia provMod = new Provincia();
+	        provMod.setId(Integer.parseInt(request.getParameter("idProvincia")));
+	        clienteModificado.setProvincia(provMod);
 
-			Localidad locMod = new Localidad();
-			locMod.setId(Integer.parseInt(request.getParameter("idLocalidad")));
-			clienteModificado.setLocalidad(locMod);
+	        Localidad locMod = new Localidad();
+	        locMod.setId(Integer.parseInt(request.getParameter("idLocalidad")));
+	        clienteModificado.setLocalidad(locMod);
 
-			if (clienteNegocio.modificar(clienteModificado)) {
-				System.out.println("modificado correctamente");
-				request.setAttribute("mensaje", "Cliente modificado correctamente.");
-			} else {
-				System.out.println("no se pudo modificar");
-				request.setAttribute("mensajeError", "Error al modificar el cliente.");
-			}
-			break;
+	        if (clienteNegocio.modificar(clienteModificado)) {
+	            toastMensaje = "Cliente modificado correctamente.";
+	            toastTitulo = "Éxito";
+	            toastTipo = "success";
+	        } else {
+	            toastMensaje = "Error al modificar el cliente.";
+	            toastTitulo = "Error";
+	            toastTipo = "error";
+	        }
+	        break;
 
-		case "eliminar":
-			int idEliminar = Integer.parseInt(request.getParameter("id"));
-			if (clienteNegocio.eliminar(idEliminar)) {
-				request.setAttribute("mensaje", "Cliente eliminado correctamente.");
-			} else {
-				request.setAttribute("mensajeError", "Error al eliminar el cliente.");
-			}
-			break;
+	    case "eliminar":
+	        int idEliminar = Integer.parseInt(request.getParameter("id"));
+	        if (clienteNegocio.eliminar(idEliminar)) {
+	            toastMensaje = "Cliente eliminado correctamente.";
+	            toastTitulo = "Éxito";
+	            toastTipo = "success";
+	        } else {
+	            toastMensaje = "Error al eliminar el cliente.";
+	            toastTitulo = "Error";
+	            toastTipo = "error";
+	        }
+	        break;
 
-		case "altaLogica":
-			int idAlta = Integer.parseInt(request.getParameter("id"));
-			if (clienteNegocio.altaLogica(idAlta)) {
-				request.setAttribute("mensaje", "Cliente dado de alta correctamente.");
-			} else {
-				request.setAttribute("mensajeError", "Error al dar de alta el cliente.");
-			}
-			break;
-		}
+	    case "altaLogica":
+	        int idAlta = Integer.parseInt(request.getParameter("id"));
+	        if (clienteNegocio.altaLogica(idAlta)) {
+	            toastMensaje = "Cliente dado de alta correctamente.";
+	            toastTitulo = "Éxito";
+	            toastTipo = "success";
+	        } else {
+	            toastMensaje = "Error al dar de alta el cliente.";
+	            toastTitulo = "Error";
+	            toastTipo = "error";
+	        }
+	        break;
+	    }
 
-		List<Cliente> listaClientes = clienteNegocio.obtenerTodos();
-		request.setAttribute("listaClientes", listaClientes);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/Clientes.jsp");
-		dispatcher.forward(request, response);
+	    // Obtener y reenviar lista actualizada con toast
+	    List<Cliente> listaClientes = clienteNegocio.obtenerTodos();
+	    request.setAttribute("listaClientes", listaClientes);
+	    request.setAttribute("toastMensaje", toastMensaje);
+	    request.setAttribute("toastTitulo", toastTitulo);
+	    request.setAttribute("toastTipo", toastTipo);
+
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/Clientes.jsp");
+	    dispatcher.forward(request, response);
 	}
 }
