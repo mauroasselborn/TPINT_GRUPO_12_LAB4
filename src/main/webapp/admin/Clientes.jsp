@@ -75,7 +75,6 @@
 	</div>
 
 
-	<jsp:include page="../componentes/Footer.jsp" />
 
 	<!-- Modal de confirmación -->
 	<div class="modal fade" id="modalConfirmacion" tabindex="-1"
@@ -110,6 +109,7 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="../componentes/Footer.jsp" />
 </div>
 
 <% if (request.getAttribute("toastMensaje") != null && request.getAttribute("toastTitulo") != null && request.getAttribute("toastTipo") != null) { %>
