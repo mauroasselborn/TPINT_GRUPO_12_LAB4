@@ -120,6 +120,14 @@ input[type="submit"]:hover {
 	flex: 1;
 }
 
+
+.toast {
+  width: 400px;  
+  min-height: 100px;  
+  font-size: 16px; 
+}
+
+
 .table td, .table th {
 	vertical-align: middle;
 }

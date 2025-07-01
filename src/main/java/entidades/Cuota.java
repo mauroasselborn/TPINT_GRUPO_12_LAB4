@@ -5,20 +5,19 @@ import java.util.Date;
 public class Cuota {
 
 	private int id;
-	private int NumeroCuota;
-	private float Monto;
-	private Date FechaPago;
-	
-	
+	private int numeroCuota;
+	private float monto;
+	private Date fechaPago;
+
 	public Cuota() {
-		
+
 	}
-	
-	public Cuota(int id, int NumeroCuota,float Monto, Date FechaPago) {
+
+	public Cuota(int id, int NumeroCuota, float Monto, Date FechaPago) {
 		this.id = id;
-		this.NumeroCuota = NumeroCuota;
-		this.Monto = Monto;
-		this.FechaPago = FechaPago;
+		this.numeroCuota = NumeroCuota;
+		this.monto = Monto;
+		this.fechaPago = FechaPago;
 	}
 
 	public int getId() {
@@ -30,28 +29,27 @@ public class Cuota {
 	}
 
 	public int getNumeroCuota() {
-		return NumeroCuota;
+		return numeroCuota;
 	}
 
 	public void setNumeroCuota(int numeroCuota) {
-		NumeroCuota = numeroCuota;
+		this.numeroCuota = numeroCuota;
 	}
 
 	public float getMonto() {
-		return Monto;
+		return monto;
 	}
 
 	public void setMonto(float monto) {
-		Monto = monto;
+		this.monto = monto;
 	}
 
 	public Date getFechaPago() {
-		return FechaPago;
+		return fechaPago;
 	}
 
 	public void setFechaPago(Date fechaPago) {
-		FechaPago = fechaPago;
+		this.fechaPago = fechaPago;
 	}
-	
-	
+
 }
