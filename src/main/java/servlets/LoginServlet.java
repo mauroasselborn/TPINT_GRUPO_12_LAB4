@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
 
 		if (credencialesValidas) {
 			Usuario usuario = usuarioNegocio.obtenerUsuarioPorNombre(nombreUsuario);
+			
 
 			if (usuario != null && usuario.isActivo()) {
 				HttpSession session = request.getSession();

@@ -1,83 +1,95 @@
+<%@ page import="java.util.List" %>
+<%@ page import="entidades.Cuenta" %>
+
 <!-- Encabezado -->
-  <jsp:include page="../componentes/Encabezado.jsp" />
+<jsp:include page="/componentes/Encabezado.jsp" />
 
-  <!-- Sidebar -->
-  <jsp:include page="../componentes/MenuLateralCliente.jsp" />
+<!-- Sidebar -->
+<jsp:include page="/componentes/MenuLateralCliente.jsp" />
 
-  <!-- Contenedor principal -->
-  <div class="main-content">
-    <!-- Navbar -->
-    <jsp:include page="../componentes/BarraSuperior.jsp" />
-    <!-- Contenido principal -->
-    <div class="container-fluid content py-4">
+<!-- Contenedor principal -->
+<div class="main-content">
+  <!-- Navbar -->
+  <jsp:include page="/componentes/BarraSuperior.jsp" />
+
+  <!-- Contenido principal -->
+  <div class="container-fluid content py-4">
 <%
-    // Lista de cuentas simuladas (mock) del cliente
-    String[] cuentas = {
-        "Caja de Ahorro (Pesos) - 00123456",
-        "Cuenta Corriente (Pesos) - 00123457",
-        "Caja de Ahorro (Dólares) - 00123458"
-    };
+    List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentasCliente");
 
-    // Obtener parámetros del formulario (si existen)
-    String cuentaOrigen = request.getParameter("cuentaOrigen");
-    String cuentaDestino = request.getParameter("cuentaDestino");
-    String importe = request.getParameter("importe");
+String cuentaOrigen = (String) request.getAttribute("cuentaOrigen");
+String cuentaDestino = (String) request.getAttribute("cuentaDestino");
+String importe = (String) request.getAttribute("importe");
 
-    // Verificar si el formulario fue enviado (parámetros no nulos)
     boolean formEnviado = (cuentaOrigen != null && cuentaDestino != null && importe != null);
 %>
 
 <% if (!formEnviado) { %>
     <!-- Sección de Formulario de transferencia -->
     <div class="form-container">
-    <h1>Transferencia entre Cuentas Propias</h1>
-        <form action="TransferenciasPropias.jsp" method="post">
-            <label for="origen">Cuenta Origen:</label>
-            <select id="origen" name="cuentaOrigen" required>
-                <%-- Opciones de cuentas de origen (simuladas) --%>
-                <% for (String c : cuentas) { %>
-                    <option value="<%= c %>"><%= c %></option>
-                <% } %>
-            </select>
-		<div class="mt-3">
-            <label for="destino">Cuenta Destino:</label>
-            <select id="destino" name="cuentaDestino" required>
-                <%-- Opciones de cuentas de destino (simuladas) --%>
-                <% for (String c : cuentas) { %>
-                    <option value="<%= c %>"><%= c %></option>
-                <% } %>
-            </select>
-		
-		</div>
-		
-		<div  class="mt-3">
-		
-            <label for="importe">Importe:</label>
-            <input type="number" id="importe" name="importe" step="0.01" min="0" required />
-		</div>
+      <h1>Transferencia entre Cuentas Propias</h1>
+      <form action="TransferenciasServlet?accion=propias" method="post">
+        <div class="mb-3">
+          <label for="origen">Cuenta Origen:</label>
+          <select id="origen" name="cuentaOrigen" required>
+            <% if (cuentas != null) {
+                   for (Cuenta c : cuentas) { %>
+                <option value="<%= c.getId() %>">
+                    <%= c.getNumeroCuenta() %> - Saldo: $<%= c.getSaldo() %>
+                </option>
+            <%   }
+               } %>
+          </select>
+        </div>
 
+        <div class="mb-3">
+          <label for="destino">Cuenta Destino:</label>
+          <select id="destino" name="cbuDestino" required>
+            <% if (cuentas != null) {
+                   for (Cuenta c : cuentas) { %>
+                <option value="<%= c.getCbu() %>">
+                    <%= c.getNumeroCuenta() %> - Saldo: $<%= c.getSaldo() %>
+                </option>
+            <%   }
+               } %>
+          </select>
+        </div>
 
-            <div class="buttons mt-3">
-                <button type="submit" class="btn btn-primary">Transferir</button>
-                <button type="reset" class="btn btn-secondary">Limpiar</button>
-            </div>
-        </form>
+        <div class="mb-3">
+          <label for="importe">Importe:</label>
+          <input type="number" id="importe" name="monto" step="0.01" min="0" required />
+        </div>
+
+        <div class="buttons mt-3">
+          <button type="submit" class="btn btn-primary">Transferir</button>
+          <button type="reset" class="btn btn-secondary">Limpiar</button>
+        </div>
+      </form>
     </div>
+
 <% } else { %>
     <!-- Sección de Resumen de la operación (después de enviar el formulario) -->
-    <h1>Resumen de la Transferencia.</h1>
-    <div class="result-container">
-        <p><strong>Cuenta Origen:</strong> <%= cuentaOrigen %></p>
-        <p><strong>Cuenta Destino:</strong> <%= cuentaDestino %></p>
-        <p><strong>Importe:</strong> <%= importe %></p>
-        <hr />
-        <p>¡Transferencia realizada con éxito!</p>
-        <!-- Enlace para realizar otra transferencia (recargar formulario) -->
-        <p><a href="TransferenciasPropias.jsp">Realizar otra transferencia</a></p>
+     <div class="d-flex justify-content-center mt-5">
+  <div class="card shadow" style="max-width: 500px; width: 100%;">
+    <div class="card-body text-center">
+      <h1 class="card-title mb-4">Resumen de la Transferencia</h1>
+
+      <p><strong>Cuenta Origen:</strong> <%= cuentaOrigen %></p>
+      <p><strong>CBU Destino:</strong> <%= cuentaDestino %></p>
+      <p><strong>Importe:</strong> $<%= importe %></p>
+      <hr />
+      <p class="text-success fw-bold">¡Transferencia propia realizada con éxito!</p>
+
+      <div class="mt-3">
+        <a href="TransferenciasServlet?accion=propias" class="btn btn-primary">Hacer otra transferencia...</a>
+      </div>
     </div>
+  </div>
+</div>
 <% } %>
-	</div>
-	<jsp:include page="../componentes/Footer.jsp" />
+
+  </div>
+  <jsp:include page="/componentes/Footer.jsp" />
 </div>
 </body>
 </html>

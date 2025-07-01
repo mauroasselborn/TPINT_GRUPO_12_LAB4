@@ -103,4 +103,18 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 
 	        return cbu;
 	    }
+	    
+	    @Override
+	    public void descontarSaldo(int idCuenta, double monto) throws Exception {
+	        if (!dao.descontarSaldo(idCuenta, monto)) {
+	            throw new Exception("No se pudo descontar el saldo. Verifique fondos suficientes.");
+	        }
+	    }
+
+	    @Override
+	    public void aumentarSaldo(int idCuenta, double monto) throws Exception {
+	        if (!dao.aumentarSaldo(idCuenta, monto)) {
+	            throw new Exception("No se pudo aumentar el saldo.");
+	        }
+	    }
 }

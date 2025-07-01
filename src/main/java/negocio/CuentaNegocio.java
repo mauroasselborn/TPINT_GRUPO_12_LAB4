@@ -17,4 +17,8 @@ public interface CuentaNegocio {
 	public  String generarNumeroCuentaUnico(); //Genera nro aleatorio
 	
 	public  String generarCBUUnico();
+	
+	public void descontarSaldo(int idCuenta, double monto) throws Exception;
+	
+    public void aumentarSaldo(int idCuenta, double monto) throws Exception;
 }

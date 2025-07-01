@@ -19,5 +19,7 @@ public interface CuentaDao {
 	
 	public boolean existeCBU(String cbu);
 	
-
+	public boolean descontarSaldo(int idCuenta, double monto);
+	
+    public boolean aumentarSaldo(int idCuenta, double monto);
 }

@@ -286,4 +286,56 @@ public class CuentaDaoImpl implements CuentaDao {
 
 	    return existe;
 	}
+	
+	public boolean descontarSaldo(int idCuenta, double monto) {
+	    boolean estado = false;
+	    PreparedStatement ps = null;
+
+	    String sql = "UPDATE cuentas SET saldo = saldo - ? WHERE id = ? AND saldo >= ?";
+
+	    try {
+	        ps = Conexion.getConexion().prepareStatement(sql);
+	        ps.setDouble(1, monto);
+	        ps.setInt(2, idCuenta);
+	        ps.setDouble(3, monto);
+
+	        if (ps.executeUpdate() > 0) {
+	            estado = true;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (ps != null) ps.close();
+	        } catch (Exception e) {}
+	    }
+
+	    return estado;
+	}
+
+	@Override
+	public boolean aumentarSaldo(int idCuenta, double monto) {
+	    boolean estado = false;
+	    PreparedStatement ps = null;
+
+	    String sql = "UPDATE cuentas SET saldo = saldo + ? WHERE id = ?";
+
+	    try {
+	        ps = Conexion.getConexion().prepareStatement(sql);
+	        ps.setDouble(1, monto);
+	        ps.setInt(2, idCuenta);
+
+	        if (ps.executeUpdate() > 0) {
+	            estado = true;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (ps != null) ps.close();
+	        } catch (Exception e) {}
+	    }
+
+	    return estado;
+	}
 }

@@ -4,10 +4,10 @@
         <hr />
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="MenuCliente.jsp" class="nav-link text-white"><i class="bi bi-list-ul me-2"></i>Inicio</a>
+                <a href="/TPINT_GRUPO_12_LAB4/cliente/MenuCliente.jsp" class="nav-link text-white"><i class="bi bi-list-ul me-2"></i>Inicio</a>
             </li>
             <li>
-                <a href="Transferencias.jsp" class="nav-link text-white"
+                <a href="/TPINT_GRUPO_12_LAB4/cliente/Transferencias.jsp" class="nav-link text-white"
                     ><i class="bi bi-arrow-left-right me-2"></i>Transferencias</a
                 >
             </li>

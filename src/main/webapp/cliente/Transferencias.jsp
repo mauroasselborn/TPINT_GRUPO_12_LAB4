@@ -1,13 +1,13 @@
 <!-- Encabezado -->
-  <jsp:include page="../componentes/Encabezado.jsp" />
+  <jsp:include page="/componentes/Encabezado.jsp" />
 
   <!-- Sidebar -->
-  <jsp:include page="../componentes/MenuLateralCliente.jsp" />
+  <jsp:include page="/componentes/MenuLateralCliente.jsp" />
 
   <!-- Contenedor principal -->
   <div class="main-content">
     <!-- Navbar -->
-    <jsp:include page="../componentes/BarraSuperior.jsp" />
+    <jsp:include page="/componentes/BarraSuperior.jsp" />
     <!-- Contenido principal -->
     <div class="container-fluid content py-4">
     
@@ -23,12 +23,12 @@
 
                     <div class="d-grid gap-3">
                         <button type="button" class="btn btn-outline-primary d-flex align-items-center justify-content-center"
-                                onclick="window.location.href='TransferenciasPropias.jsp'">
+                                onclick="window.location.href='/TPINT_GRUPO_12_LAB4/TransferenciasServlet?accion=propias'">
                             <i class="bi bi-person-check me-2"></i> Entre mis cuentas
                         </button>
 
                         <button type="button" class="btn btn-outline-success d-flex align-items-center justify-content-center"
-                                onclick="window.location.href='TransferenciasTerceros.jsp'">
+                                onclick="window.location.href='/TPINT_GRUPO_12_LAB4/TransferenciasServlet?accion=terceros'">
                             <i class="bi bi-people-fill me-2"></i> A terceros
                         </button>
                     </div>
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    <jsp:include page="../componentes/Footer.jsp" />
+    <jsp:include page="/componentes/Footer.jsp" />
 </div>
 </body>
 </html>
