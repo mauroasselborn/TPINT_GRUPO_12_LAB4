@@ -12,6 +12,8 @@ public class EstadoPrestamo {
 		this.id = id;
 		this.descripcion = descripcion;
 	}
+	
+	//getters y Setters
 
 	public int getId() {
 		return id;

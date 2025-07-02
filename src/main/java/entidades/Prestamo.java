@@ -12,11 +12,12 @@ public class Prestamo {
 	private float importeCuota;
 	private int cuotaPendientes;
 	private EstadoPrestamo estadoPrestamo;
+	private boolean activo;
 	
 	public Prestamo() {
 	}
 	
-	public Prestamo(int id,Cuenta cuenta,Date fecha,float importePedido,int cantidadCuotas,float importeCuota,int cuotaPendientes, EstadoPrestamo estadoPrestamo) {
+	public Prestamo(int id,Cuenta cuenta,Date fecha,float importePedido,int cantidadCuotas,float importeCuota,int cuotaPendientes,EstadoPrestamo estadoPrestamo,boolean activo) {
 		this.id = id;
 		this.cuenta = cuenta;
 		this.fecha = fecha;
@@ -25,7 +26,10 @@ public class Prestamo {
 		this.importeCuota = importeCuota;
 		this.cuotaPendientes = cuotaPendientes;
 		this.estadoPrestamo = estadoPrestamo;
+		this.activo = activo;
 	}
+	
+	//getters y Setters
 
 	public int getId() {
 		return id;
@@ -90,6 +94,13 @@ public class Prestamo {
 	public void setEstadoPrestamo(EstadoPrestamo estadoPrestamo) {
 		this.estadoPrestamo = estadoPrestamo;
 	}
-	
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
 	
 }
