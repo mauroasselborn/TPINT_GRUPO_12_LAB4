@@ -58,11 +58,11 @@ public class ClientesServlet extends HttpServlet {
 			request.setAttribute("localidades", localidadNegocio.obtenerTodos());
 			request.setAttribute("nacionalidades", nacionalidadNegocio.obtenerTodos());
 			request.setAttribute("usuario", usuario);
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/ModificarCliente.jsp");
 			dispatcher.forward(request, response);
 		}
-		
+
 		if (accion.equals("detalle")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			Cliente cliente = clienteNegocio.obtenerPorId(id);
@@ -82,9 +82,9 @@ public class ClientesServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/DetalleCliente.jsp");
 			dispatcher.forward(request, response);
 		}
-		
+
 		if (accion.equals("alta")) {
-			
+
 			ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
 			LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
 			NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
@@ -99,162 +99,163 @@ public class ClientesServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String accion = request.getParameter("accion");
+		String accion = request.getParameter("accion");
 
-	    if (accion == null) {
-	        response.sendRedirect("ClientesServlet?accion=listar");
-	        return;
-	    }
+		if (accion == null) {
+			response.sendRedirect("ClientesServlet?accion=listar");
+			return;
+		}
 
-	    String toastMensaje = "";
-	    String toastTitulo = "";
-	    String toastTipo = "";
+		String toastMensaje = "";
+		String toastTitulo = "";
+		String toastTipo = "";
 
-	    switch (accion) {
-	    case "alta":
-	        try {
-	            // Alta de cliente
-	            Cliente nuevoCliente = new Cliente();
-	            nuevoCliente.setDni(request.getParameter("dni"));
-	            nuevoCliente.setCuil(request.getParameter("cuil"));
-	            nuevoCliente.setNombre(request.getParameter("nombre"));
-	            nuevoCliente.setApellido(request.getParameter("apellido"));
-	            nuevoCliente.setSexo(request.getParameter("sexo"));
-	            nuevoCliente.setFechaNacimiento(request.getParameter("fechaNacimiento"));
-	            nuevoCliente.setDireccion(request.getParameter("direccion"));
-	            nuevoCliente.setCorreoElectronico(request.getParameter("correoElectronico"));
-	            nuevoCliente.setTelefono(request.getParameter("telefono"));
+		switch (accion) {
+		case "alta":
+			try {
+				// Alta de cliente
+				Cliente nuevoCliente = new Cliente();
+				nuevoCliente.setDni(request.getParameter("dni"));
+				nuevoCliente.setCuil(request.getParameter("cuil"));
+				nuevoCliente.setNombre(request.getParameter("nombre"));
+				nuevoCliente.setApellido(request.getParameter("apellido"));
+				nuevoCliente.setSexo(request.getParameter("sexo"));
+				nuevoCliente.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+				nuevoCliente.setDireccion(request.getParameter("direccion"));
+				nuevoCliente.setCorreoElectronico(request.getParameter("correoElectronico"));
+				nuevoCliente.setTelefono(request.getParameter("telefono"));
 
-	            Nacionalidad nac = new Nacionalidad();
-	            nac.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
-	            nuevoCliente.setNacionalidad(nac);
+				Nacionalidad nac = new Nacionalidad();
+				nac.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
+				nuevoCliente.setNacionalidad(nac);
 
-	            Provincia prov = new Provincia();
-	            prov.setId(Integer.parseInt(request.getParameter("idProvincia")));
-	            nuevoCliente.setProvincia(prov);
+				Provincia prov = new Provincia();
+				prov.setId(Integer.parseInt(request.getParameter("idProvincia")));
+				nuevoCliente.setProvincia(prov);
 
-	            Localidad loc = new Localidad();
-	            loc.setId(Integer.parseInt(request.getParameter("idLocalidad")));
-	            nuevoCliente.setLocalidad(loc);
+				Localidad loc = new Localidad();
+				loc.setId(Integer.parseInt(request.getParameter("idLocalidad")));
+				nuevoCliente.setLocalidad(loc);
 
-	            String usuarioNombre = request.getParameter("usuario");
-	            String contrasena = request.getParameter("contrasena");
-	            String repContrasena = request.getParameter("repContrasena");
+				String usuarioNombre = request.getParameter("usuario");
+				String contrasena = request.getParameter("contrasena");
+				String repContrasena = request.getParameter("repContrasena");
 
-	            if (!contrasena.equals(repContrasena)) {
-	                toastMensaje = "Las contraseñas no coinciden.";
-	                toastTitulo = "Error";
-	                toastTipo = "error";
-	                break;
-	            }
+				if (!contrasena.equals(repContrasena)) {
+					toastMensaje = "Las contraseñas no coinciden.";
+					toastTitulo = "Error";
+					toastTipo = "error";
+					break;
+				}
 
-	            boolean clienteInsertado = clienteNegocio.insertar(nuevoCliente);
-	            if (clienteInsertado) {
-	                Cliente clienteRecienInsertado = clienteNegocio.obtenerPorDni(nuevoCliente.getDni());
+				boolean clienteInsertado = clienteNegocio.insertar(nuevoCliente);
+				if (clienteInsertado) {
+					Cliente clienteRecienInsertado = clienteNegocio.obtenerPorDni(nuevoCliente.getDni());
 
-	                Usuario nuevoUsuario = new Usuario();
-	                nuevoUsuario.setNombreUsuario(usuarioNombre);
-	                nuevoUsuario.setContrasena(contrasena);
-	                nuevoUsuario.setActivo(true);
+					Usuario nuevoUsuario = new Usuario();
+					nuevoUsuario.setNombreUsuario(usuarioNombre);
+					nuevoUsuario.setContrasena(contrasena);
+					nuevoUsuario.setActivo(true);
 
-	                TipoUsuario tipoCliente = new TipoUsuario();
-	                tipoCliente.setId(2);
-	                nuevoUsuario.setTipoUsuario(tipoCliente);
-	                nuevoUsuario.setCliente(clienteRecienInsertado);
+					TipoUsuario tipoCliente = new TipoUsuario();
+					tipoCliente.setId(2);
+					nuevoUsuario.setTipoUsuario(tipoCliente);
+					nuevoUsuario.setCliente(clienteRecienInsertado);
 
-	                if (usuarioNegocio.insertarUsuario(nuevoUsuario)) {
-	                    toastMensaje = "Cliente y usuario agregados correctamente.";
-	                    toastTitulo = "Éxito";
-	                    toastTipo = "success";
-	                } else {
-	                    toastMensaje = "Cliente creado, pero no se pudo agregar el usuario.";
-	                    toastTitulo = "Advertencia";
-	                    toastTipo = "warning";
-	                }
-	            } else {
-	                toastMensaje = "Error al agregar el cliente.";
-	                toastTitulo = "Error";
-	                toastTipo = "error";
-	            }
-	        } catch (Exception ex) {
-	            toastMensaje = ex.getMessage();
-	            toastTitulo = "Error";
-	            toastTipo = "error";
-	        }
-	        break;
+					if (usuarioNegocio.insertarUsuario(nuevoUsuario)) {
+						toastMensaje = "Cliente y usuario agregados correctamente.";
+						toastTitulo = "Éxito";
+						toastTipo = "success";
+					} else {
+						toastMensaje = "Cliente creado, pero no se pudo agregar el usuario.";
+						toastTitulo = "Advertencia";
+						toastTipo = "warning";
+					}
+				} else {
+					toastMensaje = "Error al agregar el cliente.";
+					toastTitulo = "Error";
+					toastTipo = "error";
+				}
+			} catch (Exception ex) {
+				toastMensaje = ex.getMessage();
+				toastTitulo = "Error";
+				toastTipo = "error";
+			}
+			break;
 
-	    case "modificar":
-	        Cliente clienteModificado = new Cliente();
-	        clienteModificado.setId(Integer.parseInt(request.getParameter("id")));
-	        clienteModificado.setDni(request.getParameter("dni"));
-	        clienteModificado.setCuil(request.getParameter("cuil"));
-	        clienteModificado.setNombre(request.getParameter("nombre"));
-	        clienteModificado.setApellido(request.getParameter("apellido"));
-	        clienteModificado.setSexo(request.getParameter("sexo"));
-	        clienteModificado.setFechaNacimiento(request.getParameter("fechaNacimiento"));
-	        clienteModificado.setDireccion(request.getParameter("direccion"));
-	        clienteModificado.setCorreoElectronico(request.getParameter("correoElectronico"));
-	        clienteModificado.setTelefono(request.getParameter("telefono"));
+		case "modificar":
+			Cliente clienteModificado = new Cliente();
+			clienteModificado.setId(Integer.parseInt(request.getParameter("id")));
+			clienteModificado.setDni(request.getParameter("dni"));
+			clienteModificado.setCuil(request.getParameter("cuil"));
+			clienteModificado.setNombre(request.getParameter("nombre"));
+			clienteModificado.setApellido(request.getParameter("apellido"));
+			clienteModificado.setSexo(request.getParameter("sexo"));
+			clienteModificado.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+			clienteModificado.setDireccion(request.getParameter("direccion"));
+			clienteModificado.setCorreoElectronico(request.getParameter("correoElectronico"));
+			clienteModificado.setTelefono(request.getParameter("telefono"));
 
-	        Nacionalidad nacMod = new Nacionalidad();
-	        nacMod.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
-	        clienteModificado.setNacionalidad(nacMod);
+			Nacionalidad nacMod = new Nacionalidad();
+			nacMod.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
+			clienteModificado.setNacionalidad(nacMod);
 
-	        Provincia provMod = new Provincia();
-	        provMod.setId(Integer.parseInt(request.getParameter("idProvincia")));
-	        clienteModificado.setProvincia(provMod);
+			Provincia provMod = new Provincia();
+			provMod.setId(Integer.parseInt(request.getParameter("idProvincia")));
+			clienteModificado.setProvincia(provMod);
 
-	        Localidad locMod = new Localidad();
-	        locMod.setId(Integer.parseInt(request.getParameter("idLocalidad")));
-	        clienteModificado.setLocalidad(locMod);
+			Localidad locMod = new Localidad();
+			locMod.setId(Integer.parseInt(request.getParameter("idLocalidad")));
+			clienteModificado.setLocalidad(locMod);
 
-	        if (clienteNegocio.modificar(clienteModificado)) {
-	            toastMensaje = "Cliente modificado correctamente.";
-	            toastTitulo = "Éxito";
-	            toastTipo = "success";
-	        } else {
-	            toastMensaje = "Error al modificar el cliente.";
-	            toastTitulo = "Error";
-	            toastTipo = "error";
-	        }
-	        break;
+			if (clienteNegocio.modificar(clienteModificado)) {
+				toastMensaje = "Cliente modificado correctamente.";
+				toastTitulo = "Éxito";
+				toastTipo = "success";
+			} else {
+				toastMensaje = "Error al modificar el cliente.";
+				toastTitulo = "Error";
+				toastTipo = "error";
+			}
+			break;
 
-	    case "eliminar":
-	        int idEliminar = Integer.parseInt(request.getParameter("id"));
-	        if (clienteNegocio.eliminar(idEliminar)) {
-	            toastMensaje = "Cliente eliminado correctamente.";
-	            toastTitulo = "Éxito";
-	            toastTipo = "success";
-	        } else {
-	            toastMensaje = "Error al eliminar el cliente.";
-	            toastTitulo = "Error";
-	            toastTipo = "error";
-	        }
-	        break;
+		case "eliminar":
+			int idEliminar = Integer.parseInt(request.getParameter("id"));
+			System.out.println(idEliminar);
+			if (clienteNegocio.eliminar(idEliminar) && usuarioNegocio.eliminarPorIdCliente(idEliminar)) {
+				toastMensaje = "Cliente eliminado correctamente.";
+				toastTitulo = "Éxito";
+				toastTipo = "success";
+			} else {
+				toastMensaje = "Error al eliminar el cliente.";
+				toastTitulo = "Error";
+				toastTipo = "error";
+			}
+			break;
 
-	    case "altaLogica":
-	        int idAlta = Integer.parseInt(request.getParameter("id"));
-	        if (clienteNegocio.altaLogica(idAlta)) {
-	            toastMensaje = "Cliente dado de alta correctamente.";
-	            toastTitulo = "Éxito";
-	            toastTipo = "success";
-	        } else {
-	            toastMensaje = "Error al dar de alta el cliente.";
-	            toastTitulo = "Error";
-	            toastTipo = "error";
-	        }
-	        break;
-	    }
+		case "altaLogica":
+			int idAlta = Integer.parseInt(request.getParameter("id"));
+			if (clienteNegocio.altaLogica(idAlta) && usuarioNegocio.activarUsuarioPorIdCliente(idAlta)) {
+				toastMensaje = "Cliente dado de alta correctamente.";
+				toastTitulo = "Éxito";
+				toastTipo = "success";
+			} else {
+				toastMensaje = "Error al dar de alta el cliente.";
+				toastTitulo = "Error";
+				toastTipo = "error";
+			}
+			break;
+		}
 
-	    // Obtener y reenviar lista actualizada con toast
-	    List<Cliente> listaClientes = clienteNegocio.obtenerTodos();
-	    request.setAttribute("listaClientes", listaClientes);
-	    request.setAttribute("toastMensaje", toastMensaje);
-	    request.setAttribute("toastTitulo", toastTitulo);
-	    request.setAttribute("toastTipo", toastTipo);
+		// Obtener y reenviar lista actualizada con toast
+		List<Cliente> listaClientes = clienteNegocio.obtenerTodos();
+		request.setAttribute("listaClientes", listaClientes);
+		request.setAttribute("toastMensaje", toastMensaje);
+		request.setAttribute("toastTitulo", toastTitulo);
+		request.setAttribute("toastTipo", toastTipo);
 
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/Clientes.jsp");
-	    dispatcher.forward(request, response);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/Clientes.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

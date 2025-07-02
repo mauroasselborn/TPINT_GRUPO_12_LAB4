@@ -8,7 +8,11 @@ public interface UsuarioDao {
 
 	boolean eliminarUsuario(int idUsuario);
 
+	boolean bajaPorIdCLiente(int idCliente);
+
 	boolean activarUsuario(int idUsuario);
+
+	boolean activarUsuarioPorIdCliente(int idCliente);
 
 	Usuario obtenerUsuarioPorId(int idUsuario);
 

@@ -9,7 +9,11 @@ public interface UsuarioNegocio {
 
 	public boolean eliminarUsuario(int idUsuario); // baja lógica
 
+	public boolean eliminarPorIdCliente(int idCliente);
+
 	public boolean activarUsuario(int idUsuario); // alta lógica
+
+	public boolean activarUsuarioPorIdCliente(int idCliente); // alta lógica
 
 	public Usuario obtenerUsuarioPorId(int idUsuario);
 
@@ -22,4 +26,5 @@ public interface UsuarioNegocio {
 	public Usuario obtenerUsuarioPorNombre(String nombreUsuario);
 
 	public List<Usuario> obtenerTodosLosUsuariosAdmin();
+
 }

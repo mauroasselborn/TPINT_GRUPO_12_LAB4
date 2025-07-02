@@ -42,6 +42,11 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
 	}
 
 	@Override
+	public boolean eliminarPorIdCliente(int idCliente) {
+		return usuarioDao.bajaPorIdCLiente(idCliente);
+	}
+
+	@Override
 	public Usuario obtenerUsuarioPorNombre(String nombreUsuario) {
 		return usuarioDao.obtenerUsuarioPorNombre(nombreUsuario);
 	}
@@ -54,6 +59,11 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
 	@Override
 	public List<Usuario> obtenerTodosLosUsuariosAdmin() {
 		return usuarioDao.obtenerTodosLosUsuariosAdmin();
+	}
+
+	@Override
+	public boolean activarUsuarioPorIdCliente(int idCliente) {
+		return usuarioDao.activarUsuarioPorIdCliente(idCliente);
 	}
 
 }
