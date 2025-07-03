@@ -3,33 +3,32 @@ package entidades;
 import java.util.Date;
 
 public class Prestamo {
-	
 	private int id;
+	private Cliente cliente;
 	private Cuenta cuenta;
-	private Date fecha;
-	private float importePedido;
+	private Date fechaAlta;
+	private double importePedido;
 	private int cantidadCuotas;
-	private float importeCuota;
-	private int cuotaPendientes;
-	private EstadoPrestamo estadoPrestamo;
+	private double importePorCuota;
+	private String estado;
 	private boolean activo;
-	
+
 	public Prestamo() {
+
 	}
-	
-	public Prestamo(int id,Cuenta cuenta,Date fecha,float importePedido,int cantidadCuotas,float importeCuota,int cuotaPendientes,EstadoPrestamo estadoPrestamo,boolean activo) {
+
+	public Prestamo(int id, Cliente cliente, Cuenta cuenta, Date fechaAlta, double importePedido, int cantidadCuotas, double importePorCuota, String estado, boolean activo) {
+		super();
 		this.id = id;
+		this.cliente = cliente;
 		this.cuenta = cuenta;
-		this.fecha = fecha;
+		this.fechaAlta = fechaAlta;
 		this.importePedido = importePedido;
 		this.cantidadCuotas = cantidadCuotas;
-		this.importeCuota = importeCuota;
-		this.cuotaPendientes = cuotaPendientes;
-		this.estadoPrestamo = estadoPrestamo;
+		this.importePorCuota = importePorCuota;
+		this.estado = estado;
 		this.activo = activo;
 	}
-	
-	//getters y Setters
 
 	public int getId() {
 		return id;
@@ -37,6 +36,14 @@ public class Prestamo {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public Cuenta getCuenta() {
@@ -47,19 +54,19 @@ public class Prestamo {
 		this.cuenta = cuenta;
 	}
 
-	public Date getFecha() {
-		return fecha;
+	public Date getFechaAlta() {
+		return fechaAlta;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 
-	public float getImportePedido() {
+	public double getImportePedido() {
 		return importePedido;
 	}
 
-	public void setImportePedido(float importePedido) {
+	public void setImportePedido(double importePedido) {
 		this.importePedido = importePedido;
 	}
 
@@ -71,28 +78,20 @@ public class Prestamo {
 		this.cantidadCuotas = cantidadCuotas;
 	}
 
-	public float getImporteCuota() {
-		return importeCuota;
+	public double getImportePorCuota() {
+		return importePorCuota;
 	}
 
-	public void setImporteCuota(float importeCuota) {
-		this.importeCuota = importeCuota;
+	public void setImportePorCuota(double importePorCuota) {
+		this.importePorCuota = importePorCuota;
 	}
 
-	public int getCuotaPendientes() {
-		return cuotaPendientes;
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setCuotaPendientes(int cuotaPendientes) {
-		this.cuotaPendientes = cuotaPendientes;
-	}
-
-	public EstadoPrestamo getEstadoPrestamo() {
-		return estadoPrestamo;
-	}
-
-	public void setEstadoPrestamo(EstadoPrestamo estadoPrestamo) {
-		this.estadoPrestamo = estadoPrestamo;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public boolean isActivo() {
@@ -102,5 +101,5 @@ public class Prestamo {
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
-	
+
 }

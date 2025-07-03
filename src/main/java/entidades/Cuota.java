@@ -6,16 +6,18 @@ public class Cuota {
 
 	private int id;
 	private int numeroCuota;
-	private float monto;
-	private Date fechaPago;
+	private double monto;
+	private Date fechaPago; // puede ser null si no está pagada
+	private Prestamo prestamo;
+	private boolean activo;
 
 	public Cuota() {
 
 	}
 
-	public Cuota(int id, int NumeroCuota, float Monto, Date FechaPago) {
+	public Cuota(int id, int numeroCuota, float Monto, Date FechaPago) {
 		this.id = id;
-		this.numeroCuota = NumeroCuota;
+		this.numeroCuota = numeroCuota;
 		this.monto = Monto;
 		this.fechaPago = FechaPago;
 	}
@@ -28,19 +30,19 @@ public class Cuota {
 		this.id = id;
 	}
 
-	public int getNumeroCuota() {
+	public int getNroCuota() {
 		return numeroCuota;
 	}
 
-	public void setNumeroCuota(int numeroCuota) {
+	public void setNroCuota(int numeroCuota) {
 		this.numeroCuota = numeroCuota;
 	}
 
-	public float getMonto() {
+	public double getMonto() {
 		return monto;
 	}
 
-	public void setMonto(float monto) {
+	public void setMonto(double monto) {
 		this.monto = monto;
 	}
 
@@ -50,6 +52,22 @@ public class Cuota {
 
 	public void setFechaPago(Date fechaPago) {
 		this.fechaPago = fechaPago;
+	}
+
+	public Prestamo getPrestamo() {
+		return prestamo;
+	}
+
+	public void setPrestamo(Prestamo prestamo) {
+		this.prestamo = prestamo;
+	}
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 
 }

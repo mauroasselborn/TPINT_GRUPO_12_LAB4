@@ -162,8 +162,11 @@ public class UsuariosServlet extends HttpServlet {
 			}
 
 		case "eliminar":
+			
 			int idEliminar = Integer.parseInt(request.getParameter("id"));
-			if (usuarioNegocio.eliminarUsuario(idEliminar)) {
+			int idClienteBaja = usuarioNegocio.obtenerUsuarioPorId(idEliminar).getCliente().getId();
+			
+			if (usuarioNegocio.eliminarUsuario(idEliminar) && clienteNegocio.eliminar(idClienteBaja)) {
 				request.setAttribute("mensaje", "Usuario eliminado correctamente.");
 			} else {
 				request.setAttribute("mensajeError", "Error al eliminar el Usuario.");
@@ -172,7 +175,8 @@ public class UsuariosServlet extends HttpServlet {
 
 		case "altaLogica":
 			int idAlta = Integer.parseInt(request.getParameter("id"));
-			if (usuarioNegocio.activarUsuario(idAlta)) {
+			int idClienteAlta = usuarioNegocio.obtenerUsuarioPorId(idAlta).getCliente().getId();
+			if (usuarioNegocio.activarUsuario(idAlta) && clienteNegocio.altaLogica(idClienteAlta)) {
 				request.setAttribute("mensaje", "Usuario dado de alta correctamente.");
 			} else {
 				request.setAttribute("mensajeError", "Error al dar de alta el Usuario.");

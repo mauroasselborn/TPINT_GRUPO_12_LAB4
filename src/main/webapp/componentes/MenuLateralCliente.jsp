@@ -8,8 +8,7 @@
 			<li><a href="/TPINT_GRUPO_12_LAB4/cliente/MenuCliente.jsp"
 				class="nav-link text-white"><i class="bi bi-list-ul me-2"></i>Inicio</a>
 			</li>
-			<li><a href="/TPINT_GRUPO_12_LAB4/cliente/Transferencias.jsp"
-				class="nav-link text-white"><i
+			<li><a href="Transferencias.jsp" class="nav-link text-white"><i
 					class="bi bi-arrow-left-right me-2"></i>Transferencias</a></li>
 			<li><a href="GestionarPrestamos.jsp" class="nav-link text-white"><i
 					class="bi bi-cash-stack me-2"></i>Gestión de Préstamos</a></li>
@@ -21,8 +20,9 @@
 	</div>
 	<div>
 		<hr />
-		<a href="../LoginServlet?accion=logout" class="btn btn-outline-light w-100">
-            <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
-        </a>
+		<a href="../LoginServlet?accion=logout"
+			class="btn btn-outline-light w-100"> <i
+			class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
+		</a>
 	</div>
 </div>

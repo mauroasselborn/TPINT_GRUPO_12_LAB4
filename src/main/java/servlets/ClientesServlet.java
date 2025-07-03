@@ -222,6 +222,9 @@ public class ClientesServlet extends HttpServlet {
 		case "eliminar":
 			int idEliminar = Integer.parseInt(request.getParameter("id"));
 			System.out.println(idEliminar);
+			
+			
+			
 			if (clienteNegocio.eliminar(idEliminar) && usuarioNegocio.eliminarPorIdCliente(idEliminar)) {
 				toastMensaje = "Cliente eliminado correctamente.";
 				toastTitulo = "Éxito";

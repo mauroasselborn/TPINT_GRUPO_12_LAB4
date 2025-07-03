@@ -18,7 +18,7 @@ import negocioImpl.CuentaNegocioImpl;
 import negocio.MovimientoNegocio;
 import negocioImpl.MovimientoNegocioImpl;
 
-@WebServlet("/TransferenciasServlet")
+@WebServlet("/cliente/TransferenciasServlet")
 public class TransferenciasServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	 
