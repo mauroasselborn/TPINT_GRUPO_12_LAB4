@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 
 public class Conexion {
 	private static final String host = "localhost";
-	//private static final String port = "3306";
-	private static final String port = "3307"; //Configuracion para que ande la bbdd de MARIANO
+	private static final String port = "3306";
+//	private static final String port = "3307"; //Configuracion para que ande la bbdd de MARIANO
 	private static final String db = "bancogrupo12";
 	private static final String usuario = "root";
 	private static final String clave = "root";

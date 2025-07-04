@@ -15,7 +15,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/MenuClienteServlet")
+@WebServlet("/cliente/MenuClienteServlet")
 public class MenuClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	CuentaNegocio cuentaNeg = new CuentaNegocioImpl();
@@ -67,7 +67,7 @@ public class MenuClienteServlet extends HttpServlet {
 		    e.printStackTrace();
 		}
 
-		request.getRequestDispatcher("cliente/MenuCliente.jsp").forward(request, response);
+		request.getRequestDispatcher("MenuCliente.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
