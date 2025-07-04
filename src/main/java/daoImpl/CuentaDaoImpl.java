@@ -338,4 +338,50 @@ public class CuentaDaoImpl implements CuentaDao {
 
 	    return estado;
 	}
+	
+	@Override
+	public List<Cuenta> obtenerPorCliente(int idCliente) {
+	    List<Cuenta> lista = new ArrayList<>();
+	    Connection cn = null;
+	    PreparedStatement pst = null;
+	    ResultSet rs = null;
+
+	    try {
+	        cn = Conexion.getConexion();
+	        String sql = "SELECT * FROM cuentas WHERE id_cliente = ? AND activo = 1";
+	        pst = cn.prepareStatement(sql);
+	        pst.setInt(1, idCliente);
+	        rs = pst.executeQuery();
+
+	        while (rs.next()) {
+	            Cuenta c = new Cuenta();
+	            c.setId(rs.getInt("id"));
+	            c.setNumeroCuenta(rs.getString("numero_cuenta"));
+	            c.setCbu(rs.getString("cbu"));
+	            c.setSaldo(rs.getDouble("saldo"));
+	            c.setFechaCreacion(rs.getString("fecha_creacion"));
+	            
+	            TipoCuentaNegocio tipocuenta = new TipoCuentaNegocioImpl();
+	            c.setTipoCuenta(tipocuenta.obtenerPorId(rs.getInt("id_tipo_cuenta")));
+	            
+	            c.setActivo(rs.getBoolean("activo"));
+	            
+	            // Cargar cliente (opcional si lo necesitás completo)
+	            Cliente cliente = new Cliente();
+	            cliente.setId(rs.getInt("id_cliente"));
+	            c.setCliente(cliente);
+	            
+	            lista.add(c);
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try { if (rs != null) rs.close(); } catch (Exception e) { e.printStackTrace(); }
+	        try { if (pst != null) pst.close(); } catch (Exception e) { e.printStackTrace(); }
+	        try { if (cn != null) cn.close(); } catch (Exception e) { e.printStackTrace(); }
+	    }
+
+	    return lista;
+	}
 }

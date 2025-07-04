@@ -21,4 +21,8 @@ public interface CuentaNegocio {
 	public void descontarSaldo(int idCuenta, double monto) throws Exception;
 	
     public void aumentarSaldo(int idCuenta, double monto) throws Exception;
+    
+    List<Cuenta> obtenerCuentasPorCliente(int idCliente);
+    
+    
 }

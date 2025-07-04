@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 				if (usuario.getTipoUsuario().getId() == 1) {
 					response.sendRedirect("admin/MenuAdmin.jsp");
 				} else {
-					response.sendRedirect("cliente/MenuCliente.jsp");
+					response.sendRedirect("MenuClienteServlet");
 				}
 			} else {
 				request.setAttribute("error", "Usuario inactivo o no encontrado.");

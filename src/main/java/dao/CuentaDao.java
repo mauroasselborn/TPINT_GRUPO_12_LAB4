@@ -22,4 +22,7 @@ public interface CuentaDao {
 	public boolean descontarSaldo(int idCuenta, double monto);
 	
     public boolean aumentarSaldo(int idCuenta, double monto);
-}
+    
+    List<Cuenta> obtenerPorCliente(int idCliente);
+    
+    }

@@ -117,4 +117,11 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	            throw new Exception("No se pudo aumentar el saldo.");
 	        }
 	    }
+	    
+	    @Override
+	    public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
+	        return dao.obtenerPorCliente(idCliente);
+	    }
+	    
+	    
 }

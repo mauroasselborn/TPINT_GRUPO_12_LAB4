@@ -1,5 +1,7 @@
 package negocioImpl;
 
+import java.util.List;
+
 import dao.MovimientoDao;
 import daoImpl.MovimientoDaoImpl;
 import entidades.Movimiento;
@@ -12,5 +14,11 @@ public class MovimientoNegocioImpl implements MovimientoNegocio {
     @Override
     public boolean insertarMovimiento(Movimiento mov) {
         return movimientoDAO.insertarMovimiento(mov);
+    }
+    
+    @Override
+    public List<Movimiento> obtenerMovimientosPorCuenta(int idCuenta) {
+        MovimientoDao dao = new MovimientoDaoImpl();
+        return dao.obtenerPorCuenta(idCuenta);
     }
 }
