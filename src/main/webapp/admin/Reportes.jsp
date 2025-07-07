@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.*" %>
+
 <!-- Encabezado -->
 <jsp:include page="../componentes/Encabezado.jsp" />
 
@@ -6,92 +10,123 @@
 
 <!-- Contenedor principal -->
 <div class="main-content">
-	<!-- Navbar -->
-	<jsp:include page="../componentes/BarraSuperior.jsp" />
-	<!-- Contenido principal -->
-	<div class="container-fluid content py-4">
 
+  <!-- Navbar superior -->
+  <jsp:include page="../componentes/BarraSuperior.jsp" />
+  
+  
+  
+  
 
-		<h2>Reporte de Movimientos</h2>
+  <!-- Contenido principal -->
+  <div class="container content py-4">
+    <div class="w-75 mx-auto">
+      <h2 class="text-center mb-4">Cuentas por Tipo</h2>
+      
+      
 
-		<form action="#" method="get">
-			<div>
-				<label>Fecha desde:</label><br> <input type="date"
-					name="fechaDesde">
-			</div>
+      <%
+        Map<String, Integer> datos = (Map<String, Integer>) request.getAttribute("cuentasPorTipo");
+        if (datos != null && !datos.isEmpty()) {
+      %>
 
-			<div>
-				<label>Fecha hasta:</label><br> <input type="date"
-					name="fechaHasta">
-			</div>
+      <canvas id="graficoCuentas" width="600" height="400"></canvas>
 
-			<div>
-				<label>Tipo de movimiento:</label><br> <select
-					name="tipoMovimiento">
-					<option value="">Todos</option>
-					<option value="altaCuenta">Alta de cuenta</option>
-					<option value="altaPrestamo">Alta de prÈstamo</option>
-					<option value="pagoPrestamo">Pago de prÈstamo</option>
-					<option value="transferencia">Transferencia</option>
-				</select>
-			</div>
+      <% } else { %>
+        <div class="alert alert-warning text-center">
+          No hay datos disponibles para mostrar el gr√°fico de cuentas.
+        </div>
+      <% } %>
 
-			<div>
-				<label>Importe mÌnimo:</label><br> <input type="number"
-					name="importeMin" step="0.01" min="0" placeholder="Ej: 1000.00">
-			</div>
+      <hr class="my-5">
 
-			<div>
-				<label>Importe m·ximo:</label><br> <input type="number"
-					name="importeMax" step="0.01" min="0" placeholder="Ej: 50000.00">
-			</div>
+      <h2 class="text-center mb-4">Pr√©stamos por Estado</h2>
 
-			<div style="flex-basis: 100%; text-align: right;">
-				<input type="submit" value="Filtrar">
-			</div>
-		</form>
+      <%
+        Map<String, Integer> prestamos = (Map<String, Integer>) request.getAttribute("prestamosPorEstado");
+        if (prestamos != null && !prestamos.isEmpty()) {
+      %>
 
-		<table>
-			<thead>
-				<tr>
-					<th>Fecha</th>
-					<th>Detalle</th>
-					<th>Importe</th>
-					<th>Tipo</th>
-					<th>Cuenta</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>2025-06-10</td>
-					<td>DepÛsito inicial</td>
-					<td>$10.000,00</td>
-					<td>Alta de cuenta</td>
-					<td>12345678</td>
-				</tr>
-				<tr>
-					<td>2025-06-11</td>
-					<td>PrÈstamo aprobado</td>
-					<td>$50.000,00</td>
-					<td>Alta de prÈstamo</td>
-					<td>12345678</td>
-				</tr>
-				<tr>
-					<td>2025-06-12</td>
-					<td>Transferencia a cuenta 98765432</td>
-					<td>-$5.000,00</td>
-					<td>Transferencia</td>
-					<td>12345678</td>
-				</tr>
-			</tbody>
-		</table>
+      <canvas id="graficoPrestamos" width="600" height="400"></canvas>
 
-		<div class="pagination">
-			<a href="#">1</a> <a href="#" class="active">2</a> <a href="#">3</a>
-		</div>
-	</div>
-	<jsp:include page="../componentes/Footer.jsp" />
+      <% } else { %>
+        <div class="alert alert-warning text-center">
+          No hay datos disponibles para mostrar el gr√°fico de pr√©stamos.
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <jsp:include page="../componentes/Footer.jsp" />
 </div>
 
-</body>
-</html>
+<!-- Chart.js y scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  <% if (datos != null && !datos.isEmpty()) { %>
+    const labelsCuentas = [<% for (String tipo : datos.keySet()) { %>"<%= tipo %>",<% } %>];
+    const dataCuentas = [<% for (Integer valor : datos.values()) { %><%= valor %>,<% } %>];
+
+    const ctxCuentas = document.getElementById('graficoCuentas').getContext('2d');
+    new Chart(ctxCuentas, {
+      type: 'bar',
+      data: {
+        labels: labelsCuentas,
+        datasets: [{
+          label: 'Cantidad de cuentas',
+          data: dataCuentas,
+          backgroundColor: 'rgba(54, 162, 235, 0.6)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Cantidad de Cuentas por Tipo'
+          }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  <% } %>
+
+  <% if (prestamos != null && !prestamos.isEmpty()) { %>
+    const labelsPrestamos = [<% for (String estado : prestamos.keySet()) { %>"<%= estado %>",<% } %>];
+    const dataPrestamos = [<% for (Integer valor : prestamos.values()) { %><%= valor %>,<% } %>];
+
+    const ctxPrestamos = document.getElementById('graficoPrestamos').getContext('2d');
+    new Chart(ctxPrestamos, {
+      type: 'pie',
+      data: {
+        labels: labelsPrestamos,
+        datasets: [{
+          label: 'Pr√©stamos',
+          data: dataPrestamos,
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(255, 205, 86, 0.6)',
+            'rgba(255, 99, 132, 0.6)'
+          ],
+          borderColor: 'rgba(255,255,255,1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Distribuci√≥n de Pr√©stamos por Estado'
+          }
+        }
+      }
+    });
+  <% } %>
+</script>

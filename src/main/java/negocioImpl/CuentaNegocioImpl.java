@@ -123,5 +123,5 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	        return dao.obtenerPorCliente(idCliente);
 	    }
 	    
-	    
+
 }
