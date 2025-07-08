@@ -30,8 +30,7 @@ import negocioImpl.ProvinciaNegocioImpl;
 /**
  * Servlet implementation class UsuariosServlet
  */
-@WebServlet("/admin/UsuariosServlet")
-//@WebServlet(urlPatterns = {"/admin/UsuariosServlet", "/cliente/UsuariosServlet"})
+@WebServlet(urlPatterns = { "/admin/UsuariosServlet", "/cliente/UsuariosServlet" })
 public class UsuariosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UsuarioNegocio usuarioNegocio = new UsuarioNegocioImpl();
@@ -62,10 +61,9 @@ public class UsuariosServlet extends HttpServlet {
 			dispatcher = request.getRequestDispatcher("/admin/Usuarios.jsp");
 			dispatcher.forward(request, response);
 			break;
-		
-		
+
 		case "alta":
-			
+
 			ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
 			LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
 			NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
@@ -77,14 +75,8 @@ public class UsuariosServlet extends HttpServlet {
 			dispatcher = request.getRequestDispatcher("/admin/AltaUsuario.jsp");
 			dispatcher.forward(request, response);
 			break;
-	
-		case "perfil":
-			
-			dispatcher = request.getRequestDispatcher("/cliente/MiPerfil.jsp");
-			dispatcher.forward(request, response);
-			break;
 		}
-		
+
 	}
 
 	/**
@@ -93,16 +85,14 @@ public class UsuariosServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String accion = request.getParameter("accion");
-		
-		
+
 		if (accion == null) {
 			response.sendRedirect("UsuariosServlet?accion=listar");
 			return;
 		}
-		
-		
+
 		switch (accion) {
-		
+
 		case "alta":
 			Cliente nuevoCliente = new Cliente();
 			nuevoCliente.setDni(request.getParameter("dni"));
@@ -140,16 +130,16 @@ public class UsuariosServlet extends HttpServlet {
 			try {
 				clienteInsertado = clienteNegocio.insertar(nuevoCliente);
 				if (clienteInsertado) {
-					
+
 					Cliente clienteRecienInsertado = clienteNegocio.obtenerPorDni(nuevoCliente.getDni());
 
 					Usuario nuevoUsuario = new Usuario();
 					nuevoUsuario.setNombreUsuario(usuarioNombre);
 					nuevoUsuario.setContrasena(contrasena);
 					nuevoUsuario.setActivo(true);
-					
+
 					TipoUsuario tipoCliente = new TipoUsuario();
-					tipoCliente.setId(1); //siempre se crea un usuario admin
+					tipoCliente.setId(1); // siempre se crea un usuario admin
 					nuevoUsuario.setTipoUsuario(tipoCliente);
 
 					nuevoUsuario.setCliente(clienteRecienInsertado);
@@ -169,10 +159,10 @@ public class UsuariosServlet extends HttpServlet {
 			}
 
 		case "eliminar":
-			
+
 			int idEliminar = Integer.parseInt(request.getParameter("id"));
 			int idClienteBaja = usuarioNegocio.obtenerUsuarioPorId(idEliminar).getCliente().getId();
-			
+
 			if (usuarioNegocio.eliminarUsuario(idEliminar) && clienteNegocio.eliminar(idClienteBaja)) {
 				request.setAttribute("mensaje", "Usuario eliminado correctamente.");
 			} else {
