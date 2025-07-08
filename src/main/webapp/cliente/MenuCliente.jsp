@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
     import="java.util.List, entidades.Cuenta, entidades.Movimiento" %>
-    
+
+<%@ page import="java.text.DecimalFormat" %>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 
 <!-- jQuery -->
@@ -30,6 +31,11 @@
         List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentas");
         Cuenta cuentaSeleccionada = (Cuenta) request.getAttribute("cuentaSeleccionada");
         List<Movimiento> movimientos = (List<Movimiento>) request.getAttribute("movimientos");
+        
+        double saldo = cuentaSeleccionada.getSaldo();  // o como tengas tu getter
+
+        DecimalFormat formatoSaldo = new DecimalFormat("#,##0.00");
+        String saldoFormateado = formatoSaldo.format(saldo);
       %>
 
       <form action="MenuClienteServlet" method="get">
@@ -110,7 +116,7 @@
 
       <div class="bg-white text-center py-4 rounded border shadow-sm mb-4">
         <div class="fs-6 text-secondary">Saldo:</div>
-        <div class="fs-1 fw-semibold text-dark">$<%= cuentaSeleccionada.getSaldo() %></div>
+        <div class="fs-1 fw-semibold text-dark">$<%= saldoFormateado %></div>
       </div>
 
       <h5 class="text-dark mb-3">Detalle de Movimientos</h5>
