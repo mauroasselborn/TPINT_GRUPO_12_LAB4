@@ -31,6 +31,7 @@ import negocioImpl.ProvinciaNegocioImpl;
  * Servlet implementation class UsuariosServlet
  */
 @WebServlet("/admin/UsuariosServlet")
+//@WebServlet(urlPatterns = {"/admin/UsuariosServlet", "/cliente/UsuariosServlet"})
 public class UsuariosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UsuarioNegocio usuarioNegocio = new UsuarioNegocioImpl();
@@ -74,6 +75,12 @@ public class UsuariosServlet extends HttpServlet {
 			request.setAttribute("nacionalidades", nacionalidadNegocio.obtenerTodos());
 
 			dispatcher = request.getRequestDispatcher("/admin/AltaUsuario.jsp");
+			dispatcher.forward(request, response);
+			break;
+	
+		case "perfil":
+			
+			dispatcher = request.getRequestDispatcher("/cliente/MiPerfil.jsp");
 			dispatcher.forward(request, response);
 			break;
 		}
