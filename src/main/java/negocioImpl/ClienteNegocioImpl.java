@@ -1,10 +1,16 @@
 package negocioImpl;
 
+import java.time.LocalDate;
 import java.util.List;
 import dao.ClienteDao;
 import daoImpl.ClienteDaoImpl;
 import entidades.Cliente;
+import excepciones.ClienteRepetidoException;
+import excepciones.FechaNoValidaException;
 import negocio.ClienteNegocio;
+
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class ClienteNegocioImpl implements ClienteNegocio {
 
@@ -22,8 +28,29 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	@Override
 	public boolean insertar(Cliente cliente) throws Exception {
-		return clienteDao.alta(cliente);
+		
+		Cliente existente = clienteDao.obtenerPorDni(cliente.getDni());
+
+	    if (existente != null) {
+	        throw new ClienteRepetidoException("El cliente con DNI " + cliente.getDni() + " ya existe en la base de datos.");
+	    }
+
+	    try {
+	        // Validar fecha de nacimiento
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	        LocalDate fechaNacimiento = LocalDate.parse(cliente.getFechaNacimiento(), formatter);
+
+	        if (fechaNacimiento.isAfter(LocalDate.now())) {
+	            throw new FechaNoValidaException();
+	        }
+
+	    } catch (DateTimeParseException e) {
+	        throw new FechaNoValidaException();
+
+	    
+	    return clienteDao.alta(cliente);
 	}
+
 
 	@Override
 	public boolean modificar(Cliente cliente) {

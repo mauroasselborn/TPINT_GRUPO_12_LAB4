@@ -3,6 +3,7 @@ package negocio;
 import java.util.List;
 import entidades.Cliente;
 
+
 public interface ClienteNegocio {
 	public List<Cliente> obtenerTodos();
 
@@ -10,7 +11,7 @@ public interface ClienteNegocio {
 
 	public Cliente obtenerPorDni(String dni);
 
-	public boolean insertar(Cliente cliente) throws Exception;;
+	public boolean insertar(Cliente cliente) throws Exception;
 
 	public boolean modificar(Cliente cliente);
 
