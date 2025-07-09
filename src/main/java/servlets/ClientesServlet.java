@@ -17,6 +17,9 @@ import negocioImpl.UsuarioNegocioImpl;
 import negocioImpl.LocalidadNegocioImpl;
 import negocioImpl.NacionalidadNegocioImpl;
 
+import excepciones.ClienteRepetidoException;
+import excepciones.FechaNoValidaException;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -176,8 +179,13 @@ public class ClientesServlet extends HttpServlet {
 					toastTitulo = "Error";
 					toastTipo = "error";
 				}
-			} catch (Exception ex) {
+			}catch(ClienteRepetidoException | FechaNoValidaException ex) {
 				toastMensaje = ex.getMessage();
+		        toastTitulo = "Error";
+		        toastTipo = "error";
+				
+			}catch (Exception ex) {
+				toastMensaje = "Error inesperado: "+ex.getMessage();
 				toastTitulo = "Error";
 				toastTipo = "error";
 			}
