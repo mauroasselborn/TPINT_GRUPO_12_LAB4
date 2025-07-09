@@ -13,7 +13,7 @@ public class CuotaDaoImpl implements CuotaDao {
 
     @Override
     public boolean insertarCuota(Cuota cuota) {
-        String sql = "INSERT INTO cuotas (id_prestamo, nro_cuota, monto, fecha_pago) VALUES (?, ?, ?, NULL)";
+        String sql = "INSERT INTO cuota (id_prestamo, nro_cuota, monto, fecha_pago) VALUES (?, ?, ?, NULL)";
         
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -33,7 +33,7 @@ public class CuotaDaoImpl implements CuotaDao {
     @Override
     public List<Cuota> obtenerCuotasPorPrestamo(int idPrestamo) {
         List<Cuota> cuotas = new ArrayList<>();
-        String sql = "SELECT id, nro_cuota, monto, fecha_pago FROM cuotas WHERE id_prestamo = ? ORDER BY nro_cuota ASC";
+        String sql = "SELECT id, nro_cuota, monto, fecha_pago FROM cuota WHERE id_prestamo = ? ORDER BY nro_cuota ASC";
 
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -62,7 +62,7 @@ public class CuotaDaoImpl implements CuotaDao {
 
     @Override
     public boolean pagarCuota(int idCuota, String fechaPago) {
-        String sql = "UPDATE cuotas SET fecha_pago = ? WHERE id = ? AND fecha_pago IS NULL";
+        String sql = "UPDATE cuota SET fecha_pago = ? WHERE id = ? AND fecha_pago IS NULL";
         
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {

@@ -28,29 +28,28 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	@Override
 	public boolean insertar(Cliente cliente) throws Exception {
-		
+
 		Cliente existente = clienteDao.obtenerPorDni(cliente.getDni());
 
-	    if (existente != null) {
-	        throw new ClienteRepetidoException("El cliente con DNI " + cliente.getDni() + " ya existe en la base de datos.");
-	    }
+		if (existente != null) {
+			throw new ClienteRepetidoException("El cliente con DNI " + cliente.getDni() + " ya existe en la base de datos.");
+		}
 
-	    try {
-	        // Validar fecha de nacimiento
-	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	        LocalDate fechaNacimiento = LocalDate.parse(cliente.getFechaNacimiento(), formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate fechaNacimiento;
+		
+		try {
+			fechaNacimiento = LocalDate.parse(cliente.getFechaNacimiento(), formatter);
+		} catch (DateTimeParseException e) {
+			throw new FechaNoValidaException();
+		}
 
-	        if (fechaNacimiento.isAfter(LocalDate.now())) {
-	            throw new FechaNoValidaException();
-	        }
+		if (fechaNacimiento.isAfter(LocalDate.now())) {
+			throw new FechaNoValidaException();
+		}
 
-	    } catch (DateTimeParseException e) {
-	        throw new FechaNoValidaException();
-
-	    
-	    return clienteDao.alta(cliente);
+		return clienteDao.alta(cliente);
 	}
-
 
 	@Override
 	public boolean modificar(Cliente cliente) {

@@ -16,9 +16,8 @@ public class PrestamoDaoImpl implements PrestamoDao {
 	@Override
 	public List<Prestamo> obtenerPrestamosPorCliente(int idCliente) {
 		List<Prestamo> lista = new ArrayList<>();
-		String sql = "SELECT * "
-				+ "FROM prestamos "
-				+ "WHERE id_cliente = ?";
+		String sql = "SELECT id, fecha_alta, importe_pedido, cantidad_cuotas, importe_por_cuota, estado, id_cuenta"
+				+ " FROM prestamo" + " WHERE id_cliente = ? AND activo = 1";
 
 		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -27,12 +26,11 @@ public class PrestamoDaoImpl implements PrestamoDao {
 				while (rs.next()) {
 					Prestamo p = new Prestamo();
 					p.setId(rs.getInt("id"));
-					p.setFechaAlta(rs.getDate("fecha"));
+					p.setFechaAlta(rs.getDate("fecha_alta"));
 					p.setImportePedido(rs.getDouble("importe_pedido"));
 					p.setCantidadCuotas(rs.getInt("cantidad_cuotas"));
-					p.setImportePorCuota(rs.getDouble("importe_cuota"));
-					p.setCuotasPendientes(rs.getInt("cuotas_pendientes"));
-					p.setIdEstado(rs.getInt("id_estado"));
+					p.setImportePorCuota(rs.getDouble("importe_por_cuota"));
+					p.setEstado(rs.getString("estado"));
 
 					Cuenta c = new Cuenta();
 					c.setId(rs.getInt("id_cuenta"));
@@ -54,9 +52,8 @@ public class PrestamoDaoImpl implements PrestamoDao {
 	@Override
 	public Prestamo obtenerPrestamoPorId(int idPrestamo) {
 		Prestamo prestamo = null;
-		String sql = "SELECT * "
-				+ "FROM prestamos "
-				+ "WHERE id = ?";
+		String sql = "SELECT id, fecha_alta, importe_pedido, cantidad_cuotas, importe_por_cuota, estado, id_cuenta, id_cliente"
+				+ " FROM prestamo" + " WHERE id = ? AND activo = 1";
 
 		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -65,12 +62,11 @@ public class PrestamoDaoImpl implements PrestamoDao {
 				if (rs.next()) {
 					prestamo = new Prestamo();
 					prestamo.setId(rs.getInt("id"));
-					prestamo.setFechaAlta(rs.getDate("fecha"));
+					prestamo.setFechaAlta(rs.getDate("fecha_alta"));
 					prestamo.setImportePedido(rs.getDouble("importe_pedido"));
 					prestamo.setCantidadCuotas(rs.getInt("cantidad_cuotas"));
-					prestamo.setImportePorCuota(rs.getDouble("importe_cuota"));
-					prestamo.setCuotasPendientes(rs.getInt("cuotas_pendientes"));
-					prestamo.setIdEstado(rs.getInt("id_estado"));
+					prestamo.setImportePorCuota(rs.getDouble("importe_por_cuota"));
+					prestamo.setEstado(rs.getString("estado"));
 
 					Cuenta c = new Cuenta();
 					c.setId(rs.getInt("id_cuenta"));
@@ -90,10 +86,8 @@ public class PrestamoDaoImpl implements PrestamoDao {
 	@Override
 	public List<Cuota> obtenerCuotasPorPrestamo(int idPrestamo) {
 		List<Cuota> cuotas = new ArrayList<>();
-		String sql = "SELECT * "
-					+ "FROM cuotas "
-					+ "WHERE id_prestamo = ? "
-					+ "ORDER BY nro_cuota ASC";
+		String sql = "SELECT id, nro_cuota, monto, fecha_pago" + " FROM cuota"
+				+ " WHERE id_prestamo = ? AND activo = 1 ORDER BY nro_cuota ASC";
 
 		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -121,9 +115,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 
 	@Override
 	public boolean pagarCuota(int idCuota, String fechaPago) {
-		String sql = "UPDATE cuotas "
-				+ "SET fecha_pago = ? "
-				+ "WHERE id = ? AND fecha_pago IS NULL";
+		String sql = "UPDATE cuota SET fecha_pago = ? WHERE id = ? AND activo = 1 AND fecha_pago IS NULL";
 
 		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -142,23 +134,31 @@ public class PrestamoDaoImpl implements PrestamoDao {
 	@Override
 	public int insertarPrestamo(Prestamo prestamo) {
 		int idGenerado = -1;
-		String sqlPrestamo = "INSERT INTO prestamos "
-				+ "(id_cliente, id_cuenta, fecha, importe_pedido, cantidad_cuotas, importe_cuota, cuotas_pendientes, id_estado) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO prestamo (id_cliente, id_cuenta, fecha, importe_pedido, cantidad_cuotas, importe_cuota, cuotas_pendientes, id_estado, activo) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sqlPrestamo, Statement.RETURN_GENERATED_KEYS)) {
+		try (Connection con = Conexion.getConexion();
+				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 			ps.setInt(1, prestamo.getCliente().getId());
 			ps.setInt(2, prestamo.getCuenta().getId());
 
+			// fecha
 			java.sql.Date sqlDate = new java.sql.Date(prestamo.getFechaAlta().getTime());
 			ps.setDate(3, sqlDate);
 
 			ps.setDouble(4, prestamo.getImportePedido());
 			ps.setInt(5, prestamo.getCantidadCuotas());
 			ps.setDouble(6, prestamo.getImportePorCuota());
-			ps.setInt(7, prestamo.getCuotasPendientes());
-			ps.setInt(8, prestamo.getIdEstado());
+
+			// cuotas_pendientes = NULL al crear
+			ps.setNull(7, java.sql.Types.INTEGER);
+
+			// id_estado = 1 (Pendiente)
+			ps.setInt(8, 1);
+
+			// activo = 1
+			ps.setInt(9, 1);
 
 			int filas = ps.executeUpdate();
 

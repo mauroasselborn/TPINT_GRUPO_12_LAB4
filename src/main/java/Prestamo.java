@@ -10,13 +10,15 @@ public class Prestamo {
 	private double importePedido;
 	private int cantidadCuotas;
 	private double importePorCuota;
-	private int cuotasPendientes;
-	private int idEstado;
+	private String estado;
+	private boolean activo;
 
 	public Prestamo() {
+
 	}
 
-	public Prestamo(int id, Cliente cliente, Cuenta cuenta, Date fechaAlta, double importePedido, int cantidadCuotas, double importePorCuota, int cuotasPendientes, int idEstado) {
+	public Prestamo(int id, Cliente cliente, Cuenta cuenta, Date fechaAlta, double importePedido, int cantidadCuotas, double importePorCuota, String estado, boolean activo) {
+		super();
 		this.id = id;
 		this.cliente = cliente;
 		this.cuenta = cuenta;
@@ -24,8 +26,8 @@ public class Prestamo {
 		this.importePedido = importePedido;
 		this.cantidadCuotas = cantidadCuotas;
 		this.importePorCuota = importePorCuota;
-		this.cuotasPendientes = cuotasPendientes;
-		this.idEstado = idEstado;
+		this.estado = estado;
+		this.activo = activo;
 	}
 
 	public int getId() {
@@ -84,19 +86,20 @@ public class Prestamo {
 		this.importePorCuota = importePorCuota;
 	}
 
-	public int getCuotasPendientes() {
-		return cuotasPendientes;
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setCuotasPendientes(int cuotasPendientes) {
-		this.cuotasPendientes = cuotasPendientes;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
-	public int getIdEstado() {
-		return idEstado;
+	public boolean isActivo() {
+		return activo;
 	}
 
-	public void setIdEstado(int idEstado) {
-		this.idEstado = idEstado;
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
+
 }

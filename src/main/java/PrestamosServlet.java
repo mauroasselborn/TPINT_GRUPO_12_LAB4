@@ -4,6 +4,7 @@ import entidades.Cliente;
 import entidades.Usuario;
 import entidades.Cuenta;
 import entidades.Prestamo;
+import entidades.Cuota;
 import negocio.CuentaNegocio;
 import negocioImpl.CuentaNegocioImpl;
 import negocio.PrestamoNegocio;
@@ -13,7 +14,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @WebServlet("/cliente/PrestamosServlet")
@@ -23,17 +24,19 @@ public class PrestamosServlet extends HttpServlet {
 	private CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+		Cliente cliente = usuarioLogueado.getCliente();
 
-		if (usuarioLogueado == null || usuarioLogueado.getCliente() == null) {
+		if (cliente == null) {
 			response.sendRedirect(request.getContextPath() + "/login.jsp");
 			return;
 		}
 
-		Cliente cliente = usuarioLogueado.getCliente();
 		List<Cuenta> cuentas = cuentaNegocio.obtenerCuentasPorCliente(cliente.getId());
+
 		request.setAttribute("cuentas", cuentas);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente/SolicitarPrestamo.jsp");
@@ -41,7 +44,8 @@ public class PrestamosServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
 
@@ -66,14 +70,12 @@ public class PrestamosServlet extends HttpServlet {
 			double montoSolicitado = Double.parseDouble(request.getParameter("monto"));
 			int cantidadCuotas = Integer.parseInt(request.getParameter("cuotas"));
 
+			// Validaciones
 			if (montoSolicitado <= 0 || cantidadCuotas <= 0) {
 				throw new Exception("Monto y cuotas deben ser mayores a cero.");
 			}
 
-			// Calcular importe por cuota
-			double importePorCuota = montoSolicitado / cantidadCuotas;
-
-			// Armar el Prestamo completo
+			// Armar el Prestamo
 			Prestamo prestamo = new Prestamo();
 			prestamo.setCliente(usuarioLogueado.getCliente());
 
@@ -81,12 +83,11 @@ public class PrestamosServlet extends HttpServlet {
 			cuentaDestino.setId(idCuentaDestino);
 			prestamo.setCuenta(cuentaDestino);
 
-			prestamo.setFechaAlta(new Date());
+			prestamo.setFechaAlta(new java.util.Date());
 			prestamo.setImportePedido(montoSolicitado);
 			prestamo.setCantidadCuotas(cantidadCuotas);
-			prestamo.setImportePorCuota(importePorCuota);
-			prestamo.setCuotasPendientes(cantidadCuotas);
-			prestamo.setIdEstado(1); // Estado pendiente
+			prestamo.setEstado("Pendiente");
+			prestamo.setActivo(true);
 
 			boolean resultado = prestamoNegocio.registrarSolicitudPrestamo(prestamo);
 
@@ -95,21 +96,34 @@ public class PrestamosServlet extends HttpServlet {
 				toastTitulo = "Éxito";
 				toastTipo = "success";
 
+
+				request.setAttribute("toastMensaje", toastMensaje);
+				request.setAttribute("toastTitulo", toastTitulo);
+				request.setAttribute("toastTipo", toastTipo);
+				doGet(request, response);
+				return;
+
 			} else {
 				toastMensaje = "Error al solicitar el préstamo. Intente nuevamente.";
 				toastTitulo = "Error";
 				toastTipo = "error";
+
+				request.setAttribute("toastMensaje", toastMensaje);
+				request.setAttribute("toastTitulo", toastTitulo);
+				request.setAttribute("toastTipo", toastTipo);
+				doGet(request, response);
 			}
 
 		} catch (Exception ex) {
 			toastMensaje = "Error: " + ex.getMessage();
 			toastTitulo = "Error";
 			toastTipo = "error";
-		}
 
-		request.setAttribute("toastMensaje", toastMensaje);
-		request.setAttribute("toastTitulo", toastTitulo);
-		request.setAttribute("toastTipo", toastTipo);
-		doGet(request, response);
+			request.setAttribute("toastMensaje", toastMensaje);
+			request.setAttribute("toastTitulo", toastTitulo);
+			request.setAttribute("toastTipo", toastTipo);
+			doGet(request, response);
+		}
 	}
+
 }

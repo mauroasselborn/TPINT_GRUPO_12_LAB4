@@ -21,9 +21,7 @@
 			
 			<div class="form-group mb-3">
 				<label for="monto">Monto solicitado ($):</label>
-				<input
-					type="number" class="form-control" id="monto" name="monto"
-					placeholder="Ej: 50000" step="0.01" min="1" required>
+				<input type="number" class="form-control" id="monto" name="monto" placeholder="Ej: 50000" step="0.01" min="1" required>
 			</div>
 
 			<div class="form-group mb-3">

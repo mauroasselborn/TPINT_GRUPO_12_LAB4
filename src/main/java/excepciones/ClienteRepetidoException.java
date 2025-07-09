@@ -1,10 +1,14 @@
 package excepciones;
 
-import entidades.Cliente;
 
 public class ClienteRepetidoException extends Exception {
 
-    public ClienteRepetidoException(String mensaje) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ClienteRepetidoException(String mensaje) {
         super(mensaje);
     }
 

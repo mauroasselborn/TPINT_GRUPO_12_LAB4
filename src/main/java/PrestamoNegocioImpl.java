@@ -42,7 +42,9 @@ public class PrestamoNegocioImpl implements PrestamoNegocio {
 			return false;
 		}
 
-		double importePorCuota = Math.round((prestamo.getImportePedido() / prestamo.getCantidadCuotas()) * 100.0) / 100.0;
+		// Calcular importe_por_cuota redondeado
+		double importePorCuota = Math.round((prestamo.getImportePedido() / prestamo.getCantidadCuotas()) * 100.0)
+				/ 100.0;
 		prestamo.setImportePorCuota(importePorCuota);
 
 		// Insertar el préstamo
