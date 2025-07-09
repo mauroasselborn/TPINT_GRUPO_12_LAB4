@@ -12,4 +12,7 @@ public interface PrestamoNegocio {
 	List<Cuota> obtenerCuotasPorPrestamo(int idPrestamo);
 
 	boolean pagarCuota(int idCuota, String fechaPago);
+	
+	boolean registrarSolicitudPrestamo(Prestamo prestamo);
+
 }

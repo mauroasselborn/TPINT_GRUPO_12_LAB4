@@ -7,7 +7,7 @@ public class Cuota {
 	private int id;
 	private int numeroCuota;
 	private double monto;
-	private Date fechaPago; // puede ser null si no está pagada
+	private Date fechaPago; // null si no esta pagada
 	private Prestamo prestamo;
 	private boolean activo;
 
@@ -15,12 +15,13 @@ public class Cuota {
 
 	}
 
-	public Cuota(int id, int numeroCuota, float Monto, Date FechaPago) {
-		this.id = id;
-		this.numeroCuota = numeroCuota;
-		this.monto = Monto;
-		this.fechaPago = FechaPago;
+	public Cuota(int id, int numeroCuota, double monto, Date fechaPago) {
+	    this.id = id;
+	    this.numeroCuota = numeroCuota;
+	    this.monto = monto;
+	    this.fechaPago = fechaPago;
 	}
+
 
 	public int getId() {
 		return id;

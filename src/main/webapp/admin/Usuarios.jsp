@@ -26,7 +26,7 @@ List<Usuario> listaUsuarios = (List<Usuario>) request.getAttribute("listausuario
 		<div class="d-flex justify-content-between align-items-center mb-3">
 			<h2 class="mb-0">Usuarios</h2>
 
-			<a href="UsuariosServlet?accion=alta" class="btn btn-primary">Agregar nuevo usuario</a>
+			<!-- <a href="UsuariosServlet?accion=alta" class="btn btn-primary">Agregar nuevo usuario</a> -->
 		</div>
 		<div class="scroll-x">
 			<table id="tablaUsuarios" class="table table-bordered table-hover">
@@ -53,7 +53,7 @@ List<Usuario> listaUsuarios = (List<Usuario>) request.getAttribute("listausuario
 						<td><%=usuario.getTipoUsuario().getDescripcion()%></td>
 						<td>
 							<div class="d-flex justify-content-center">
-								<button class="btn btn-warning btn-sm me-2"
+								<%-- <button class="btn btn-warning btn-sm me-2"
 									onclick="abrirModalUsuario(
 									    '<%=usuario.getId()%>',
 									    '<%=usuario.getNombreUsuario()%>',
@@ -64,7 +64,7 @@ List<Usuario> listaUsuarios = (List<Usuario>) request.getAttribute("listausuario
 									    '<%=usuario.isActivo() ? "Activo" : "Inactivo"%>'
 									  )">
 									Modificar
-								</button>
+								</button> --%>
 
 								<button
 									class="btn btn-<%=usuario.isActivo() ? "danger" : "success"%> btn-sm"
@@ -148,7 +148,7 @@ List<Usuario> listaUsuarios = (List<Usuario>) request.getAttribute("listausuario
 		});
 	});
 
-	function abrirModalUsuario(id, usuario, nombre, apellido, email, rol, estado) {
+	/* function abrirModalUsuario(id, usuario, nombre, apellido, email, rol, estado) {
 		const modal = new bootstrap.Modal(document
 				.getElementById('modalUsuario'));
 
@@ -161,7 +161,7 @@ List<Usuario> listaUsuarios = (List<Usuario>) request.getAttribute("listausuario
 		document.getElementById('usuarioEstado').value = estado;
 
 		modal.show();
-	}
+	} */
 
 	function confirmar(id, activo) {
 	    let modal = new bootstrap.Modal(document.getElementById('modalConfirmacion'));

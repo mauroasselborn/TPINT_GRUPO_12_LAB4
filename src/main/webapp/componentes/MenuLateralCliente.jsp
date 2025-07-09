@@ -12,7 +12,7 @@
 					class="bi bi-arrow-left-right me-2"></i>Transferencias</a></li>
 			<li><a href="GestionarPrestamos.jsp" class="nav-link text-white"><i
 					class="bi bi-cash-stack me-2"></i>Gestión de Préstamos</a></li>
-			<li><a href="SolicitarPrestamo.jsp" class="nav-link text-white"><i
+			<li><a href="PrestamosServlet" class="nav-link text-white"><i
 					class="bi bi-cash-stack me-2"></i>Solicitar Préstamos</a></li>
 			<li><a href="MiPerfil.jsp" class="nav-link text-white"><i
 					class="bi bi-person me-2"></i> Mi Perfil</a></li>

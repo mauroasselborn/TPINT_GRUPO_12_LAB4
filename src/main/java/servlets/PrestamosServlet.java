@@ -1,8 +1,12 @@
 package servlets;
 
 import entidades.Cliente;
+import entidades.Usuario;
+import entidades.Cuenta;
 import entidades.Prestamo;
 import entidades.Cuota;
+import negocio.CuentaNegocio;
+import negocioImpl.CuentaNegocioImpl;
 import negocio.PrestamoNegocio;
 import negocioImpl.PrestamoNegocioImpl;
 
@@ -17,69 +21,109 @@ import java.util.List;
 public class PrestamosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PrestamoNegocio prestamoNegocio = new PrestamoNegocioImpl();
+	private CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String accion = request.getParameter("accion");
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
+		Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+		Cliente cliente = usuarioLogueado.getCliente();
 
-		if (clienteLogueado == null) {
-			response.sendRedirect("../login.jsp");
+		if (cliente == null) {
+			response.sendRedirect(request.getContextPath() + "/login.jsp");
 			return;
 		}
 
-		if ("detalle".equals(accion)) {
-			// Mostrar detalle del préstamo con cuotas
-			String idParam = request.getParameter("id");
-			if (idParam == null) {
-				response.sendRedirect("PrestamosServlet");
+		List<Cuenta> cuentas = cuentaNegocio.obtenerCuentasPorCliente(cliente.getId());
+
+		request.setAttribute("cuentas", cuentas);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente/SolicitarPrestamo.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+
+		String toastMensaje = "";
+		String toastTitulo = "";
+		String toastTipo = "";
+
+		if (usuarioLogueado == null || usuarioLogueado.getCliente() == null) {
+			toastMensaje = "Debe volver a iniciar sesión.";
+			toastTitulo = "Error";
+			toastTipo = "error";
+
+			request.setAttribute("toastMensaje", toastMensaje);
+			request.setAttribute("toastTitulo", toastTitulo);
+			request.setAttribute("toastTipo", toastTipo);
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
+			return;
+		}
+
+		try {
+			int idCuentaDestino = Integer.parseInt(request.getParameter("cuentaDestino"));
+			double montoSolicitado = Double.parseDouble(request.getParameter("monto"));
+			int cantidadCuotas = Integer.parseInt(request.getParameter("cuotas"));
+
+			// Validaciones
+			if (montoSolicitado <= 0 || cantidadCuotas <= 0) {
+				throw new Exception("Monto y cuotas deben ser mayores a cero.");
+			}
+
+			// Armar el Prestamo
+			Prestamo prestamo = new Prestamo();
+			prestamo.setCliente(usuarioLogueado.getCliente());
+
+			Cuenta cuentaDestino = new Cuenta();
+			cuentaDestino.setId(idCuentaDestino);
+			prestamo.setCuenta(cuentaDestino);
+
+			prestamo.setFechaAlta(new java.util.Date());
+			prestamo.setImportePedido(montoSolicitado);
+			prestamo.setCantidadCuotas(cantidadCuotas);
+			prestamo.setEstado("Pendiente");
+			prestamo.setActivo(true);
+
+			boolean resultado = prestamoNegocio.registrarSolicitudPrestamo(prestamo);
+
+			if (resultado) {
+				toastMensaje = "Préstamo solicitado correctamente. Quedó en estado Pendiente para aprobación.";
+				toastTitulo = "Éxito";
+				toastTipo = "success";
+
+
+				request.setAttribute("toastMensaje", toastMensaje);
+				request.setAttribute("toastTitulo", toastTitulo);
+				request.setAttribute("toastTipo", toastTipo);
+				doGet(request, response);
 				return;
+
+			} else {
+				toastMensaje = "Error al solicitar el préstamo. Intente nuevamente.";
+				toastTitulo = "Error";
+				toastTipo = "error";
+
+				request.setAttribute("toastMensaje", toastMensaje);
+				request.setAttribute("toastTitulo", toastTitulo);
+				request.setAttribute("toastTipo", toastTipo);
+				doGet(request, response);
 			}
 
-			int idPrestamo = Integer.parseInt(idParam);
-			Prestamo prestamo = prestamoNegocio.obtenerPrestamoPorId(idPrestamo);
-			List<Cuota> cuotas = prestamoNegocio.obtenerCuotasPorPrestamo(idPrestamo);
+		} catch (Exception ex) {
+			toastMensaje = "Error: " + ex.getMessage();
+			toastTitulo = "Error";
+			toastTipo = "error";
 
-			request.setAttribute("prestamo", prestamo);
-			request.setAttribute("listaCuotas", cuotas);
-
-			// Mensaje de pago exitoso o fallido
-			String pago = request.getParameter("pago");
-			if (pago != null) {
-				request.setAttribute("pago", pago);
-			}
-
-			RequestDispatcher rd = request.getRequestDispatcher("/cliente/DetallePrestamo.jsp");
-			rd.forward(request, response);
-
-		} else if ("pagar".equals(accion)) {
-			// Procesar pago de cuota
-			String idCuotaParam = request.getParameter("idCuota");
-			String idPrestamoParam = request.getParameter("idPrestamo");
-
-			if (idCuotaParam == null || idPrestamoParam == null) {
-				response.sendRedirect("PrestamosServlet");
-				return;
-			}
-
-			int idCuota = Integer.parseInt(idCuotaParam);
-			String fechaPago = new Date(System.currentTimeMillis()).toString();
-
-			boolean exito = prestamoNegocio.pagarCuota(idCuota, fechaPago);
-
-			// Volver al detalle con resultado
-			response.sendRedirect("PrestamosServlet?accion=detalle&id=" + idPrestamoParam + "&pago=" + exito);
-
-		} else {
-			// Listado general de préstamos
-			List<Prestamo> listaPrestamos = prestamoNegocio.obtenerPrestamosPorCliente(clienteLogueado.getId());
-			request.setAttribute("listaPrestamos", listaPrestamos);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente/MisPrestamos.jsp");
-			dispatcher.forward(request, response);
+			request.setAttribute("toastMensaje", toastMensaje);
+			request.setAttribute("toastTitulo", toastTitulo);
+			request.setAttribute("toastTipo", toastTipo);
+			doGet(request, response);
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
 }

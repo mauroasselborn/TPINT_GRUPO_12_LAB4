@@ -11,7 +11,7 @@
 
   <div class="container-fluid content py-4">
     <h2>Mis Préstamos</h2>
-    <a href="SolicitarPrestamo.jsp" class="btn btn-primary mb-3">Solicitar Nuevo Préstamo</a>
+    <a href="PrestamosServlet" class="btn btn-primary mb-3">Solicitar Nuevo Préstamo</a>
 
     <table class="table table-striped">
       <thead>
