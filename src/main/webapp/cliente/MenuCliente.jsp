@@ -44,9 +44,8 @@
 			<form action="MenuClienteServlet" method="get">
 				<div class="mb-3">
 					<label for="selectCuenta" class="form-label fw-bold text-primary">Elige
-						tu cuenta:</label> 
-						
-						<select class="form-select" id="selectCuenta" name="idCuenta" onchange="this.form.submit()">
+						tu cuenta:</label> <select class="form-select" id="selectCuenta"
+						name="idCuenta" onchange="this.form.submit()">
 						<%
 						if (cuentas != null) {
 							for (Cuenta c : cuentas) {
@@ -66,7 +65,7 @@
 			</form>
 
 			<%
-				if (cuentaSeleccionada != null) {
+			if (cuentaSeleccionada != null) {
 			%>
 			<!-- Botón Ver CBU y campo para mostrarlo/ocultarlo -->
 			<div class="mb-3 d-flex align-items-center">
@@ -80,10 +79,13 @@
 					style="display: none;">
 
 					<form action="MenuClienteServlet" method="post" id="copiarForm">
-						<input type="hidden" name="accion" value="copiarCBU"> 
-						<input type="hidden" name="cbu" id="copyBtn" value="<%=cuentaSeleccionada.getCbu()%>"> 
-						<input type="hidden" name="idCuenta" value="<%=cuentaSeleccionada.getId()%>">
-						<button type="button" class="btn btn-secondary" onclick="copiarCBU()">📋</button>
+						<input type="hidden" name="accion" value="copiarCBU"> <input
+							type="hidden" name="cbu" id="copyBtn"
+							value="<%=cuentaSeleccionada.getCbu()%>"> <input
+							type="hidden" name="idCuenta"
+							value="<%=cuentaSeleccionada.getId()%>">
+						<button type="button" class="btn btn-secondary"
+							onclick="copiarCBU()">📋</button>
 					</form>
 				</span>
 
@@ -162,9 +164,9 @@
 						}
 						} else {
 						%>
-						
+
 						<p class="text-center">No hay movimientos para esta cuenta.</p>
-						
+
 						<%
 						}
 						%>

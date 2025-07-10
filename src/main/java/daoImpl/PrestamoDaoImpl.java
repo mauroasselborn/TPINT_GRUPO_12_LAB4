@@ -16,9 +16,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 	@Override
 	public List<Prestamo> obtenerPrestamosPorCliente(int idCliente) {
 		List<Prestamo> lista = new ArrayList<>();
-		String sql = "SELECT * "
-				+ "FROM prestamos "
-				+ "WHERE id_cliente = ?";
+		String sql = "SELECT * " + "FROM prestamos " + "WHERE id_cliente = ?";
 
 		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -54,9 +52,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 	@Override
 	public Prestamo obtenerPrestamoPorId(int idPrestamo) {
 		Prestamo prestamo = null;
-		String sql = "SELECT * "
-				+ "FROM prestamos "
-				+ "WHERE id = ?";
+		String sql = "SELECT * " + "FROM prestamos " + "WHERE id = ?";
 
 		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -90,10 +86,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 	@Override
 	public List<Cuota> obtenerCuotasPorPrestamo(int idPrestamo) {
 		List<Cuota> cuotas = new ArrayList<>();
-		String sql = "SELECT * "
-					+ "FROM cuotas "
-					+ "WHERE id_prestamo = ? "
-					+ "ORDER BY nro_cuota ASC";
+		String sql = "SELECT * " + "FROM cuotas " + "WHERE id_prestamo = ? " + "ORDER BY nro_cuota ASC";
 
 		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -121,9 +114,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 
 	@Override
 	public boolean pagarCuota(int idCuota, String fechaPago) {
-		String sql = "UPDATE cuotas "
-				+ "SET fecha_pago = ? "
-				+ "WHERE id = ? AND fecha_pago IS NULL";
+		String sql = "UPDATE cuotas " + "SET fecha_pago = ? " + "WHERE id = ? AND fecha_pago IS NULL";
 
 		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -142,9 +133,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 	@Override
 	public int insertarPrestamo(Prestamo prestamo) {
 		int idGenerado = -1;
-		String sqlPrestamo = "INSERT INTO prestamos "
-				+ "(id_cliente, id_cuenta, fecha, importe_pedido, cantidad_cuotas, importe_cuota, cuotas_pendientes, id_estado) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String sqlPrestamo = "INSERT INTO prestamos " + "(id_cliente, id_cuenta, fecha, importe_pedido, cantidad_cuotas, importe_cuota, cuotas_pendientes, id_estado) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sqlPrestamo, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -175,6 +164,56 @@ public class PrestamoDaoImpl implements PrestamoDao {
 		}
 
 		return idGenerado;
+	}
+
+	@Override
+	public List<Prestamo> obtenerTodosLosPrestamos() {
+		List<Prestamo> lista = new ArrayList<>();
+		String sql = "SELECT * FROM prestamos";
+
+		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					Prestamo p = new Prestamo();
+					p.setId(rs.getInt("id"));
+					p.setFechaAlta(rs.getDate("fecha"));
+					p.setImportePedido(rs.getDouble("importe_pedido"));
+					p.setCantidadCuotas(rs.getInt("cantidad_cuotas"));
+					p.setImportePorCuota(rs.getDouble("importe_cuota"));
+					p.setCuotasPendientes(rs.getInt("cuotas_pendientes"));
+					p.setIdEstado(rs.getInt("id_estado"));
+
+					Cuenta c = new Cuenta();
+					c.setId(rs.getInt("id_cuenta"));
+					p.setCuenta(c);
+
+					Cliente cl = new Cliente();
+					cl.setId(rs.getInt("id_cliente"));
+					p.setCliente(cl);
+
+					lista.add(p);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+
+	@Override
+	public boolean cambiarEstadoPrestamo(int idPrestamo, int nuevoEstado) {
+		String sql = "UPDATE prestamos SET id_estado = ? WHERE id = ?";
+		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setInt(1, nuevoEstado);
+			ps.setInt(2, idPrestamo);
+			return ps.executeUpdate() > 0;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

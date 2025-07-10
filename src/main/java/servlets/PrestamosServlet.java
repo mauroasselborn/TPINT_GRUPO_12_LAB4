@@ -6,6 +6,8 @@ import entidades.Cuenta;
 import entidades.Prestamo;
 import negocio.CuentaNegocio;
 import negocioImpl.CuentaNegocioImpl;
+import negocio.ClienteNegocio;
+import negocioImpl.ClienteNegocioImpl;
 import negocio.PrestamoNegocio;
 import negocioImpl.PrestamoNegocioImpl;
 
@@ -16,28 +18,60 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet("/cliente/PrestamosServlet")
+@WebServlet(urlPatterns = { "/admin/PrestamosServlet", "/cliente/PrestamosServlet" })
 public class PrestamosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PrestamoNegocio prestamoNegocio = new PrestamoNegocioImpl();
 	private CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
+	private ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
 
-		if (usuarioLogueado == null || usuarioLogueado.getCliente() == null) {
+		if (usuarioLogueado == null) {
+			response.sendRedirect(request.getContextPath() + "/login.jsp");
+			return;
+		}
+
+		String accion = request.getParameter("accion");
+
+		if ("listarSolicitudes".equals(accion)) {
+			// ADMIN: ver todas las solicitudes
+			List<Prestamo> prestamos = prestamoNegocio.obtenerTodosLosPrestamos();
+
+			for (Prestamo p : prestamos) {
+				Cliente cliente = clienteNegocio.obtenerPorId(p.getCliente().getId());
+				p.setCliente(cliente);
+
+				try {
+					Cuenta cuenta = cuentaNegocio.obtenerCuenta(p.getCuenta().getId());
+					p.setCuenta(cuenta);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			request.setAttribute("prestamos", prestamos);
+			request.getRequestDispatcher("/admin/Prestamos.jsp").forward(request, response);
+			return;
+		}
+
+		// CLIENTE
+		if (usuarioLogueado.getCliente() == null) {
 			response.sendRedirect(request.getContextPath() + "/login.jsp");
 			return;
 		}
 
 		Cliente cliente = usuarioLogueado.getCliente();
 		List<Cuenta> cuentas = cuentaNegocio.obtenerCuentasPorCliente(cliente.getId());
-		request.setAttribute("cuentas", cuentas);
+		List<Prestamo> prestamosCliente = prestamoNegocio.obtenerPrestamosPorCliente(cliente.getId());
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente/SolicitarPrestamo.jsp");
-		dispatcher.forward(request, response);
+		request.setAttribute("cuentas", cuentas);
+		request.setAttribute("prestamos", prestamosCliente);
+
+		request.getRequestDispatcher("/cliente/SolicitarPrestamo.jsp").forward(request, response);
 	}
 
 	@Override
@@ -45,23 +79,60 @@ public class PrestamosServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
 
+		String accion = request.getParameter("accion");
 		String toastMensaje = "";
 		String toastTitulo = "";
 		String toastTipo = "";
 
-		if (usuarioLogueado == null || usuarioLogueado.getCliente() == null) {
-			toastMensaje = "Debe volver a iniciar sesión.";
-			toastTitulo = "Error";
-			toastTipo = "error";
-
-			request.setAttribute("toastMensaje", toastMensaje);
-			request.setAttribute("toastTitulo", toastTitulo);
-			request.setAttribute("toastTipo", toastTipo);
-			request.getRequestDispatcher("/login.jsp").forward(request, response);
+		if (usuarioLogueado == null) {
+			response.sendRedirect(request.getContextPath() + "/login.jsp");
 			return;
 		}
 
 		try {
+			if ("aprobar".equals(accion) || "rechazar".equals(accion)) {
+				int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
+				int nuevoEstado = "aprobar".equals(accion) ? 2 : 3;
+
+				boolean cambio = prestamoNegocio.cambiarEstadoPrestamo(idPrestamo, nuevoEstado);
+
+				if (cambio && nuevoEstado == 2) {
+					//si se aprobo acredito el prestamo a la cuenta
+					prestamoNegocio.acreditarPrestamo(idPrestamo);
+				}
+
+				toastMensaje = "Operación realizada correctamente.";
+				toastTitulo = "Éxito";
+				toastTipo = "success";
+
+				List<Prestamo> prestamos = prestamoNegocio.obtenerTodosLosPrestamos();
+
+				for (Prestamo p : prestamos) {
+					Cliente cliente = clienteNegocio.obtenerPorId(p.getCliente().getId());
+					p.setCliente(cliente);
+
+					try {
+						Cuenta cuenta = cuentaNegocio.obtenerCuenta(p.getCuenta().getId());
+						p.setCuenta(cuenta);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				request.setAttribute("prestamos", prestamos);
+				request.setAttribute("toastMensaje", toastMensaje);
+				request.setAttribute("toastTitulo", toastTitulo);
+				request.setAttribute("toastTipo", toastTipo);
+
+				request.getRequestDispatcher("/admin/Prestamos.jsp").forward(request, response);
+				return;
+			}
+
+			
+			if (usuarioLogueado.getCliente() == null) {
+				throw new Exception("El usuario no tiene cliente asociado.");
+			}
+
 			int idCuentaDestino = Integer.parseInt(request.getParameter("cuentaDestino"));
 			double montoSolicitado = Double.parseDouble(request.getParameter("monto"));
 			int cantidadCuotas = Integer.parseInt(request.getParameter("cuotas"));
@@ -70,10 +141,8 @@ public class PrestamosServlet extends HttpServlet {
 				throw new Exception("Monto y cuotas deben ser mayores a cero.");
 			}
 
-			// Calcular importe por cuota
 			double importePorCuota = montoSolicitado / cantidadCuotas;
 
-			// Armar el Prestamo completo
 			Prestamo prestamo = new Prestamo();
 			prestamo.setCliente(usuarioLogueado.getCliente());
 
@@ -86,7 +155,7 @@ public class PrestamosServlet extends HttpServlet {
 			prestamo.setCantidadCuotas(cantidadCuotas);
 			prestamo.setImportePorCuota(importePorCuota);
 			prestamo.setCuotasPendientes(cantidadCuotas);
-			prestamo.setIdEstado(1); // Estado pendiente
+			prestamo.setIdEstado(1);
 
 			boolean resultado = prestamoNegocio.registrarSolicitudPrestamo(prestamo);
 
@@ -94,7 +163,6 @@ public class PrestamosServlet extends HttpServlet {
 				toastMensaje = "Préstamo solicitado correctamente. Quedó en estado Pendiente para aprobación.";
 				toastTitulo = "Éxito";
 				toastTipo = "success";
-
 			} else {
 				toastMensaje = "Error al solicitar el préstamo. Intente nuevamente.";
 				toastTitulo = "Error";
@@ -105,6 +173,7 @@ public class PrestamosServlet extends HttpServlet {
 			toastMensaje = "Error: " + ex.getMessage();
 			toastTitulo = "Error";
 			toastTipo = "error";
+			ex.printStackTrace();
 		}
 
 		request.setAttribute("toastMensaje", toastMensaje);

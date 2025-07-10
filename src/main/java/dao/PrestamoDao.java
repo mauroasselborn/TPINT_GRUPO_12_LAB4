@@ -5,7 +5,10 @@ import entidades.Prestamo;
 import entidades.Cuota;
 
 public interface PrestamoDao {
+
 	List<Prestamo> obtenerPrestamosPorCliente(int idCliente);
+
+	List<Prestamo> obtenerTodosLosPrestamos();
 
 	Prestamo obtenerPrestamoPorId(int idPrestamo);
 
@@ -14,4 +17,7 @@ public interface PrestamoDao {
 	boolean pagarCuota(int idCuota, String fechaPago);
 
 	int insertarPrestamo(Prestamo prestamo);
+
+	boolean cambiarEstadoPrestamo(int idPrestamo, int nuevoEstado);
+
 }
