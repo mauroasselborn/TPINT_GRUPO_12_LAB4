@@ -116,7 +116,7 @@ public class ClientesServlet extends HttpServlet {
 		switch (accion) {
 		case "alta":
 			try {
-				// Alta de cliente
+				// Cliente
 				Cliente nuevoCliente = new Cliente();
 				nuevoCliente.setDni(request.getParameter("dni"));
 				nuevoCliente.setCuil(request.getParameter("cuil"));
@@ -140,125 +140,114 @@ public class ClientesServlet extends HttpServlet {
 				loc.setId(Integer.parseInt(request.getParameter("idLocalidad")));
 				nuevoCliente.setLocalidad(loc);
 
+				// Usuario
 				String usuarioNombre = request.getParameter("usuario");
 				String contrasena = request.getParameter("contrasena");
 				String repContrasena = request.getParameter("repContrasena");
 
 				if (!contrasena.equals(repContrasena)) {
-					toastMensaje = "Las contraseñas no coinciden.";
-					toastTitulo = "Error";
-					toastTipo = "error";
-					break;
+					throw new Exception("Las contraseñas no coinciden.");
 				}
 
-				boolean clienteInsertado = clienteNegocio.insertar(nuevoCliente);
-				if (clienteInsertado) {
-					Cliente clienteRecienInsertado = clienteNegocio.obtenerPorDni(nuevoCliente.getDni());
+				Usuario nuevoUsuario = new Usuario();
+				nuevoUsuario.setNombreUsuario(usuarioNombre);
+				nuevoUsuario.setContrasena(contrasena);
+				nuevoUsuario.setActivo(false);
 
-					Usuario nuevoUsuario = new Usuario();
-					nuevoUsuario.setNombreUsuario(usuarioNombre);
-					nuevoUsuario.setContrasena(contrasena);
-					nuevoUsuario.setActivo(true);
+				TipoUsuario tipoCliente = new TipoUsuario();
+				tipoCliente.setId(2);
+				nuevoUsuario.setTipoUsuario(tipoCliente);
 
-					TipoUsuario tipoCliente = new TipoUsuario();
-					tipoCliente.setId(2);
-					nuevoUsuario.setTipoUsuario(tipoCliente);
-					nuevoUsuario.setCliente(clienteRecienInsertado);
+				clienteNegocio.registrarClienteConUsuario(nuevoCliente, nuevoUsuario);
 
-					if (usuarioNegocio.insertarUsuario(nuevoUsuario)) {
-						toastMensaje = "Cliente y usuario agregados correctamente.";
-						toastTitulo = "Éxito";
-						toastTipo = "success";
-					} else {
-						toastMensaje = "Cliente creado, pero no se pudo agregar el usuario.";
-						toastTitulo = "Advertencia";
-						toastTipo = "warning";
-					}
-				} else {
-					toastMensaje = "Error al agregar el cliente.";
-					toastTitulo = "Error";
-					toastTipo = "error";
-				}
-			}catch(ClienteRepetidoException | FechaNoValidaException ex) {
+				toastMensaje = "Cliente y usuario agregados correctamente.";
+				toastTitulo = "Éxito";
+				toastTipo = "success";
+
+			} catch (Exception ex) {
 				toastMensaje = ex.getMessage();
-		        toastTitulo = "Error";
-		        toastTipo = "error";
-				
-			}catch (Exception ex) {
-				toastMensaje = "Error inesperado: "+ex.getMessage();
 				toastTitulo = "Error";
 				toastTipo = "error";
 			}
 			break;
 
 		case "modificar":
-			Cliente clienteModificado = new Cliente();
-			clienteModificado.setId(Integer.parseInt(request.getParameter("id")));
-			clienteModificado.setDni(request.getParameter("dni"));
-			clienteModificado.setCuil(request.getParameter("cuil"));
-			clienteModificado.setNombre(request.getParameter("nombre"));
-			clienteModificado.setApellido(request.getParameter("apellido"));
-			clienteModificado.setSexo(request.getParameter("sexo"));
-			clienteModificado.setFechaNacimiento(request.getParameter("fechaNacimiento"));
-			clienteModificado.setDireccion(request.getParameter("direccion"));
-			clienteModificado.setCorreoElectronico(request.getParameter("correoElectronico"));
-			clienteModificado.setTelefono(request.getParameter("telefono"));
+			try {
+				Cliente clienteModificado = new Cliente();
+				clienteModificado.setId(Integer.parseInt(request.getParameter("id")));
+				clienteModificado.setDni(request.getParameter("dni"));
+				clienteModificado.setCuil(request.getParameter("cuil"));
+				clienteModificado.setNombre(request.getParameter("nombre"));
+				clienteModificado.setApellido(request.getParameter("apellido"));
+				clienteModificado.setSexo(request.getParameter("sexo"));
+				clienteModificado.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+				clienteModificado.setDireccion(request.getParameter("direccion"));
+				clienteModificado.setCorreoElectronico(request.getParameter("correoElectronico"));
+				clienteModificado.setTelefono(request.getParameter("telefono"));
 
-			Nacionalidad nacMod = new Nacionalidad();
-			nacMod.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
-			clienteModificado.setNacionalidad(nacMod);
+				Nacionalidad nacMod = new Nacionalidad();
+				nacMod.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
+				clienteModificado.setNacionalidad(nacMod);
 
-			Provincia provMod = new Provincia();
-			provMod.setId(Integer.parseInt(request.getParameter("idProvincia")));
-			clienteModificado.setProvincia(provMod);
+				Provincia provMod = new Provincia();
+				provMod.setId(Integer.parseInt(request.getParameter("idProvincia")));
+				clienteModificado.setProvincia(provMod);
 
-			Localidad locMod = new Localidad();
-			locMod.setId(Integer.parseInt(request.getParameter("idLocalidad")));
-			clienteModificado.setLocalidad(locMod);
+				Localidad locMod = new Localidad();
+				locMod.setId(Integer.parseInt(request.getParameter("idLocalidad")));
+				clienteModificado.setLocalidad(locMod);
 
-			if (clienteNegocio.modificar(clienteModificado)) {
-				toastMensaje = "Cliente modificado correctamente.";
-				toastTitulo = "Éxito";
-				toastTipo = "success";
-			} else {
-				toastMensaje = "Error al modificar el cliente.";
+				if (clienteNegocio.modificar(clienteModificado)) {
+					toastMensaje = "Cliente modificado correctamente.";
+					toastTitulo = "Éxito";
+					toastTipo = "success";
+				} else {
+					throw new Exception("Error al modificar el cliente.");
+				}
+			} catch (Exception ex) {
+				toastMensaje = ex.getMessage();
 				toastTitulo = "Error";
 				toastTipo = "error";
 			}
 			break;
 
 		case "eliminar":
-			int idEliminar = Integer.parseInt(request.getParameter("id"));
-			System.out.println(idEliminar);
-			
-			
-			
-			if (clienteNegocio.eliminar(idEliminar) && usuarioNegocio.eliminarPorIdCliente(idEliminar)) {
-				toastMensaje = "Cliente eliminado correctamente.";
-				toastTitulo = "Éxito";
-				toastTipo = "success";
-			} else {
-				toastMensaje = "Error al eliminar el cliente.";
+			try {
+				int idEliminar = Integer.parseInt(request.getParameter("id"));
+
+				if (clienteNegocio.eliminar(idEliminar) && usuarioNegocio.eliminarPorIdCliente(idEliminar)) {
+					toastMensaje = "Cliente eliminado correctamente.";
+					toastTitulo = "Éxito";
+					toastTipo = "success";
+				} else {
+					throw new Exception("Error al eliminar el cliente.");
+				}
+			} catch (Exception ex) {
+				toastMensaje = ex.getMessage();
 				toastTitulo = "Error";
 				toastTipo = "error";
 			}
 			break;
 
 		case "altaLogica":
-			int idAlta = Integer.parseInt(request.getParameter("id"));
-			if (clienteNegocio.altaLogica(idAlta) && usuarioNegocio.activarUsuarioPorIdCliente(idAlta)) {
-				toastMensaje = "Cliente dado de alta correctamente.";
-				toastTitulo = "Éxito";
-				toastTipo = "success";
-			} else {
-				toastMensaje = "Error al dar de alta el cliente.";
+			try {
+				int idAlta = Integer.parseInt(request.getParameter("id"));
+
+				if (clienteNegocio.altaLogica(idAlta) && usuarioNegocio.activarUsuarioPorIdCliente(idAlta)) {
+					toastMensaje = "Cliente dado de alta correctamente.";
+					toastTitulo = "Éxito";
+					toastTipo = "success";
+				} else {
+					throw new Exception("Error al dar de alta el cliente.");
+				}
+			} catch (Exception ex) {
+				toastMensaje = ex.getMessage();
 				toastTitulo = "Error";
 				toastTipo = "error";
 			}
 			break;
 		}
 
-		// Obtener y reenviar lista actualizada con toast
 		List<Cliente> listaClientes = clienteNegocio.obtenerTodos();
 		request.setAttribute("listaClientes", listaClientes);
 		request.setAttribute("toastMensaje", toastMensaje);

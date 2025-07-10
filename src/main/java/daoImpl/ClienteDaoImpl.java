@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ClienteDaoImpl implements ClienteDao {
 
-	private final String CONSULTA = "SELECT C.*" + " FROM clientes C" + " JOIN usuarios U ON U.id_cliente = C.id" + " WHERE U.id_tipo_usuario = ?";
+	private final String CONSULTA = "SELECT C.* " + "FROM clientes C " + "JOIN usuarios U " + "ON U.id_cliente = C.id " + "WHERE U.id_tipo_usuario = ?";
 
 	@Override
 	public List<Cliente> obtenerTodos() {
@@ -153,7 +153,7 @@ public class ClienteDaoImpl implements ClienteDao {
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		String sql = "INSERT INTO clientes " + "(dni, cuil, nombre, apellido, sexo, id_nacionalidad, fecha_nacimiento, direccion, id_localidad, id_provincia, correo_electronico, telefono, activo) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
+		String sql = "INSERT INTO clientes " + "(dni, cuil, nombre, apellido, sexo, id_nacionalidad, fecha_nacimiento, direccion, id_localidad, id_provincia, correo_electronico, telefono, activo) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
 
 		try {
 			con = Conexion.getConexion();
@@ -337,9 +337,8 @@ public class ClienteDaoImpl implements ClienteDao {
 
 		try {
 			conn = Conexion.getConexion();
-			ps = conn.prepareStatement(CONSULTA + " AND C.dni = ?");
-			ps.setInt(1, 2);
-			ps.setString(2, dni);
+			ps = conn.prepareStatement("SELECT * FROM clientes WHERE dni = ?");
+			ps.setString(1, dni);
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -391,4 +390,5 @@ public class ClienteDaoImpl implements ClienteDao {
 
 		return cliente;
 	}
+
 }

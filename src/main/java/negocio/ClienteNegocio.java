@@ -2,7 +2,7 @@ package negocio;
 
 import java.util.List;
 import entidades.Cliente;
-
+import entidades.Usuario;
 
 public interface ClienteNegocio {
 	public List<Cliente> obtenerTodos();
@@ -18,4 +18,7 @@ public interface ClienteNegocio {
 	public boolean eliminar(int id);
 
 	public boolean altaLogica(int id);
+
+	boolean registrarClienteConUsuario(Cliente cliente, Usuario usuario) throws Exception;
+
 }

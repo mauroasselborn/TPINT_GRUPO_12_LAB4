@@ -6,9 +6,11 @@ import entidades.TipoCuenta;
 import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.TipoCuentaNegocioImpl;
+import negocioImpl.UsuarioNegocioImpl;
 import negocio.CuentaNegocio;
 import negocio.ClienteNegocio;
 import negocio.TipoCuentaNegocio;
+import negocio.UsuarioNegocio;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +22,10 @@ import java.util.List;
 public class CuentasServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private final CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
-	private final ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
+	private CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
+	private ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
+	private TipoCuentaNegocio tipocuenta = new TipoCuentaNegocioImpl();
+	private UsuarioNegocio usuarioNegocio = new UsuarioNegocioImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,20 +34,20 @@ public class CuentasServlet extends HttpServlet {
 		try {
 			switch (accion) {
 			case "nuevo":
-			    List<Cliente> clientes = clienteNegocio.obtenerTodos();
+				List<Cliente> clientes = clienteNegocio.obtenerTodos();
 
-			    // Generar CBU y número de cuenta únicos
-			    String cbu = cuentaNegocio.generarCBUUnico();
-			    String numeroCuenta = cuentaNegocio.generarNumeroCuentaUnico();
-			    double saldoInicial = 10000;
+				// Generar CBU y número de cuenta únicos
+				String cbu = cuentaNegocio.generarCBUUnico();
+				String numeroCuenta = cuentaNegocio.generarNumeroCuentaUnico();
+				double saldoInicial = 10000;
 
-			    // Enviar al JSP
-			    req.setAttribute("clientes", clientes);
-			    req.setAttribute("cbu", cbu);
-			    req.setAttribute("numeroCuenta", numeroCuenta);
-			    req.setAttribute("saldo", saldoInicial);
-			    req.getRequestDispatcher("/admin/AltaCuenta.jsp").forward(req, resp);
-			    break;
+				// Enviar al JSP
+				req.setAttribute("clientes", clientes);
+				req.setAttribute("cbu", cbu);
+				req.setAttribute("numeroCuenta", numeroCuenta);
+				req.setAttribute("saldo", saldoInicial);
+				req.getRequestDispatcher("/admin/AltaCuenta.jsp").forward(req, resp);
+				break;
 
 			case "editar":
 				int idEd = Integer.parseInt(req.getParameter("id"));
@@ -78,28 +82,29 @@ public class CuentasServlet extends HttpServlet {
 		try {
 			if ("crear".equals(accion)) {
 				Cuenta nueva = new Cuenta();
-				TipoCuentaNegocio tipocuenta = new TipoCuentaNegocioImpl();
-				nueva.setCliente(new Cliente(Integer.parseInt(req.getParameter("clienteId"))));
+				int idCliente = Integer.parseInt(req.getParameter("clienteId"));
+				nueva.setCliente(new Cliente(idCliente));
 				nueva.setNumeroCuenta(req.getParameter("numero"));
 				nueva.setCbu(req.getParameter("cbu"));
 				nueva.setTipoCuenta(tipocuenta.obtenerPorId(Integer.parseInt(req.getParameter("tipo"))));
 				nueva.setFechaCreacion(java.time.LocalDate.now().toString());
 				nueva.setSaldo(Double.parseDouble(req.getParameter("saldo")));
 				cuentaNegocio.crearCuenta(nueva);
+				clienteNegocio.altaLogica(idCliente);
+				usuarioNegocio.activarUsuarioPorIdCliente(idCliente);
 
 			} else if ("guardarModificacion".equals(accion)) {
 				Cuenta cuentamodificar = new Cuenta();
 				cuentamodificar.setId(Integer.parseInt(req.getParameter("id")));
-				
+
 				TipoCuenta tipocuenta = new TipoCuenta();
 				tipocuenta.setId(Integer.parseInt(req.getParameter("tipo")));
 				cuentamodificar.setTipoCuenta(tipocuenta);
-				
-				
+
 				cuentamodificar.setCbu(req.getParameter("cbu"));
 				cuentamodificar.setSaldo(Double.parseDouble(req.getParameter("saldo")));
 				cuentaNegocio.modificarCuenta(cuentamodificar);
-			}else if ("borrar".equals(accion)) {
+			} else if ("borrar".equals(accion)) {
 				int idB = Integer.parseInt(req.getParameter("id"));
 				cuentaNegocio.eliminarCuenta(idB);
 			}

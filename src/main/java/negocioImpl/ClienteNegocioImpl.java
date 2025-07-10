@@ -5,9 +5,12 @@ import java.util.List;
 import dao.ClienteDao;
 import daoImpl.ClienteDaoImpl;
 import entidades.Cliente;
+import entidades.Usuario;
 import excepciones.ClienteRepetidoException;
 import excepciones.FechaNoValidaException;
 import negocio.ClienteNegocio;
+import negocio.UsuarioNegocio;
+import negocioImpl.UsuarioNegocioImpl;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -15,6 +18,7 @@ import java.time.format.DateTimeParseException;
 public class ClienteNegocioImpl implements ClienteNegocio {
 
 	private ClienteDao clienteDao = new ClienteDaoImpl();
+	UsuarioNegocio usuarioNegocio = new UsuarioNegocioImpl();
 
 	@Override
 	public List<Cliente> obtenerTodos() {
@@ -37,7 +41,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate fechaNacimiento;
-		
+
 		try {
 			fechaNacimiento = LocalDate.parse(cliente.getFechaNacimiento(), formatter);
 		} catch (DateTimeParseException e) {
@@ -69,6 +73,54 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	@Override
 	public Cliente obtenerPorDni(String dni) {
 		return clienteDao.obtenerPorDni(dni);
+	}
+
+	@Override
+	public boolean registrarClienteConUsuario(Cliente cliente, Usuario usuario) throws Exception {
+
+		// Valido que llegue Cliente
+		if (cliente == null || cliente.getDni() == null || cliente.getDni().isEmpty()) {
+			throw new Exception("El DNI del cliente es obligatorio.");
+		}
+
+		// Valido si ya existe el cliente en la db
+		Cliente existente = clienteDao.obtenerPorDni(cliente.getDni());
+		if (existente != null) {
+			throw new ClienteRepetidoException("El cliente con DNI " + cliente.getDni() + " ya existe.");
+		}
+
+		// Valido el Usuario
+		if (usuario == null || usuario.getNombreUsuario() == null || usuario.getNombreUsuario().isEmpty()) {
+			throw new Exception("El nombre de usuario es obligatorio.");
+		}
+
+		// validacion para evitar duplicados de usuarios
+		Usuario existenteUsuario = usuarioNegocio.obtenerUsuarioPorNombre(usuario.getNombreUsuario());
+		if (existenteUsuario != null) {
+			throw new Exception("El nombre de usuario ya existe. Por favor elija otro.");
+		}
+
+		// Inserto el cliente
+		boolean clienteInsertado = clienteDao.alta(cliente);
+		if (!clienteInsertado) {
+			throw new Exception("No se pudo insertar el cliente.");
+		}
+
+		// Recupero el cliente recien insertado
+		Cliente clienteRecienInsertado = clienteDao.obtenerPorDni(cliente.getDni());
+		if (clienteRecienInsertado == null) {
+			throw new Exception("Error al obtener el cliente insertado.");
+		}
+
+		usuario.setCliente(clienteRecienInsertado);
+
+		// Inserto Usuario
+		boolean usuarioInsertado = usuarioNegocio.insertarUsuario(usuario);
+		if (!usuarioInsertado) {
+			throw new Exception("Cliente creado, pero no se pudo insertar el usuario.");
+		}
+
+		return true;
 	}
 
 }

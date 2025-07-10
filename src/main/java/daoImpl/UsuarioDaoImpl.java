@@ -285,7 +285,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 		try {
 			conn = Conexion.getConexion();
-			ps = conn.prepareStatement("INSERT INTO usuarios (id_cliente, id_tipo_usuario, nombre_usuario, contrasena, activo) VALUES (?, ?, ?, ?, 1)");
+			ps = conn.prepareStatement("INSERT INTO usuarios (id_cliente, id_tipo_usuario, nombre_usuario, contrasena, activo) VALUES (?, ?, ?, ?, 0)");
 
 			ps.setInt(1, usuario.getCliente().getId());
 			ps.setInt(2, usuario.getTipoUsuario().getId());
