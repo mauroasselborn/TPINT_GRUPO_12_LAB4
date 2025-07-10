@@ -20,18 +20,25 @@
     
     
     
-<form method="get" action="reportes" class="mb-4 text-center">
-  <label>
-    Desde:
-    <input type="date" name="desde" value="<%= inicioAnio %>" required>
-  </label>
-  <label>
-    Hasta:
-    <input type="date" name="hasta" value="<%= finAnio %>" required>
-  </label>
-  <button type="submit" class="btn btn-primary">Filtrar</button>
-</form>
+<form method="get" action="reportes" class="mb-4">
+  <div class="row justify-content-center align-items-end gx-3">
+    <div class="col-auto">
+      <label for="desde" class="form-label fw-bold">Desde</label>
+      <input type="date" id="desde" name="desde" value="<%= inicioAnio %>" class="form-control" required>
+    </div>
 
+    <div class="col-auto">
+      <label for="hasta" class="form-label fw-bold">Hasta</label>
+      <input type="date" id="hasta" name="hasta" value="<%= finAnio %>" class="form-control" required>
+    </div>
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary mt-2">
+        <i class="bi bi-funnel-fill"></i> Filtrar
+      </button>
+    </div>
+  </div>
+</form>
       <!-- Fila de gráficos -->
       <div style="display: flex; flex-wrap: wrap; justify-content: space-around; gap: 30px;">
         <!-- Cuentas por Tipo -->
