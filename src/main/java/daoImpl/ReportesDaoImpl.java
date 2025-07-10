@@ -36,18 +36,23 @@ public class ReportesDaoImpl implements ReportesDao {
 	    return resultado;
 	}
 
-	
 	@Override
-	public Map<String, Integer> obtenerCantidadPrestamosPorEstado() {
+	public Map<String, Integer> obtenerCantidadPrestamosPorEstado(java.sql.Date desde, java.sql.Date hasta) {
 	    Map<String, Integer> resultado = new HashMap<>();
+
 	    String query = "SELECT ep.descripcion, COUNT(*) as cantidad " +
 	                   "FROM prestamos p " +
 	                   "JOIN estado_prestamo ep ON p.id_estado = ep.id " +
+	                   "WHERE p.fecha BETWEEN ? AND ? " +
 	                   "GROUP BY ep.descripcion";
 
 	    try (Connection conn = Conexion.getConexion();
-	         PreparedStatement stmt = conn.prepareStatement(query);
-	         ResultSet rs = stmt.executeQuery()) {
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+	        stmt.setDate(1, desde);
+	        stmt.setDate(2, hasta);
+
+	        ResultSet rs = stmt.executeQuery();
 
 	        while (rs.next()) {
 	            resultado.put(rs.getString("descripcion"), rs.getInt("cantidad"));
@@ -57,9 +62,32 @@ public class ReportesDaoImpl implements ReportesDao {
 	        e.printStackTrace();
 	    }
 
-	    System.out.println("Préstamos por estado: " + resultado); // 
 	    return resultado;
 	}
+
+	
+	public Map<String, Integer> obtenerCantidadClientesPorProvincia() {
+	    Map<String, Integer> resultado = new HashMap<>();
+
+	    try (Connection conn = Conexion.getConexion()) {
+	        String query = "SELECT p.nombre AS provincia, COUNT(*) AS cantidad " +
+	                       "FROM clientes c JOIN provincias p ON c.id_provincia = p.id " +
+	                       "GROUP BY p.nombre";
+
+	        PreparedStatement stmt = conn.prepareStatement(query);
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            resultado.put(rs.getString("provincia"), rs.getInt("cantidad"));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return resultado;
+	}
+	
+	
 	
 	
 }

@@ -3,6 +3,8 @@ package negocioImpl;
 import dao.ReportesDao;
 import daoImpl.ReportesDaoImpl;
 import negocio.ReportesNegocio;
+
+import java.sql.Date;
 import java.util.Map;
 
 public class ReportesNegocioImpl implements ReportesNegocio {
@@ -15,9 +17,17 @@ public class ReportesNegocioImpl implements ReportesNegocio {
     	}
     	
     	
+    	
+    	@Override
+    	public Map<String, Integer> obtenerCantidadPrestamosPorEstado(java.sql.Date desde, java.sql.Date hasta) {
+    	    return reportesDao.obtenerCantidadPrestamosPorEstado(desde, hasta);
+    	}
+
+  
+		
 		@Override
-		public Map<String, Integer> obtenerCantidadPrestamosPorEstado() {
-		return reportesDao.obtenerCantidadPrestamosPorEstado(); 
+		public Map<String, Integer> obtenerCantidadClientesPorProvincia() {
+		return reportesDao.obtenerCantidadClientesPorProvincia(); 
         }   
         
         
