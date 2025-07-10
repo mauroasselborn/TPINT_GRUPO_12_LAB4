@@ -6,6 +6,9 @@ import negocioImpl.ReportesNegocioImpl;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
+import entidades.Usuario;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -17,7 +20,15 @@ public class ReportesServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ReportesNegocio negocio = new ReportesNegocioImpl();
-
+        HttpSession session = request.getSession(false);
+	    Usuario user = new Usuario();
+		if(session.getAttribute("usuarioLogueado") != null) {user = (Usuario) session.getAttribute("usuarioLogueado");}
+		    if (session == null || session.getAttribute("usuarioLogueado") == null) {
+		        response.sendRedirect("../Login.jsp");
+		        return;
+		    } else if(user.getTipoUsuario().getDescripcion().equals("Administrador")) {
+		    	response.sendRedirect("../Login.jsp");
+		    	}
         String desdeStr = request.getParameter("desde");
         String hastaStr = request.getParameter("hasta");
 

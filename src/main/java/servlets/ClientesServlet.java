@@ -35,6 +35,16 @@ public class ClientesServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String accion = request.getParameter("accion");
+		HttpSession session = request.getSession(false);
+		Usuario user = new Usuario();
+		if(session.getAttribute("usuarioLogueado") != null) {user = (Usuario) session.getAttribute("usuarioLogueado");}
+		    if (session == null || session.getAttribute("usuarioLogueado") == null) {
+		        response.sendRedirect("../Login.jsp");
+		        return;
+		    } else if(user.getTipoUsuario().getDescripcion().equals("Administrador")) {
+		    	response.sendRedirect("../Login.jsp");
+		    	}
+		    
 
 		if (accion != null && accion.equals("listar")) {
 			List<Cliente> listaClientes = clienteNegocio.obtenerTodos();
@@ -103,6 +113,15 @@ public class ClientesServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String accion = request.getParameter("accion");
+		HttpSession session = request.getSession(false);
+	    Usuario user = new Usuario();
+		if(session.getAttribute("usuarioLogueado") != null) {user = (Usuario) session.getAttribute("usuarioLogueado");}
+		    if (session == null || session.getAttribute("usuarioLogueado") == null) {
+		        response.sendRedirect("../Login.jsp");
+		        return;
+		    } else if(user.getTipoUsuario().getDescripcion().equals("Administrador")) {
+		    	response.sendRedirect("../Login.jsp");
+		    	}
 
 		if (accion == null) {
 			response.sendRedirect("ClientesServlet?accion=listar");
