@@ -5,17 +5,25 @@
 		<h4 class="text-white text-center">Banco Grupo12</h4>
 		<hr />
 		<ul class="nav nav-pills flex-column mb-auto">
-			<li><a href="MenuClienteServlet"
-				class="nav-link text-white"><i class="bi bi-list-ul me-2"></i>Inicio</a>
+			<li>
+				<a href="MenuClienteServlet" class="nav-link text-white"><i class="bi bi-list-ul me-2"></i>Inicio</a>
 			</li>
-			<li><a href="Transferencias.jsp" class="nav-link text-white"><i
-					class="bi bi-arrow-left-right me-2"></i>Transferencias</a></li>
-			<li><a href="GestionarPrestamos.jsp" class="nav-link text-white"><i
-					class="bi bi-cash-stack me-2"></i>Gestión de Préstamos</a></li>
-			<li><a href="PrestamosServlet" class="nav-link text-white"><i
-					class="bi bi-cash-stack me-2"></i>Solicitar Préstamos</a></li>
-			<li><a href="MiPerfil.jsp" class="nav-link text-white"><i
-					class="bi bi-person me-2"></i> Mi Perfil</a></li>
+			<li>
+				<a href="Transferencias.jsp" class="nav-link text-white">
+				<i class="bi bi-arrow-left-right me-2"></i>Transferencias</a>
+			</li>
+			<li>
+				<a href="PrestamosServlet?accion=listar" class="nav-link text-white">
+				<i class="bi bi-cash-stack me-2"></i>Gestión de Préstamos</a>
+			</li>
+			<li>
+				<a href="PrestamosServlet" class="nav-link text-white">
+				<i class="bi bi-cash-stack me-2"></i>Solicitar Préstamos</a>
+			</li>
+			<li>
+				<a href="MiPerfil.jsp" class="nav-link text-white">
+				<i class="bi bi-person me-2"></i> Mi Perfil</a>
+			</li>
 		</ul>
 	</div>
 	<div>

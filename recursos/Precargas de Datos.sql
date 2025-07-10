@@ -298,23 +298,23 @@ INSERT INTO clientes (dni, cuil, nombre, apellido, sexo, id_nacionalidad, fecha_
 VALUES
 
 ('30011111', '20-30011111-3', 'Mauro', 'Asselborn', 'Masculino', 1, '1992-07-27', 'Calle Alsina 272', 9, 9, 'mauro.asselborn@gmail.com', '1144965827', 1),
-('30022222', '20-30022222-3', 'Adriel', 'Logullo', 'Masculino', 3, '1991-08-26', 'Calle Belgrano 218', 8, 8, 'adriel.logullo@gmail.com', '1148868537', 1),
+('30022222', '20-30022222-3', 'Adriel', 'Logullo', 'Masculino', 3, '1991-08-26', 'Calle Belgrano 218', 8, 8, 'adriel.logullo@gmail.com', '1148868537', 0),
 ('30033333', '20-30033333-3', 'Franco', 'Bonzi', 'Masculino', 2, '1994-08-16', 'Pasaje San Martín 845', 19, 19, 'franco.bonzi@gmail.com', '1141505620', 1),
 ('30044444', '20-30044444-3', 'Guido', 'Secovih', 'Masculino', 5, '1987-02-14', 'Calle Alsina 119', 7, 7, 'guido.secovih@gmail.com', '1140248697', 1),
-('30055555', '20-30055555-3', 'Adrian', 'Criscione', 'Masculino', 8, '1997-03-20', 'Pasaje Alsina 279', 20, 20, 'adrian.criscione@gmail.com', '1142991320', 1),
-('30066666', '20-30066666-3', 'Mariano', 'Stoesell', 'Masculino', 6, '1985-01-13', 'Pasaje Belgrano 331', 10, 10, 'mariano.stoesell@gmail.com', '1141350433', 1);
+('30055555', '20-30055555-3', 'Adrian', 'Criscione', 'Masculino', 8, '1997-03-20', 'Pasaje Alsina 279', 20, 20, 'adrian.criscione@gmail.com', '1142991320', 0),
+('30066666', '20-30066666-3', 'Mariano', 'Stoesell', 'Masculino', 6, '1985-01-13', 'Pasaje Belgrano 331', 10, 10, 'mariano.stoesell@gmail.com', '1141350433', 0);
 
 -- Precarga de usuarios
 
 INSERT INTO usuarios (id_cliente, id_tipo_usuario, nombre_usuario, contrasena, activo)
 VALUES
 
-(1, 2, 'mauro', '1234', 1),
-(2, 1, 'adriel', '1234', 1),
+(1, 1, 'mauro', '1234', 1),
+(2, 2, 'adriel', '1234', 0),
 (3, 1, 'franco', '1234', 1),
 (4, 1, 'guido', '1234', 1),
-(5, 2, 'adrian', '1234', 1),
-(6, 2, 'mariano', '1234', 1);
+(5, 2, 'adrian', '1234', 0),
+(6, 2, 'mariano', '1234', 0);
 
 
 -- Precarga de Tipos de Cuentas

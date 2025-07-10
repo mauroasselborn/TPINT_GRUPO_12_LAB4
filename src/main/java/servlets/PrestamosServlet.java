@@ -26,7 +26,8 @@ public class PrestamosServlet extends HttpServlet {
 	private ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
 
@@ -37,8 +38,9 @@ public class PrestamosServlet extends HttpServlet {
 
 		String accion = request.getParameter("accion");
 
+		// Admin - Listo todas las solicitudes
 		if ("listarSolicitudes".equals(accion)) {
-			// ADMIN: ver todas las solicitudes
+
 			List<Prestamo> prestamos = prestamoNegocio.obtenerTodosLosPrestamos();
 
 			for (Prestamo p : prestamos) {
@@ -58,7 +60,25 @@ public class PrestamosServlet extends HttpServlet {
 			return;
 		}
 
-		// CLIENTE
+		// NUEVO - CLIENTE - Listar mis préstamos
+		if ("listar".equals(accion)) {
+			if (usuarioLogueado.getCliente() == null) {
+				response.sendRedirect(request.getContextPath() + "/login.jsp");
+				return;
+			}
+
+			Cliente cliente = usuarioLogueado.getCliente();
+			List<Cuenta> cuentas = cuentaNegocio.obtenerCuentasPorCliente(cliente.getId());
+			List<Prestamo> prestamosCliente = prestamoNegocio.obtenerPrestamosPorCliente(cliente.getId());
+
+			request.setAttribute("cuentas", cuentas);
+			request.setAttribute("prestamos", prestamosCliente);
+
+			request.getRequestDispatcher("/cliente/GestionarPrestamos.jsp").forward(request, response);
+			return;
+		}
+
+		// CLIENTE - Solicitar préstamo (por defecto si no hay acción o es otra)
 		if (usuarioLogueado.getCliente() == null) {
 			response.sendRedirect(request.getContextPath() + "/login.jsp");
 			return;
@@ -75,7 +95,8 @@ public class PrestamosServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
 
@@ -90,6 +111,7 @@ public class PrestamosServlet extends HttpServlet {
 		}
 
 		try {
+			// ADMIN - Aprobar o rechazar
 			if ("aprobar".equals(accion) || "rechazar".equals(accion)) {
 				int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
 				int nuevoEstado = "aprobar".equals(accion) ? 2 : 3;
@@ -97,7 +119,7 @@ public class PrestamosServlet extends HttpServlet {
 				boolean cambio = prestamoNegocio.cambiarEstadoPrestamo(idPrestamo, nuevoEstado);
 
 				if (cambio && nuevoEstado == 2) {
-					//si se aprobo acredito el prestamo a la cuenta
+					// Si se aprobó, acreditar el préstamo a la cuenta
 					prestamoNegocio.acreditarPrestamo(idPrestamo);
 				}
 
@@ -128,7 +150,7 @@ public class PrestamosServlet extends HttpServlet {
 				return;
 			}
 
-			
+			// CLIENTE - Solicitar nuevo préstamo
 			if (usuarioLogueado.getCliente() == null) {
 				throw new Exception("El usuario no tiene cliente asociado.");
 			}

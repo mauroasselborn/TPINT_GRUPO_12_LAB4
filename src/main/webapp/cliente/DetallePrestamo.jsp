@@ -71,7 +71,7 @@
 					</tr>
 					<tr>
 						<th scope="row">Estado</th>
-						<td><%=prestamo.getEstado()%></td>
+						<td><%=prestamo.getIdEstado()%></td>
 					</tr>
 					<tr>
 						<th scope="row">Fecha de alta</th>

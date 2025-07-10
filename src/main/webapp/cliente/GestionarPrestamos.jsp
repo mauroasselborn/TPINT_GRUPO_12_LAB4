@@ -1,58 +1,103 @@
-<jsp:include page="../componentes/Encabezado.jsp" />
-	
-	<!-- Sidebar -->
-  <jsp:include page="../componentes/MenuLateralCliente.jsp" />
+<%@ page import="entidades.Prestamo" %>
+<%@ page import="java.util.List" %>
 
-  <!-- Contenedor principal -->
-  <div class="main-content">
+<!-- Encabezado -->
+<jsp:include page="../componentes/Encabezado.jsp" />
+
+<!-- Sidebar -->
+<jsp:include page="../componentes/MenuLateralCliente.jsp" />
+
+<!-- Contenedor principal -->
+<div class="main-content">
     <!-- Navbar -->
     <jsp:include page="../componentes/BarraSuperior.jsp" />
+
     <!-- Contenido principal -->
+    <div class="container-fluid content py-4">
 
-  <div class="container-fluid content py-4">
-    <h2>Mis Préstamos</h2>
-    <a href="PrestamosServlet" class="btn btn-primary mb-3">Solicitar Nuevo Préstamo</a>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0">Mis Préstamos</h2>
+            <a href="PrestamosServlet?accion=solicitar" class="btn btn-primary">
+                Solicitar Nuevo Préstamo
+            </a>
+        </div>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Importe</th>
-          <th>Cuotas</th>
-          <th>Estado</th>
-          <th>Detalle</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>$50.000</td>
-          <td>12</td>
-          <td><span class="badge bg-warning">PENDIENTE</span></td>
-          <td><a href="DetallePrestamo.jsp" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Ver</a></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>$75.000</td>
-          <td>24</td>
-          <td><span class="badge bg-success">APROBADO</span></td>
-          <td><a href="DetallePrestamo.jsp" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Ver</a></td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>$30.000</td>
-          <td>6</td>
-          <td><span class="badge bg-danger">RECHAZADO</span></td>
-          <td><a href="DetallePrestamo.jsp" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Ver</a></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  <jsp:include page="../componentes/Footer.jsp" />
-  
-  </div>
+        <div class="scroll-x">
+            <table id="tablaPrestamos" class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Cuenta</th>
+                        <th>Importe</th>
+                        <th>Cantidad de Cuotas</th>
+                        <th>Importe por Cuota</th>
+                        <th>Fecha de Alta</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        List<Prestamo> listaPrestamos = (List<Prestamo>) request.getAttribute("prestamos");
+                        if (listaPrestamos != null) {
+                            for (Prestamo p : listaPrestamos) {
+                    %>
+                    <tr>
+                        <td><%= p.getCuenta().getNumeroCuenta() %></td>
+                        <td>$<%= String.format("%.2f", p.getImportePedido())%></td>
+                        <td><%= p.getCantidadCuotas() %></td>
+                        <td><%= p.getImportePorCuota() %></td>
+                        <td><%= p.getFechaAlta() %></td>
+                        <td>
+                            <% if ("PENDIENTE".equals(p.getIdEstado())){ %>
+                                <span class="badge bg-warning">PENDIENTE</span>
+                            <% } else if ("APROBADO".equals(p.getIdEstado())) { %>
+                                <span class="badge bg-success">APROBADO</span>
+                            <% } else if ("RECHAZADO".equals(p.getIdEstado())) { %>
+                                <span class="badge bg-danger">RECHAZADO</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <a href="PrestamosServlet?accion=detalle&id=<%= p.getId() %>" class="btn btn-info btn-sm">
+                                    <i class="bi bi-eye"></i> Ver
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <%
+                            }
+                        }
+                    %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <jsp:include page="../componentes/Footer.jsp" />
+</div>
+
+
+<script>
+$(document).ready(function () {
+    $('#tablaPrestamos').DataTable({
+        responsive: true,
+        autoWidth: false,
+        language: {
+            search: "Filtrar:",
+            lengthMenu: "Mostrar _MENU_ registros por página",
+            zeroRecords: "No se encontraron resultados",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            infoEmpty: "Mostrando 0 a 0 de 0 registros",
+            infoFiltered: "(filtrado de _MAX_ registros totales)",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior"
+            }
+        }
+    });
+});
+</script>
 </body>
 </html>
