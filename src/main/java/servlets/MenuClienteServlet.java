@@ -23,7 +23,12 @@ public class MenuClienteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Obtener sesión y cliente logueado
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+	    if (session == null || session.getAttribute("usuarioLogueado") == null) {
+	        response.sendRedirect("../Login.jsp");
+	        return;
+	    }
+		    
 		Cuenta cuentaSeleccionada = null;
 		String idCuentaParam = request.getParameter("idCuenta");
 		
@@ -72,6 +77,11 @@ public class MenuClienteServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+		HttpSession session = request.getSession(false);
+	    if (session == null || session.getAttribute("usuarioLogueado") == null) {
+	        response.sendRedirect("../Login.jsp");
+	        return;
+	    }
 		String accion = request.getParameter("accion");
 
 		    if ("copiarCBU".equals(accion)) {

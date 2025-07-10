@@ -29,8 +29,11 @@ public class TransferenciasServlet extends HttpServlet {
    
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String accion = request.getParameter("accion");
-    	HttpSession session = request.getSession();
-        
+    	HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("usuarioLogueado") == null) {
+            response.sendRedirect("../Login.jsp");
+            return;
+        }
        
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         System.out.println("Cliente logueado: " + usuario.getNombreUsuario());
@@ -59,6 +62,12 @@ public class TransferenciasServlet extends HttpServlet {
     
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("usuarioLogueado") == null) {
+            response.sendRedirect("../Login.jsp");
+            return;
+        }
+    	
     	String accion = request.getParameter("accion");
     	String cuentaOrigenIdStr = request.getParameter("cuentaOrigen");
         String cbuDestino = request.getParameter("cbuDestino");
@@ -139,9 +148,9 @@ public class TransferenciasServlet extends HttpServlet {
 	    request.setAttribute("toastTipo", toastTipo);
           	    
         if ("propias".equals(accion)) {
-            request.getRequestDispatcher("/cliente/TransferenciasPropias.jsp").forward(request, response);
+            request.getRequestDispatcher("/cliente/Transferencias.jsp").forward(request, response);
         } else if ("terceros".equals(accion)) {
-            request.getRequestDispatcher("/cliente/TransferenciasTerceros.jsp").forward(request, response);
+            request.getRequestDispatcher("/cliente/Transferencias.jsp").forward(request, response);
         }
     }
 }

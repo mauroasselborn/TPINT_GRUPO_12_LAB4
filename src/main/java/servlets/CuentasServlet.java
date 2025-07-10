@@ -3,6 +3,7 @@ package servlets;
 import entidades.Cuenta;
 import entidades.Cliente;
 import entidades.TipoCuenta;
+import entidades.Usuario;
 import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.TipoCuentaNegocioImpl;
@@ -30,6 +31,16 @@ public class CuentasServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String accion = req.getParameter("accion");
+		HttpSession session = req.getSession(false);
+		Usuario user = new Usuario();
+		if(session.getAttribute("usuarioLogueado") != null) {user = (Usuario) session.getAttribute("usuarioLogueado");}
+		    if (session == null || session.getAttribute("usuarioLogueado") == null) {
+		        resp.sendRedirect("../Login.jsp");
+		        return;
+		    } else if(user.getTipoUsuario().getDescripcion().equals("Administrador")) {
+		    	resp.sendRedirect("../Login.jsp");
+		    	}
+		    
 
 		try {
 			switch (accion) {
@@ -78,6 +89,16 @@ public class CuentasServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String accion = req.getParameter("accion");
+		
+		HttpSession session = req.getSession(false);
+	    Usuario user = new Usuario();
+		if(session.getAttribute("usuarioLogueado") != null) {user = (Usuario) session.getAttribute("usuarioLogueado");}
+		    if (session == null || session.getAttribute("usuarioLogueado") == null) {
+		        resp.sendRedirect("../Login.jsp");
+		        return;
+		    } else if(user.getTipoUsuario().getDescripcion().equals("Administrador")) {
+		    	resp.sendRedirect("../Login.jsp");
+		    	}
 
 		try {
 			if ("crear".equals(accion)) {
