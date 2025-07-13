@@ -106,6 +106,7 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	    
 	    @Override
 	    public void descontarSaldo(int idCuenta, double monto) throws Exception {
+	    	
 	        if (!dao.descontarSaldo(idCuenta, monto)) {
 	            throw new Exception("No se pudo descontar el saldo. Verifique fondos suficientes.");
 	        }
