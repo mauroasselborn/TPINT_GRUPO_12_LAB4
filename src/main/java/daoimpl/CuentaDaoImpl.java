@@ -128,7 +128,13 @@ public class CuentaDaoImpl implements CuentaDao {
 
 		return cuenta;
 	}
-
+	
+	
+	
+	
+	
+/* PROBANDO CODIGO PARA AGREGAR MOVIMIENTO 
+ * 
 	@Override
 	public boolean alta(Cuenta cuenta) {
 		boolean estado = false;
@@ -167,7 +173,73 @@ public class CuentaDaoImpl implements CuentaDao {
 		}
 
 		return estado;
+	}*/
+	
+	@Override
+	public boolean alta(Cuenta cuenta) {
+	    boolean estado = false;
+	    Connection con = null;
+	    PreparedStatement psCuenta = null;
+	    PreparedStatement psMov = null;
+	    ResultSet rsKeys = null;
+
+	    String sql = "INSERT INTO cuentas (id_cliente, numero_cuenta, cbu, id_tipo_cuenta, fecha_creacion, saldo, activo) VALUES (?, ?, ?, ?, ?, ?, 1)";
+	    String sqlMovimiento = "INSERT INTO movimientos (fecha, detalle, id_tipo_movimiento, importe, tipo, id_cuenta) VALUES (NOW(), ?, ?, ?, ?, ?)";
+
+	    try {
+	        con = Conexion.getConexion();
+	        con.setAutoCommit(false); // Transacción
+
+	        psCuenta = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	        psCuenta.setInt(1, cuenta.getCliente().getId());
+	        psCuenta.setString(2, cuenta.getNumeroCuenta());
+	        psCuenta.setString(3, cuenta.getCbu());
+	        psCuenta.setInt(4, cuenta.getTipoCuenta().getId());
+	        psCuenta.setString(5, cuenta.getFechaCreacion());
+	        psCuenta.setDouble(6, cuenta.getSaldo());
+
+	        int filasCuenta = psCuenta.executeUpdate();
+
+	        if (filasCuenta > 0) {
+	            rsKeys = psCuenta.getGeneratedKeys();
+	            if (rsKeys.next()) {
+	                int idCuenta = rsKeys.getInt(1);
+
+	                psMov = con.prepareStatement(sqlMovimiento);
+	                psMov.setString(1, "Alta de cuenta");
+	                psMov.setInt(2, 1); // ID tipo_movimiento: "Alta de cuenta"
+	                psMov.setDouble(3, cuenta.getSaldo());
+	                psMov.setString(4, "ingreso");
+	                psMov.setInt(5, idCuenta);
+
+	                int filasMov = psMov.executeUpdate();
+
+	                if (filasMov > 0) {
+	                    con.commit();
+	                    estado = true;
+	                } else {
+	                    con.rollback();
+	                }
+	            }
+	        }
+
+	    } catch (SQLException e) {
+	        try {
+	            if (con != null) con.rollback();
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	        e.printStackTrace();
+	    } finally {
+	        try { if (rsKeys != null) rsKeys.close(); } catch (Exception e) {}
+	        try { if (psMov != null) psMov.close(); } catch (Exception e) {}
+	        try { if (psCuenta != null) psCuenta.close(); } catch (Exception e) {}
+	        try { if (con != null) con.setAutoCommit(true); con.close(); } catch (Exception e) {}
+	    }
+
+	    return estado;
 	}
+
 
 	@Override
 	public boolean modificar(Cuenta cuenta) {
@@ -207,6 +279,11 @@ public class CuentaDaoImpl implements CuentaDao {
 		return estado;
 	}
 
+	
+
+	
+	
+	
 	@Override
 	public boolean baja(int id) {
 		boolean estado = false;
