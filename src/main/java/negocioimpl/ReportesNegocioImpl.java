@@ -11,8 +11,8 @@ public class ReportesNegocioImpl implements ReportesNegocio {
     private ReportesDao reportesDao = new ReportesDaoImpl();
 
     	@Override
-    	public Map<String, Integer> obtenerCantidadCuentasPorTipo() {
-        return reportesDao.obtenerCantidadCuentasPorTipo();
+    	public Map<String, Integer> obtenerCantidadCuentasPorTipo(java.sql.Date desde, java.sql.Date hasta) {
+        return reportesDao.obtenerCantidadCuentasPorTipo(desde, hasta);
     	}
     	
     	
