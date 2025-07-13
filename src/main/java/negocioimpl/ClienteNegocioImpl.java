@@ -10,7 +10,6 @@ import excepciones.ClienteRepetidoException;
 import excepciones.FechaNoValidaException;
 import negocio.ClienteNegocio;
 import negocio.UsuarioNegocio;
-import negocioimpl.UsuarioNegocioImpl;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;

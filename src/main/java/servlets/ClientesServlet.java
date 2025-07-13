@@ -16,9 +16,6 @@ import negocio.ClienteNegocio;
 import negocio.ProvinciaNegocio;
 import negocio.LocalidadNegocio;
 import negocio.NacionalidadNegocio;
-import excepciones.ClienteRepetidoException;
-import excepciones.FechaNoValidaException;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;

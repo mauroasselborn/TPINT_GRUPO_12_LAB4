@@ -3,7 +3,6 @@ package servlets;
 import entidades.Cuenta;
 import entidades.Cliente;
 import entidades.TipoCuenta;
-import entidades.Usuario;
 import negocio.CuentaNegocio;
 import negocio.ClienteNegocio;
 import negocio.TipoCuentaNegocio;

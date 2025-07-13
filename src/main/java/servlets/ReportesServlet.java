@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import entidades.Usuario;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

@@ -4,7 +4,6 @@ import dao.ReportesDao;
 import daoimpl.ReportesDaoImpl;
 import negocio.ReportesNegocio;
 
-import java.sql.Date;
 import java.util.Map;
 
 public class ReportesNegocioImpl implements ReportesNegocio {

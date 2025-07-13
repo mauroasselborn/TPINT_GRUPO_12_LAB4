@@ -5,8 +5,6 @@ import java.util.List;
 import dao.PrestamoDao;
 import daoimpl.PrestamoDaoImpl;
 import negocio.PrestamoNegocio;
-import negocioimpl.CuentaNegocioImpl;
-import negocioimpl.MovimientoNegocioImpl;
 import negocio.CuentaNegocio;
 import negocio.MovimientoNegocio;
 import entidades.Prestamo;

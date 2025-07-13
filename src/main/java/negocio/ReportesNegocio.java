@@ -1,6 +1,5 @@
 package negocio;
 
-import java.sql.Date;
 import java.util.Map;
 
 public interface ReportesNegocio {

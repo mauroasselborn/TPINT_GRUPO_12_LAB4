@@ -1,20 +1,10 @@
 package daoimpl;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import dao.ReportesDao;
-import dao.UsuarioDao;
-import entidades.Usuario;
-import entidades.Cliente;
-import entidades.Localidad;
-import entidades.Nacionalidad;
-import entidades.Provincia;
-import entidades.TipoUsuario;
 import datos.Conexion;
 
 public class ReportesDaoImpl implements ReportesDao {
