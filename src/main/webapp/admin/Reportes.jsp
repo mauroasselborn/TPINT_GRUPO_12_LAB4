@@ -13,23 +13,30 @@
   <div class="container content py-4">
     <div class="w-100 mx-auto">
     
-    <%
-  java.time.LocalDate inicioAnio = java.time.LocalDate.now().withDayOfYear(1);
-  java.time.LocalDate finAnio = java.time.LocalDate.now().withMonth(12).withDayOfMonth(31);
+<%
+  String inicioAnioStr = java.time.LocalDate.now().withDayOfYear(1).toString();
+  String finAnioStr = java.time.LocalDate.now().withMonth(12).withDayOfMonth(31).toString();
 %>
-    
-    
-    
+
+<h3>Debug cuentas por tipo</h3>
+<c:forEach var="entry" items="${cuentasPorTipo}">
+    <p>${entry.key}: ${entry.value}</p>
+</c:forEach>
+
 <form method="get" action="reportes" class="mb-4">
   <div class="row justify-content-center align-items-end gx-3">
     <div class="col-auto">
       <label for="desde" class="form-label fw-bold">Desde</label>
-      <input type="date" id="desde" name="desde" value="<%= inicioAnio %>" class="form-control" required>
+      <input type="date" id="desde" name="desde" 
+             value="<%= request.getParameter("desde") != null ? request.getParameter("desde") : inicioAnioStr %>" 
+             class="form-control" required>
     </div>
 
     <div class="col-auto">
       <label for="hasta" class="form-label fw-bold">Hasta</label>
-      <input type="date" id="hasta" name="hasta" value="<%= finAnio %>" class="form-control" required>
+      <input type="date" id="hasta" name="hasta" 
+             value="<%= request.getParameter("hasta") != null ? request.getParameter("hasta") : finAnioStr %>" 
+             class="form-control" required>
     </div>
 
     <div class="col-auto">
@@ -39,6 +46,9 @@
     </div>
   </div>
 </form>
+
+    
+
       <!-- Fila de gráficos -->
       <div style="display: flex; flex-wrap: wrap; justify-content: space-around; gap: 30px;">
         <!-- Cuentas por Tipo -->
@@ -82,12 +92,17 @@
           <% } else { %>
             <div class="alert alert-warning text-center">
               No hay datos disponibles para mostrar el gráfico de clientes por provincia.
+              
+
+              
             </div>
           <% } %>
         </div>
       </div>
     </div>
   </div>
+  
+  
 
   <jsp:include page="../componentes/Footer.jsp" />
 </div>
@@ -96,7 +111,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  <%-- Gráfico de Cuentas --%>
+  // Gráfico de Cuentas 
   <% if (datos != null && !datos.isEmpty()) { %>
     const labelsCuentas = [<% for (String tipo : datos.keySet()) { %>"<%= tipo %>",<% } %>];
     const dataCuentas = [<% for (Integer valor : datos.values()) { %><%= valor %>,<% } %>];
@@ -138,7 +153,7 @@
     });
   <% } %>
 
-  <%-- Gráfico de Préstamos --%>
+  // Gráfico de Préstamos 
   <% if (prestamos != null && !prestamos.isEmpty()) { %>
     const labelsPrestamos = [<% for (String estado : prestamos.keySet()) { %>"<%= estado %>",<% } %>];
     const dataPrestamos = [<% for (Integer valor : prestamos.values()) { %><%= valor %>,<% } %>];
@@ -172,7 +187,7 @@
     });
   <% } %>
 
-  <%-- Gráfico de Clientes por Provincia --%>
+  //Gráfico de Clientes por Provincia 
   <% if (clientesProv != null && !clientesProv.isEmpty()) { %>
     const labelsClientesProvincia = [<% for (String prov : clientesProv.keySet()) { %>"<%= prov %>",<% } %>];
     const dataClientesProvincia = [<% for (Integer val : clientesProv.values()) { %><%= val %>,<% } %>];

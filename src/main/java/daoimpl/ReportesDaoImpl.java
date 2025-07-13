@@ -11,11 +11,14 @@ public class ReportesDaoImpl implements ReportesDao {
 	@Override
 	public Map<String, Integer> obtenerCantidadCuentasPorTipo(java.sql.Date desde, java.sql.Date hasta) {
 	    Map<String, Integer> resultado = new HashMap<>();
-	    String query = "SELECT tc.descripcion, COUNT(*) as cantidad " +
-	                   "FROM cuentas c JOIN tipo_cuenta tc ON c.id_tipo_cuenta = tc.id " +
-	                   "GROUP BY tc.descripcion";
+		String query = 	   "SELECT tc.descripcion, COUNT(*) as cantidad " +
+		                   "FROM cuentas c JOIN tipo_cuenta tc ON c.id_tipo_cuenta = tc.id " +
+		                   "where c.activo = 1 and c.fecha_creacion BETWEEN ? and ? " + 
+		                   "GROUP BY tc.descripcion";
+		    
+	    
 	    try (Connection conn = Conexion.getConexion();
-	         PreparedStatement stmt = conn.prepareStatement(query)); {
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
 	    		
 	    	
 		     stmt.setDate(1, desde);
