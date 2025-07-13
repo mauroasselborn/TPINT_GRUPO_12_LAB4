@@ -60,7 +60,7 @@ public class MovimientoDaoImpl implements MovimientoDao {
 	        		+ "FROM bancogrupo12.movimientos m\r\n"
 	        		+ "INNER JOIN bancogrupo12.tipo_movimiento tm ON m.id_tipo_movimiento = tm.id\r\n"
 	        		+ "WHERE m.id_cuenta = ?\r\n"
-	        		+ "ORDER BY m.fecha ASC;";
+	        		+ "ORDER BY m.fecha desc;";
 	        pst = cn.prepareStatement(sql);
 	        pst.setInt(1, idCuenta);
 	        rs = pst.executeQuery();

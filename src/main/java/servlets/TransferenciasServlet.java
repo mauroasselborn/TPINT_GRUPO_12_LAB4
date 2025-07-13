@@ -1,6 +1,8 @@
 package servlets;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,11 +32,23 @@ public class TransferenciasServlet extends HttpServlet {
    
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String accion = request.getParameter("accion");
-    	HttpSession session = request.getSession(false);
+    	HttpSession session = request.getSession();
         if (session == null || session.getAttribute("usuarioLogueado") == null) {
             response.sendRedirect("../Login.jsp");
             return;
         }
+        if (session.getAttribute("toastMensaje") != null &&
+        	    session.getAttribute("toastTitulo") != null &&
+        	    session.getAttribute("toastTipo") != null) {
+
+        	    request.setAttribute("toastMensaje", session.getAttribute("toastMensaje"));
+        	    request.setAttribute("toastTitulo", session.getAttribute("toastTitulo"));
+        	    request.setAttribute("toastTipo", session.getAttribute("toastTipo"));
+
+        	    session.removeAttribute("toastMensaje");
+        	    session.removeAttribute("toastTitulo");
+        	    session.removeAttribute("toastTipo");
+        	}
        
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         System.out.println("Cliente logueado: " + usuario.getNombreUsuario());
@@ -63,7 +77,7 @@ public class TransferenciasServlet extends HttpServlet {
     
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session = request.getSession(false);
+    	HttpSession session = request.getSession();
         if (session == null || session.getAttribute("usuarioLogueado") == null) {
             response.sendRedirect("../Login.jsp");
             return;
@@ -112,16 +126,16 @@ public class TransferenciasServlet extends HttpServlet {
                     cuentaNegocio.aumentarSaldo(cuentaDestino.getId(), monto);
 
                     Movimiento movOrigen = new Movimiento();
-                    movOrigen.setFecha(LocalDate.now().toString());
+                    movOrigen.setFecha(LocalDateTime.now().toString());
                     movOrigen.setDetalle("Transferencia a CBU " + cbuDestino);
                     movOrigen.setTipoMovimiento(new TipoMovimiento(4, "Transferencia"));
-                    movOrigen.setImporte(monto);
+                    movOrigen.setImporte(-monto);
                     movOrigen.setTipo("D");
                     movOrigen.setCuenta(cuentaOrigen);
                     movimientoNegocio.insertarMovimiento(movOrigen);
 
                     Movimiento movDestino = new Movimiento();
-                    movDestino.setFecha(LocalDate.now().toString());
+                    movDestino.setFecha(LocalDateTime.now().toString());
                     movDestino.setDetalle("Transferencia recibida de cuenta ID " + cuentaOrigenId);
                     movDestino.setTipoMovimiento(new TipoMovimiento(4, "Transferencia"));
                     movDestino.setImporte(monto);
@@ -144,14 +158,18 @@ public class TransferenciasServlet extends HttpServlet {
             toastTipo = "error";
             e.printStackTrace();
         }
-        request.setAttribute("toastMensaje", toastMensaje);
-	    request.setAttribute("toastTitulo", toastTitulo);
-	    request.setAttribute("toastTipo", toastTipo);
+        
           	    
         if ("propias".equals(accion)) {
-            request.getRequestDispatcher("/cliente/Transferencias.jsp").forward(request, response);
+        	session.setAttribute("toastMensaje", toastMensaje);
+        	session.setAttribute("toastTitulo", toastTitulo);
+        	session.setAttribute("toastTipo", toastTipo);
+        	response.sendRedirect("TransferenciasServlet?accion=propias");
         } else if ("terceros".equals(accion)) {
-            request.getRequestDispatcher("/cliente/Transferencias.jsp").forward(request, response);
+        	session.setAttribute("toastMensaje", toastMensaje);
+        	session.setAttribute("toastTitulo", toastTitulo);
+        	session.setAttribute("toastTipo", toastTipo);
+        	response.sendRedirect("TransferenciasServlet?accion=terceros");
         }
     }
 }
