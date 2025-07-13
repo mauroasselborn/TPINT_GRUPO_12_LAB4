@@ -1,8 +1,8 @@
-package negocioImpl;
+package negocioimpl;
 
 import java.util.List;
 import dao.TipoCuentaDao;
-import daoImpl.TipoCuentaDaoImpl;
+import daoimpl.TipoCuentaDaoImpl;
 import entidades.TipoCuenta;
 import negocio.TipoCuentaNegocio;
 

@@ -1,19 +1,19 @@
-package daoImpl;
+package daoimpl;
 
-import dao.ProvinciaDao;
+import dao.LocalidadDao;
 import datos.Conexion;
-import entidades.Provincia;
+import entidades.Localidad;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProvinciaDaoImpl implements ProvinciaDao {
+public class LocalidadDaoImpl implements LocalidadDao {
 
 	@Override
-	public List<Provincia> obtenerTodos() {
-		List<Provincia> listaProvincias = new ArrayList<>();
-		String consultaSQL = "SELECT * FROM provincias ORDER BY nombre";
+	public List<Localidad> obtenerTodos() {
+		List<Localidad> listaLocalidades = new ArrayList<>();
+		String consultaSQL = "SELECT * FROM localidades ORDER BY nombre";
 		Connection conexion = null;
 		PreparedStatement statement = null;
 		ResultSet resultado = null;
@@ -24,10 +24,11 @@ public class ProvinciaDaoImpl implements ProvinciaDao {
 			resultado = statement.executeQuery();
 
 			while (resultado.next()) {
-				Provincia provincia = new Provincia();
-				provincia.setId(resultado.getInt("id"));
-				provincia.setNombre(resultado.getString("nombre"));
-				listaProvincias.add(provincia);
+				Localidad localidad = new Localidad();
+				localidad.setId(resultado.getInt("id"));
+				localidad.setNombre(resultado.getString("nombre"));
+				localidad.setProvincia(resultado.getInt("id_provincia"));
+				listaLocalidades.add(localidad);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -49,13 +50,13 @@ public class ProvinciaDaoImpl implements ProvinciaDao {
 			}
 		}
 
-		return listaProvincias;
+		return listaLocalidades;
 	}
 
 	@Override
-	public Provincia obtenerPorId(int idProvincia) {
-		Provincia provincia = null;
-		String consultaSQL = "SELECT * FROM provincias WHERE id = ?";
+	public Localidad obtenerPorId(int idLocalidad) {
+		Localidad localidad = null;
+		String consultaSQL = "SELECT * FROM localidades WHERE id = ?";
 		Connection conexion = null;
 		PreparedStatement statement = null;
 		ResultSet resultado = null;
@@ -63,13 +64,13 @@ public class ProvinciaDaoImpl implements ProvinciaDao {
 		try {
 			conexion = Conexion.getConexion();
 			statement = conexion.prepareStatement(consultaSQL);
-			statement.setInt(1, idProvincia);
+			statement.setInt(1, idLocalidad);
 			resultado = statement.executeQuery();
 
 			if (resultado.next()) {
-				provincia = new Provincia();
-				provincia.setId(resultado.getInt("id"));
-				provincia.setNombre(resultado.getString("nombre"));
+				localidad = new Localidad();
+				localidad.setId(resultado.getInt("id"));
+				localidad.setNombre(resultado.getString("nombre"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,6 +92,6 @@ public class ProvinciaDaoImpl implements ProvinciaDao {
 			}
 		}
 
-		return provincia;
+		return localidad;
 	}
 }

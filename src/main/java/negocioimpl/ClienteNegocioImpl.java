@@ -1,16 +1,16 @@
-package negocioImpl;
+package negocioimpl;
 
 import java.time.LocalDate;
 import java.util.List;
 import dao.ClienteDao;
-import daoImpl.ClienteDaoImpl;
+import daoimpl.ClienteDaoImpl;
 import entidades.Cliente;
 import entidades.Usuario;
 import excepciones.ClienteRepetidoException;
 import excepciones.FechaNoValidaException;
 import negocio.ClienteNegocio;
 import negocio.UsuarioNegocio;
-import negocioImpl.UsuarioNegocioImpl;
+import negocioimpl.UsuarioNegocioImpl;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;

@@ -5,18 +5,17 @@ import entidades.Provincia;
 import entidades.TipoUsuario;
 import entidades.Usuario;
 import negocio.UsuarioNegocio;
+import negocioimpl.ClienteNegocioImpl;
+import negocioimpl.LocalidadNegocioImpl;
+import negocioimpl.NacionalidadNegocioImpl;
+import negocioimpl.ProvinciaNegocioImpl;
+import negocioimpl.UsuarioNegocioImpl;
 import entidades.Localidad;
 import entidades.Nacionalidad;
 import negocio.ClienteNegocio;
-import negocioImpl.ClienteNegocioImpl;
 import negocio.ProvinciaNegocio;
 import negocio.LocalidadNegocio;
 import negocio.NacionalidadNegocio;
-import negocioImpl.ProvinciaNegocioImpl;
-import negocioImpl.UsuarioNegocioImpl;
-import negocioImpl.LocalidadNegocioImpl;
-import negocioImpl.NacionalidadNegocioImpl;
-
 import excepciones.ClienteRepetidoException;
 import excepciones.FechaNoValidaException;
 
@@ -36,24 +35,28 @@ public class ClientesServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String accion = request.getParameter("accion");
 		HttpSession session = request.getSession(false);
-		Usuario user = new Usuario();
-		if(session.getAttribute("usuarioLogueado") != null) {user = (Usuario) session.getAttribute("usuarioLogueado");}
-		    if (session == null || session.getAttribute("usuarioLogueado") == null) {
-		        response.sendRedirect("../Login.jsp");
-		        return;
-		    } else if(user.getTipoUsuario().getDescripcion().equals("Administrador")) {
-		    	response.sendRedirect("../Login.jsp");
-		    	}
-		    
+//		Usuario user = new Usuario();
 
-		if (accion != null && accion.equals("listar")) {
+		if (session == null || session.getAttribute("usuarioLogueado") == null) {
+			response.sendRedirect("../Login.jsp");
+			return;
+		}
+//		user = (Usuario) session.getAttribute("usuarioLogueado");
+
+//		if (user.getTipoUsuario().getDescripcion().equals("Administrador")) {
+//			response.sendRedirect("../Login.jsp");
+//			return;
+//		}
+
+		if ("listar".equals(accion)) {
 			List<Cliente> listaClientes = clienteNegocio.obtenerTodos();
 			request.setAttribute("listaClientes", listaClientes);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/Clientes.jsp");
 			dispatcher.forward(request, response);
+			return;
 		}
 
-		if (accion.equals("editar")) {
+		if ("editar".equals(accion)) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			Cliente cliente = clienteNegocio.obtenerPorId(id);
 			Usuario usuario = usuarioNegocio.obtenerUsuarioPorIdCliente(id);
@@ -74,9 +77,10 @@ public class ClientesServlet extends HttpServlet {
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/ModificarCliente.jsp");
 			dispatcher.forward(request, response);
+			return;
 		}
 
-		if (accion.equals("detalle")) {
+		if ("detalle".equals(accion)) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			Cliente cliente = clienteNegocio.obtenerPorId(id);
 			Usuario usuario = usuarioNegocio.obtenerUsuarioPorIdCliente(id);
@@ -94,10 +98,10 @@ public class ClientesServlet extends HttpServlet {
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/DetalleCliente.jsp");
 			dispatcher.forward(request, response);
+			return;
 		}
 
-		if (accion.equals("alta")) {
-
+		if ("alta".equals(accion)) {
 			ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
 			LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
 			NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
@@ -114,14 +118,17 @@ public class ClientesServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String accion = request.getParameter("accion");
 		HttpSession session = request.getSession(false);
-	    Usuario user = new Usuario();
-		if(session.getAttribute("usuarioLogueado") != null) {user = (Usuario) session.getAttribute("usuarioLogueado");}
-		    if (session == null || session.getAttribute("usuarioLogueado") == null) {
-		        response.sendRedirect("../Login.jsp");
-		        return;
-		    } else if(user.getTipoUsuario().getDescripcion().equals("Administrador")) {
-		    	response.sendRedirect("../Login.jsp");
-		    	}
+//		Usuario user = new Usuario();
+//		if (session.getAttribute("usuarioLogueado") != null) {
+//			user = (Usuario) session.getAttribute("usuarioLogueado");
+//		}
+		if (session == null || session.getAttribute("usuarioLogueado") == null) {
+			response.sendRedirect("../Login.jsp");
+			return;
+		} 
+//		else if (user.getTipoUsuario().getDescripcion().equals("Administrador")) {
+//			response.sendRedirect("../Login.jsp");
+//		}
 
 		if (accion == null) {
 			response.sendRedirect("ClientesServlet?accion=listar");

@@ -1,4 +1,4 @@
-package daoImpl;
+package daoimpl;
 
 import dao.NacionalidadDao;
 import datos.Conexion;

@@ -18,15 +18,15 @@ import entidades.Provincia;
 import entidades.TipoUsuario;
 import entidades.Usuario;
 import negocio.UsuarioNegocio;
-import negocioImpl.UsuarioNegocioImpl;
+import negocioimpl.ClienteNegocioImpl;
+import negocioimpl.LocalidadNegocioImpl;
+import negocioimpl.NacionalidadNegocioImpl;
+import negocioimpl.ProvinciaNegocioImpl;
+import negocioimpl.UsuarioNegocioImpl;
 import negocio.ClienteNegocio;
 import negocio.LocalidadNegocio;
 import negocio.NacionalidadNegocio;
 import negocio.ProvinciaNegocio;
-import negocioImpl.ClienteNegocioImpl;
-import negocioImpl.LocalidadNegocioImpl;
-import negocioImpl.NacionalidadNegocioImpl;
-import negocioImpl.ProvinciaNegocioImpl;
 
 /**
  * Servlet implementation class UsuariosServlet

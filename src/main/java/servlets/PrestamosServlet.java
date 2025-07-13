@@ -5,11 +5,11 @@ import entidades.Usuario;
 import entidades.Cuenta;
 import entidades.Prestamo;
 import negocio.CuentaNegocio;
-import negocioImpl.CuentaNegocioImpl;
 import negocio.ClienteNegocio;
-import negocioImpl.ClienteNegocioImpl;
 import negocio.PrestamoNegocio;
-import negocioImpl.PrestamoNegocioImpl;
+import negocioimpl.ClienteNegocioImpl;
+import negocioimpl.CuentaNegocioImpl;
+import negocioimpl.PrestamoNegocioImpl;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;

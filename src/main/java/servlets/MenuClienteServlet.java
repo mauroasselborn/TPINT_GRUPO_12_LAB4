@@ -4,10 +4,10 @@ import entidades.Cuenta;
 import entidades.Cliente;
 import entidades.Movimiento;
 import entidades.Usuario;
-import negocioImpl.CuentaNegocioImpl;
-import negocioImpl.MovimientoNegocioImpl;
 import negocio.CuentaNegocio;
 import negocio.MovimientoNegocio;
+import negocioimpl.CuentaNegocioImpl;
+import negocioimpl.MovimientoNegocioImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,4 +1,4 @@
-package daoImpl;
+package daoimpl;
 
 import dao.ClienteDao;
 import datos.Conexion;

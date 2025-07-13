@@ -1,8 +1,8 @@
-package negocioImpl;
+package negocioimpl;
 
 import java.util.List;
 import dao.CuotaDao;
-import daoImpl.CuotaDaoImpl;
+import daoimpl.CuotaDaoImpl;
 import entidades.Cuota;
 import negocio.CuotaNegocio;
 

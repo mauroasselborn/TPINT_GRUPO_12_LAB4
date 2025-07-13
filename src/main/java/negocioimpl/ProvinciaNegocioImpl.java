@@ -1,8 +1,8 @@
-package negocioImpl;
+package negocioimpl;
 
 import java.util.List;
 import dao.ProvinciaDao;
-import daoImpl.ProvinciaDaoImpl;
+import daoimpl.ProvinciaDaoImpl;
 import entidades.Provincia;
 import negocio.ProvinciaNegocio;
 

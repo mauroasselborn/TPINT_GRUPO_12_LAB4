@@ -1,8 +1,8 @@
-package negocioImpl;
+package negocioimpl;
 
 import java.util.List;
 import dao.NacionalidadDao;
-import daoImpl.NacionalidadDaoImpl;
+import daoimpl.NacionalidadDaoImpl;
 import entidades.Nacionalidad;
 import negocio.NacionalidadNegocio;
 

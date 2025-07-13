@@ -1,9 +1,9 @@
-package negocioImpl;
+package negocioimpl;
 
 import java.util.List;
 
 import dao.MovimientoDao;
-import daoImpl.MovimientoDaoImpl;
+import daoimpl.MovimientoDaoImpl;
 import entidades.Movimiento;
 import negocio.MovimientoNegocio;
 

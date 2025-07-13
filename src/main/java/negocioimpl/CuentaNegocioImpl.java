@@ -1,7 +1,7 @@
-package negocioImpl;
+package negocioimpl;
 
 import dao.CuentaDao;
-import daoImpl.CuentaDaoImpl;
+import daoimpl.CuentaDaoImpl;
 import entidades.Cliente;
 import entidades.Cuenta;
 import negocio.CuentaNegocio;

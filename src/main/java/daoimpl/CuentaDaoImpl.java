@@ -1,10 +1,10 @@
-package daoImpl;
+package daoimpl;
 
 import dao.CuentaDao;
 import entidades.Cuenta;
 import entidades.Cliente;
 import negocio.TipoCuentaNegocio;
-import negocioImpl.TipoCuentaNegocioImpl;
+import negocioimpl.TipoCuentaNegocioImpl;
 import datos.Conexion;
 
 import java.sql.*;

@@ -7,7 +7,7 @@ import javax.servlet.http.*;
 
 import entidades.Usuario;
 import negocio.UsuarioNegocio;
-import negocioImpl.UsuarioNegocioImpl;
+import negocioimpl.UsuarioNegocioImpl;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {

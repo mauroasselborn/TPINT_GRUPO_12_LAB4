@@ -1,14 +1,14 @@
-package negocioImpl;
+package negocioimpl;
 
 import java.util.List;
 
 import dao.PrestamoDao;
-import daoImpl.PrestamoDaoImpl;
+import daoimpl.PrestamoDaoImpl;
 import negocio.PrestamoNegocio;
+import negocioimpl.CuentaNegocioImpl;
+import negocioimpl.MovimientoNegocioImpl;
 import negocio.CuentaNegocio;
 import negocio.MovimientoNegocio;
-import negocioImpl.CuentaNegocioImpl;
-import negocioImpl.MovimientoNegocioImpl;
 import entidades.Prestamo;
 import entidades.TipoMovimiento;
 import entidades.Cuenta;

@@ -14,9 +14,10 @@ import negocio.CuentaNegocio;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.*;
-import negocioImpl.CuentaNegocioImpl;
+
 import negocio.MovimientoNegocio;
-import negocioImpl.MovimientoNegocioImpl;
+import negocioimpl.CuentaNegocioImpl;
+import negocioimpl.MovimientoNegocioImpl;
 
 @WebServlet("/cliente/TransferenciasServlet")
 public class TransferenciasServlet extends HttpServlet {

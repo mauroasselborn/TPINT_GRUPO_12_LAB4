@@ -1,7 +1,7 @@
-package negocioImpl;
+package negocioimpl;
 
 import dao.ReportesDao;
-import daoImpl.ReportesDaoImpl;
+import daoimpl.ReportesDaoImpl;
 import negocio.ReportesNegocio;
 
 import java.sql.Date;
