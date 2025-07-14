@@ -5,6 +5,11 @@
 <%@ page import="java.text.DecimalFormat"%>
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<!-- noUiSlider CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" rel="stylesheet" />
+
+<!-- noUiSlider JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -131,6 +136,11 @@
 			</div>
 
 			<h5 class="text-dark mb-3">Detalle de Movimientos</h5>
+<div class="d-flex justify-content-start align-items-center mb-2">
+  <div class="text-start">
+    <div id="sliderRangoMontos" style="width: 250px;"></div>
+  </div>
+</div>
 			<div class="table-responsive">
 				<table id="TablaMovimientos"
 					class="table table-bordered table-hover align-middle">
@@ -173,32 +183,88 @@
 					</tbody>
 				</table>
 				<script>
-					$(document)
-							.ready(
-									function() {
-										$('#TablaMovimientos')
-												.DataTable(
-														{
-															responsive : true,
-															autoWidth : false,
-															pageLength : 10, // muestra máximo 10 por página
-															lengthChange : false, // oculta el selector de cantidad si querés
-															language : {
-																search : "Filtrar:",
-																lengthMenu : "Mostrar _MENU_ registros por página",
-																zeroRecords : "No se encontraron resultados",
-																info : "Mostrando _START_ a _END_ de _TOTAL_ registros",
-																infoEmpty : "Mostrando 0 a 0 de 0 registros",
-																infoFiltered : "(filtrado de _MAX_ registros totales)",
-																paginate : {
-																	first : "Primero",
-																	last : "Último",
-																	next : "Siguiente",
-																	previous : "Anterior"
-																}
-															}
-														});
-									});
+  var rangoMin = 0;
+  var rangoMax = Infinity;
+</script>
+				<script>
+				
+				$(document).ready(function () {
+					  var table = $('#TablaMovimientos').DataTable({
+					    responsive: true,
+					    autoWidth: false,
+					    pageLength: 10,
+					    lengthChange: false,
+					    language: {
+					      search: "Filtrar:",
+					      lengthMenu: "Mostrar _MENU_ registros por página",
+					      zeroRecords: "No se encontraron resultados",
+					      info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+					      infoEmpty: "Mostrando 0 a 0 de 0 registros",
+					      infoFiltered: "(filtrado de _MAX_ registros totales)",
+					      paginate: {
+					        first: "Primero",
+					        last: "Último",
+					        next: "Siguiente",
+					        previous: "Anterior"
+					      }
+					    }
+					  });
+
+					  // Obtener montos para el rango
+					  var montos = [];
+					  $('#TablaMovimientos tbody tr').each(function () {
+					    var texto = $(this).find('td:eq(4)').text().replace(/[^\d.-]/g, '');
+					    var valor = parseFloat(texto);
+					    if (!isNaN(valor)) {
+					      montos.push(Math.abs(valor));
+					    }
+					  });
+
+					  if (montos.length === 0) return;
+
+					  var minValor = Math.floor(Math.min(...montos));
+					  var maxValor = Math.ceil(Math.max(...montos));
+
+					  var slider = document.getElementById('sliderRangoMontos');
+
+					  noUiSlider.create(slider, {
+					    start: [minValor, maxValor],
+					    connect: true,
+					    range: {
+					      min: minValor,
+					      max: maxValor
+					    },
+					    step: 1,
+					    behaviour: 'drag',
+					    tooltips: [true, true],
+					    format: {
+					      to: function (value) {
+					        return Math.round(value);
+					      },
+					      from: function (value) {
+					        return Number(value);
+					      }
+					    }
+					  });
+
+					  slider.querySelectorAll('.noUi-connect').forEach(el => el.style.background = 'black');
+					  slider.querySelectorAll('.noUi-handle').forEach(el => el.style.borderRadius = '50%');
+
+					  // ✅ Filtro personalizado para DataTables (por monto absoluto)
+					  $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+					    var texto = data[4].replace(/[^\d.-]/g, ''); // Columna Importe
+					    var valor = parseFloat(texto);
+					    if (isNaN(valor)) return false;
+					    return Math.abs(valor) >= rangoMin && Math.abs(valor) <= rangoMax;
+					  });
+
+					  // Actualizar rango y redibujar tabla al mover el slider
+					  slider.noUiSlider.on('update', function (valores) {
+					    rangoMin = parseFloat(valores[0]);
+					    rangoMax = parseFloat(valores[1]);
+					    table.draw(); // 🔁 esto sí actualiza todo correctamente
+					  });
+					});
 				</script>
 			</div>
 			<%
