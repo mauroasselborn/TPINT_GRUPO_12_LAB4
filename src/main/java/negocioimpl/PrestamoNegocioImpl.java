@@ -35,11 +35,6 @@ public class PrestamoNegocioImpl implements PrestamoNegocio {
 	}
 
 	@Override
-	public boolean pagarCuota(int idCuota, String fechaPago) {
-		return prestamoDao.pagarCuota(idCuota, fechaPago);
-	}
-
-	@Override
 	public boolean registrarSolicitudPrestamo(Prestamo prestamo) {
 		if (prestamo == null || prestamo.getCliente() == null || prestamo.getCuenta() == null) {
 			return false;
@@ -49,43 +44,11 @@ public class PrestamoNegocioImpl implements PrestamoNegocio {
 			return false;
 		}
 
-		double importePorCuota = Math.round((prestamo.getImportePedido() / prestamo.getCantidadCuotas()) * 100.0) / 100.0;
-		if (importePorCuota <= 0) {
-			return false;
-		}
-
-		prestamo.setImportePorCuota(importePorCuota);
-
 		// Insertar el prestamo
 		int idPrestamoGenerado = prestamoDao.insertarPrestamo(prestamo);
 		if (idPrestamoGenerado <= 0) {
 			return false;
 		}
-
-		// Insertar cuotas
-		for (int i = 1; i <= prestamo.getCantidadCuotas(); i++) {
-			Cuota cuota = new Cuota();
-			cuota.setNroCuota(i);
-			cuota.setMonto(importePorCuota);
-
-			Prestamo pRef = new Prestamo();
-			pRef.setId(idPrestamoGenerado);
-			cuota.setPrestamo(pRef);
-
-			cuotaNegocio.insertarCuota(cuota);
-		}
-
-		Movimiento movimiento = new Movimiento();
-		movimiento.setFecha(java.time.LocalDate.now().toString());
-		movimiento.setDetalle("Solicitud de préstamo pendiente de aprobación");
-		movimiento.setTipoMovimiento(new TipoMovimiento(2, "Solicitud de Préstamo"));
-		movimiento.setImporte(prestamo.getImportePedido());
-		movimiento.setTipo("D"); // Es egreso hasta que se apruebe
-
-		movimiento.setCuenta(prestamo.getCuenta());
-
-		MovimientoNegocio movimientoNegocio = new MovimientoNegocioImpl();
-		movimientoNegocio.insertarMovimiento(movimiento);
 
 		return true;
 	}
@@ -115,14 +78,33 @@ public class PrestamoNegocioImpl implements PrestamoNegocio {
 		try {
 			cuentaNegocio.aumentarSaldo(idCuenta, monto);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+
+		double importePorCuota = Math.round((prestamo.getImportePedido() / prestamo.getCantidadCuotas()) * 100.0) / 100.0;
+		if (importePorCuota <= 0) {
+			return false;
+		}
+
+		prestamo.setImportePorCuota(importePorCuota);
+
+		// Insertar cuotas
+		for (int i = 1; i <= prestamo.getCantidadCuotas(); i++) {
+			Cuota cuota = new Cuota();
+			cuota.setNroCuota(i);
+			cuota.setMonto(importePorCuota);
+
+			Prestamo pRef = new Prestamo();
+			pRef.setId(idPrestamo);
+			cuota.setPrestamo(pRef);
+
+			cuotaNegocio.insertarCuota(cuota);
 		}
 
 		// Registrar movimiento de Alta de Préstamo
 		Movimiento movimiento = new Movimiento();
 		movimiento.setFecha(java.time.LocalDate.now().toString());
-		movimiento.setDetalle("Alta de préstamo aprobado");
+		movimiento.setDetalle("Alta de préstamo");
 		movimiento.setTipoMovimiento(new TipoMovimiento(2, "Alta de Préstamo"));
 		movimiento.setImporte(monto);
 		movimiento.setTipo("C"); // Crédito

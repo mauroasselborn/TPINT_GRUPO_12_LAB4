@@ -14,8 +14,6 @@ public interface PrestamoDao {
 
 	List<Cuota> obtenerCuotasPorPrestamo(int idPrestamo);
 
-	boolean pagarCuota(int idCuota, String fechaPago);
-
 	int insertarPrestamo(Prestamo prestamo);
 
 	boolean cambiarEstadoPrestamo(int idPrestamo, int nuevoEstado);
