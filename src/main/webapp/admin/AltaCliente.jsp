@@ -100,7 +100,7 @@
 
         <div class="mb-3">
           <label>Teléfono</label>
-          <input type="text" class="form-control" name="telefono" placeholder="Ingrese el número telefónico">
+          <input type="number" class="form-control" name="telefono" placeholder="Ingrese el número telefónico">
         </div>
 
         <div class="mb-3">

@@ -120,24 +120,6 @@ public class PrestamoDaoImpl implements PrestamoDao {
 	}
 
 	@Override
-	public boolean pagarCuota(int idCuota, String fechaPago) {
-		String sql = "UPDATE cuotas " + "SET fecha_pago = ? " + "WHERE id = ? AND fecha_pago IS NULL";
-
-		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
-
-			ps.setString(1, fechaPago);
-			ps.setInt(2, idCuota);
-
-			int filas = ps.executeUpdate();
-			return filas > 0;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	@Override
 	public int insertarPrestamo(Prestamo prestamo) {
 		int idGenerado = -1;
 		String sqlPrestamo = "INSERT INTO prestamos " + "(id_cliente, id_cuenta, fecha, importe_pedido, cantidad_cuotas, importe_cuota, cuotas_pendientes, id_estado) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

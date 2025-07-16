@@ -103,7 +103,11 @@ public class TransferenciasServlet extends HttpServlet {
             	toastMensaje = "Saldo insuficiente...";
                 toastTitulo = "Error";
                 toastTipo = "error";
-            }           	
+            } else if(monto <= 0) {
+            	toastMensaje = "No se puede transferir por un numero menor o igual a 0";
+                toastTitulo = "Error";
+                toastTipo = "error";            	
+            }
             else {
                 Cuenta cuentaDestino = null;
                 for (Cuenta cuenta : cuentaNegocio.listarCuentas()) {
