@@ -30,8 +30,8 @@
                         <th>Importe</th>
                         <th>Cantidad de Cuotas</th>
                         <th>Importe por Cuota</th>
+                        <th>Cuotas Pendientes</th>
                         <th>Fecha de Alta</th>
-                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -46,16 +46,8 @@
                         <td>$<%= String.format("%.2f", p.getImportePedido())%></td>
                         <td><%= p.getCantidadCuotas() %></td>
                         <td><%= p.getImportePorCuota() %></td>
+                        <td><%= p.getCuotasPendientes()%></td>
                         <td><%= p.getFechaAlta() %></td>
-                        <td>
-                            <% if ("PENDIENTE".equals(p.getIdEstado())){ %>
-                                <span class="badge bg-warning">PENDIENTE</span>
-                            <% } else if ("APROBADO".equals(p.getIdEstado())) { %>
-                                <span class="badge bg-success">APROBADO</span>
-                            <% } else if ("RECHAZADO".equals(p.getIdEstado())) { %>
-                                <span class="badge bg-danger">RECHAZADO</span>
-                            <% } %>
-                        </td>
                         <td>
                             <div class="d-flex justify-content-center">
                                 <a href="PrestamosServlet?accion=detalle&id=<%= p.getId() %>" class="btn btn-info btn-sm">

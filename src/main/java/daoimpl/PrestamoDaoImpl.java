@@ -16,33 +16,40 @@ public class PrestamoDaoImpl implements PrestamoDao {
 	@Override
 	public List<Prestamo> obtenerPrestamosPorCliente(int idCliente) {
 		List<Prestamo> lista = new ArrayList<>();
-		String sql = "SELECT * " + "FROM prestamos " + "WHERE id_cliente = ?";
+		String sql = "SELECT p.id  AS id_prestamo, p.id_cliente, p.fecha, p.importe_pedido, p.cantidad_cuotas, p.importe_cuota, "
+				+ "p.cuotas_pendientes, p.id_estado, c.id AS id_cuenta, c.numero_cuenta "
+				+ "FROM prestamos p "
+				+ "JOIN cuentas c ON p.id_cuenta = c.id "
+				+ "WHERE p.id_cliente = ?";
+
 
 		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setInt(1, idCliente);
 			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					Prestamo p = new Prestamo();
-					p.setId(rs.getInt("id"));
-					p.setFechaAlta(rs.getDate("fecha"));
-					p.setImportePedido(rs.getDouble("importe_pedido"));
-					p.setCantidadCuotas(rs.getInt("cantidad_cuotas"));
-					p.setImportePorCuota(rs.getDouble("importe_cuota"));
-					p.setCuotasPendientes(rs.getInt("cuotas_pendientes"));
-					p.setIdEstado(rs.getInt("id_estado"));
+			    while (rs.next()) {
+			        Prestamo p = new Prestamo();
+			        p.setId(          rs.getInt("id_prestamo"));
+			        p.setFechaAlta(   rs.getDate("fecha"));
+			        p.setImportePedido(rs.getDouble("importe_pedido"));
+			        p.setCantidadCuotas(rs.getInt("cantidad_cuotas"));
+			        p.setImportePorCuota(rs.getDouble("importe_cuota"));
+			        p.setCuotasPendientes(rs.getInt("cuotas_pendientes"));
+			        p.setIdEstado(    rs.getInt("id_estado"));
 
-					Cuenta c = new Cuenta();
-					c.setId(rs.getInt("id_cuenta"));
-					p.setCuenta(c);
+			        Cuenta c = new Cuenta();
+			        c.setId(           rs.getInt("id_cuenta"));
+			        c.setNumeroCuenta(rs.getString("numero_cuenta"));
+			        p.setCuenta(c);
 
-					Cliente cl = new Cliente();
-					cl.setId(idCliente);
-					p.setCliente(cl);
+			        Cliente cl = new Cliente();
+			        cl.setId(idCliente);
+			        p.setCliente(cl);
 
-					lista.add(p);
-				}
+			        lista.add(p);
+			    }
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

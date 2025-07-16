@@ -68,14 +68,17 @@ public class PrestamosServlet extends HttpServlet {
 			}
 
 			Cliente cliente = usuarioLogueado.getCliente();
-			List<Cuenta> cuentas = cuentaNegocio.obtenerCuentasPorCliente(cliente.getId());
 			List<Prestamo> prestamosCliente = prestamoNegocio.obtenerPrestamosPorCliente(cliente.getId());
 
-			request.setAttribute("cuentas", cuentas);
 			request.setAttribute("prestamos", prestamosCliente);
 
 			request.getRequestDispatcher("/cliente/GestionarPrestamos.jsp").forward(request, response);
 			return;
+		}
+		
+		//Detalle prestamo
+		if("detalle".equals(accion)) {
+			
 		}
 
 		// CLIENTE - Solicitar préstamo (por defecto si no hay acción o es otra)
