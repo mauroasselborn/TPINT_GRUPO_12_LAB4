@@ -19,7 +19,7 @@
 
 		<%
 		Prestamo prestamo = (Prestamo) request.getAttribute("prestamo");
-		List<Cuota> listaCuotas = (List<Cuota>) request.getAttribute("listaCuotas");
+		List<Cuota> listaCuotas = (List<Cuota>) request.getAttribute("cuotas");
 
 		int cuotasPendientes = 0;
 		Cuota proximaCuota = null;
@@ -83,8 +83,8 @@
 
 		<!-- Acciones -->
 		<div class="d-flex gap-2">
-			<a href="PrestamosServlet" class="btn btn-secondary"> <i
-				class="bi bi-arrow-left"></i> Volver
+			<a href="PrestamosServlet?accion=listar" class="btn btn-secondary">
+				<i class="bi bi-arrow-left"></i> Volver
 			</a>
 
 			<%
@@ -92,9 +92,8 @@
 			%>
 			<form action="PrestamosServlet" method="get">
 				<input type="hidden" name="accion" value="pagar" /> <input
-					type="hidden" name="idPrestamo" value="<%=prestamo.getId()%>" />
-				<input type="hidden" name="idCuota"
-					value="<%=proximaCuota.getId()%>" />
+					type="hidden" name="idPrestamo" value="<%=prestamo.getId()%>" /> <input
+					type="hidden" name="idCuota" value="<%=proximaCuota.getId()%>" />
 				<button type="submit" class="btn btn-success">
 					<i class="bi bi-cash-coin"></i> Pagar cuota
 					<%=proximaCuota.getNroCuota()%>
@@ -109,11 +108,13 @@
 		String pago = (String) request.getAttribute("pago");
 		if ("true".equals(pago)) {
 		%>
-		<div class="alert alert-success mt-3">¡El pago se realizó correctamente!</div>
+		<div class="alert alert-success mt-3">¡El pago se realizó
+			correctamente!</div>
 		<%
 		} else if ("false".equals(pago)) {
 		%>
-		<div class="alert alert-danger mt-3">Error al realizar el pago.	Intenta nuevamente.</div>
+		<div class="alert alert-danger mt-3">Error al realizar el pago.
+			Intenta nuevamente.</div>
 		<%
 		}
 		%>

@@ -20,7 +20,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 				+ "p.cuotas_pendientes, p.id_estado, c.id AS id_cuenta, c.numero_cuenta "
 				+ "FROM prestamos p "
 				+ "JOIN cuentas c ON p.id_cuenta = c.id "
-				+ "WHERE p.id_cliente = ?";
+				+ "WHERE p.id_cliente = ? AND id_estado = 2";
 
 
 		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {

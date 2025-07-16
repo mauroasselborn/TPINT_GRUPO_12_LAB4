@@ -16,9 +16,9 @@
     <div class="container-fluid content py-4">
 
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 class="mb-0">Mis Prï¿½stamos</h2>
+            <h2 class="mb-0">Mis Préstamos</h2>
             <a href="PrestamosServlet?accion=solicitar" class="btn btn-primary">
-                Solicitar Nuevo Prï¿½stamo
+                Solicitar Nuevo Préstamo
             </a>
         </div>
 
@@ -30,6 +30,7 @@
                         <th>Importe</th>
                         <th>Cantidad de Cuotas</th>
                         <th>Importe por Cuota</th>
+                        <th>Cuotas Pendientes</th>                        
                         <th>Fecha de Alta</th>
                         <th>Acciones</th>
                     </tr>
@@ -75,14 +76,14 @@ $(document).ready(function () {
         autoWidth: false,
         language: {
             search: "Filtrar:",
-            lengthMenu: "Mostrar _MENU_ registros por pï¿½gina",
+            lengthMenu: "Mostrar _MENU_ registros por página",
             zeroRecords: "No se encontraron resultados",
             info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
             infoEmpty: "Mostrando 0 a 0 de 0 registros",
             infoFiltered: "(filtrado de _MAX_ registros totales)",
             paginate: {
                 first: "Primero",
-                last: "ï¿½ltimo",
+                last: "Último",
                 next: "Siguiente",
                 previous: "Anterior"
             }

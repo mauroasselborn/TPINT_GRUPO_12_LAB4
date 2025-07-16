@@ -3,12 +3,15 @@ package servlets;
 import entidades.Cliente;
 import entidades.Usuario;
 import entidades.Cuenta;
+import entidades.Cuota;
 import entidades.Prestamo;
 import negocio.CuentaNegocio;
+import negocio.CuotaNegocio;
 import negocio.ClienteNegocio;
 import negocio.PrestamoNegocio;
 import negocioimpl.ClienteNegocioImpl;
 import negocioimpl.CuentaNegocioImpl;
+import negocioimpl.CuotaNegocioImpl;
 import negocioimpl.PrestamoNegocioImpl;
 
 import javax.servlet.*;
@@ -24,6 +27,7 @@ public class PrestamosServlet extends HttpServlet {
 	private PrestamoNegocio prestamoNegocio = new PrestamoNegocioImpl();
 	private CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
 	private ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
+	private CuotaNegocio cuotaNegocio = new CuotaNegocioImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -78,7 +82,14 @@ public class PrestamosServlet extends HttpServlet {
 		
 		//Detalle prestamo
 		if("detalle".equals(accion)) {
+			int idPrestamo = Integer.parseInt(request.getParameter("id"));
+			Prestamo prestamo = prestamoNegocio.obtenerPrestamoPorId(idPrestamo);
+			List<Cuota> listaCuotas = cuotaNegocio.obtenerCuotasPorPrestamo(idPrestamo);
 			
+			
+			request.setAttribute("cuotas", listaCuotas);
+			request.setAttribute("prestamo", prestamo);
+			request.getRequestDispatcher("/cliente/DetallePrestamo.jsp").forward(request, response);
 		}
 
 		// CLIENTE - Solicitar préstamo (por defecto si no hay acción o es otra)
