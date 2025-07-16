@@ -64,7 +64,7 @@ public class PrestamosServlet extends HttpServlet {
 			return;
 		}
 
-		// NUEVO - CLIENTE - Listar mis préstamos
+		// CLIENTE - Listar mis préstamos
 		if ("listar".equals(accion)) {
 			if (usuarioLogueado.getCliente() == null) {
 				response.sendRedirect(request.getContextPath() + "/login.jsp");

@@ -45,7 +45,7 @@
 					</tr>
 					<tr>
 						<th scope="row">Cuenta destino</th>
-						<td>CTA$ <%=prestamo.getCuenta().getId()%>
+						<td>CTA$ <%=prestamo.getCuenta().getNumeroCuenta()%>
 						</td>
 					</tr>
 					<tr>
@@ -57,21 +57,21 @@
 						<td><%=cuotasPendientes%></td>
 					</tr>
 					<tr>
-						<th scope="row">Próxima cuota a pagar</th>
+						<th scope="row">Próxima Cuota</th>
 						<td>
 							<%
 							if (proximaCuota != null) {
 							%> Cuota <%=proximaCuota.getNroCuota()%> de <%=prestamo.getCantidadCuotas()%>
-							- Monto: $<%=String.format("%.2f", proximaCuota.getMonto())%> <%
- } else {
- %> <span class="text-muted">Sin cuotas pendientes</span> <%
- }
- %>
+							<%
+							 } else {
+							 %> <span class="text-muted">Sin cuotas pendientes</span> <%
+							 }
+							 %>
 						</td>
 					</tr>
 					<tr>
-						<th scope="row">Estado</th>
-						<td><%=prestamo.getIdEstado()%></td>
+						<th scope="row">Monto</th>
+						<td>$<%=String.format("%.2f", proximaCuota.getMonto())%></td>
 					</tr>
 					<tr>
 						<th scope="row">Fecha de alta</th>
@@ -90,10 +90,10 @@
 			<%
 			if (proximaCuota != null) {
 			%>
-			<form action="PrestamosServlet" method="get">
-				<input type="hidden" name="accion" value="pagar" /> <input
-					type="hidden" name="idPrestamo" value="<%=prestamo.getId()%>" /> <input
-					type="hidden" name="idCuota" value="<%=proximaCuota.getId()%>" />
+			<form action="PrestamosServlet" method="post">
+				<input type="hidden" name="accion" value="pagar" /> 
+				<input type="hidden" name="idPrestamo" value="<%=prestamo.getId()%>" /> 
+				<input type="hidden" name="idCuota" value="<%=proximaCuota.getId()%>" />
 				<button type="submit" class="btn btn-success">
 					<i class="bi bi-cash-coin"></i> Pagar cuota
 					<%=proximaCuota.getNroCuota()%>
