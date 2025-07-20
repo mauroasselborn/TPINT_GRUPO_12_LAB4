@@ -29,21 +29,15 @@ public class ClientesServlet extends HttpServlet {
 	private ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
 	private UsuarioNegocio usuarioNegocio = new UsuarioNegocioImpl();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String accion = request.getParameter("accion");
 		HttpSession session = request.getSession(false);
-//		Usuario user = new Usuario();
 
 		if (session == null || session.getAttribute("usuarioLogueado") == null) {
 			response.sendRedirect("../Login.jsp");
 			return;
 		}
-//		user = (Usuario) session.getAttribute("usuarioLogueado");
-
-//		if (user.getTipoUsuario().getDescripcion().equals("Administrador")) {
-//			response.sendRedirect("../Login.jsp");
-//			return;
-//		}
 
 		if ("listar".equals(accion)) {
 			List<Cliente> listaClientes = clienteNegocio.obtenerTodos();
@@ -112,20 +106,15 @@ public class ClientesServlet extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String accion = request.getParameter("accion");
 		HttpSession session = request.getSession(false);
-//		Usuario user = new Usuario();
-//		if (session.getAttribute("usuarioLogueado") != null) {
-//			user = (Usuario) session.getAttribute("usuarioLogueado");
-//		}
+
 		if (session == null || session.getAttribute("usuarioLogueado") == null) {
 			response.sendRedirect("../Login.jsp");
 			return;
-		} 
-//		else if (user.getTipoUsuario().getDescripcion().equals("Administrador")) {
-//			response.sendRedirect("../Login.jsp");
-//		}
+		}
 
 		if (accion == null) {
 			response.sendRedirect("ClientesServlet?accion=listar");
@@ -137,67 +126,7 @@ public class ClientesServlet extends HttpServlet {
 		String toastTipo = "";
 
 		switch (accion) {
-		
-		
-		
-		
-		/*case "alta":
-			try {
-				// Cliente
-				Cliente nuevoCliente = new Cliente();
-				nuevoCliente.setDni(request.getParameter("dni"));
-				nuevoCliente.setCuil(request.getParameter("cuil"));
-				nuevoCliente.setNombre(request.getParameter("nombre"));
-				nuevoCliente.setApellido(request.getParameter("apellido"));
-				nuevoCliente.setSexo(request.getParameter("sexo"));
-				nuevoCliente.setFechaNacimiento(request.getParameter("fechaNacimiento"));
-				nuevoCliente.setDireccion(request.getParameter("direccion"));
-				nuevoCliente.setCorreoElectronico(request.getParameter("correoElectronico"));
-				nuevoCliente.setTelefono(request.getParameter("telefono"));
 
-				Nacionalidad nac = new Nacionalidad();
-				nac.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
-				nuevoCliente.setNacionalidad(nac);
-
-				Provincia prov = new Provincia();
-				prov.setId(Integer.parseInt(request.getParameter("idProvincia")));
-				nuevoCliente.setProvincia(prov);
-
-				Localidad loc = new Localidad();
-				loc.setId(Integer.parseInt(request.getParameter("idLocalidad")));
-				nuevoCliente.setLocalidad(loc);
-
-				// Usuario
-				String usuarioNombre = request.getParameter("usuario");
-				String contrasena = request.getParameter("contrasena");
-				String repContrasena = request.getParameter("repContrasena");
-
-				if (!contrasena.equals(repContrasena)) {
-					throw new Exception("Las contraseñas no coinciden.");
-				}
-
-				Usuario nuevoUsuario = new Usuario();
-				nuevoUsuario.setNombreUsuario(usuarioNombre);
-				nuevoUsuario.setContrasena(contrasena);
-				nuevoUsuario.setActivo(false);
-
-				TipoUsuario tipoCliente = new TipoUsuario();
-				tipoCliente.setId(2);
-				nuevoUsuario.setTipoUsuario(tipoCliente);
-
-				clienteNegocio.registrarClienteConUsuario(nuevoCliente, nuevoUsuario);
-
-				toastMensaje = "Cliente y usuario agregados correctamente.";
-				toastTitulo = "Éxito";
-				toastTipo = "success";
-
-			} catch (Exception ex) {
-				toastMensaje = ex.getMessage();
-				toastTitulo = "Error";
-				toastTipo = "error";
-			}
-			break; */
-		
 		case "alta":
 			try {
 				// Cliente
@@ -286,11 +215,11 @@ public class ClientesServlet extends HttpServlet {
 				request.setAttribute("localidades", localidadNegocio.obtenerTodos());
 				request.setAttribute("provincias", provinciaNegocio.obtenerTodos());
 				request.setAttribute("nacionalidades", nacionalidadNegocio.obtenerTodos());
-				
+
 				toastMensaje = ex.getMessage();
 				toastTitulo = "Error";
 				toastTipo = "error";
-				
+
 				request.setAttribute("toastMensaje", toastMensaje);
 				request.setAttribute("toastTitulo", toastTitulo);
 				request.setAttribute("toastTipo", toastTipo);
@@ -298,7 +227,7 @@ public class ClientesServlet extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/AltaCliente.jsp");
 				dispatcher.forward(request, response);
 				return;
-			} 
+			}
 
 		case "modificar":
 			try {

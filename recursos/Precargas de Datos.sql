@@ -7,7 +7,18 @@ INSERT INTO nacionalidades (descripcion) VALUES
 ('Brasileña'),
 ('Peruana'),
 ('Colombiana'),
-('Venezolana');
+('Venezolana'),
+('Mexicana'),
+('Cubana'),
+('Ecuatoriana'),
+('Dominicana'),
+('Guatemalteca'),
+('Hondureña'),
+('Nicaragüense'),
+('Costarricense'),
+('Panameña'),
+('Puertorriqueña'),
+('Salvadoreña');
 
 INSERT INTO tipo_usuario (descripcion) VALUES
 ('Administrador'),
@@ -302,7 +313,21 @@ VALUES
 ('30033333', '20-30033333-3', 'Franco', 'Bonzi', 'Masculino', 2, '1994-08-16', 'Pasaje San Martín 845', 19, 19, 'franco.bonzi@gmail.com', '1141505620', 1),
 ('30044444', '20-30044444-3', 'Guido', 'Secovih', 'Masculino', 5, '1987-02-14', 'Calle Alsina 119', 7, 7, 'guido.secovih@gmail.com', '1140248697', 1),
 ('30055555', '20-30055555-3', 'Adrian', 'Criscione', 'Masculino', 8, '1997-03-20', 'Pasaje Alsina 279', 20, 20, 'adrian.criscione@gmail.com', '1142991320', 0),
-('30066666', '20-30066666-3', 'Mariano', 'Stoesell', 'Masculino', 6, '1985-01-13', 'Pasaje Belgrano 331', 10, 10, 'mariano.stoesell@gmail.com', '1141350433', 0);
+('30066666', '20-30066666-3', 'Mariano', 'Stoesell', 'Masculino', 6, '1985-01-13', 'Pasaje Belgrano 331', 10, 10, 'mariano.stoesell@gmail.com', '1141350433', 0),
+('30300001','20-30300001-1','Ana','García','Femenino',1,'1990-01-01','Calle Uno 1',1,1,'ana.garcia@example.com','1150000041',0),
+('30300002','20-30300002-2','Luis','Martínez','Masculino',2,'1991-02-02','Av. Dos 2',2,2,'luis.martinez@example.com','1150000042',0),
+('30300003','20-30300003-3','María','López','Femenino',3,'1992-03-03','Pasaje Tres 3',3,3,'maria.lopez@example.com','1150000043',0),
+('30300004','20-30300004-4','Jorge','Pérez','Masculino',4,'1993-04-04','Calle Cuatro 4',4,4,'jorge.perez@example.com','1150000044',0),
+('30300005','20-30300005-5','Lucía','Rodríguez','Femenino',5,'1994-05-05','Av. Cinco 5',5,5,'lucia.rodriguez@example.com','1150000045',0),
+('30300006','20-30300006-6','Mateo','Gómez','Masculino',6,'1995-06-06','Pasaje Seis 6',6,6,'mateo.gomez@example.com','1150000046',0),
+('30300007','20-30300007-7','Sofía','Fernández','Femenino',7,'1996-07-07','Calle Siete 7',7,7,'sofia.fernandez@example.com','1150000047',0),
+('30300008','20-30300008-8','Diego','Sánchez','Masculino',8,'1997-08-08','Av. Ocho 8',8,8,'diego.sanchez@example.com','1150000048',0),
+('30300009','20-30300009-9','Valentina','González','Femenino',9,'1998-09-09','Pasaje Nueve 9',9,9,'valentina.gonzalez@example.com','1150000049',0),
+('30300010','20-30300010-0','Bruno','Torres','Masculino',1,'1999-10-10','Calle Diez 10',10,10,'bruno.torres@example.com','1150000050',0),
+('30300011','20-30300011-1','Camila','Ramírez','Femenino',2,'1990-11-11','Av. Once 11',11,11,'camila.ramirez@example.com','1150000051',0),
+('30300012','20-30300012-2','Martín','Flores','Masculino',3,'1991-12-12','Pasaje Doce 12',12,12,'martin.flores@example.com','1150000052',0),
+('30300013','20-30300013-3','Emma','Vega','Femenino',4,'1992-01-13','Calle Trece 13',13,13,'emma.vega@example.com','1150000053',0),
+('30300014','20-30300014-4','Enzo','Herrera','Masculino',5,'1993-02-14','Av. Catorce 14',14,14,'enzo.herrera@example.com','1150000054',0);
 
 -- Precarga de usuarios
 
@@ -314,7 +339,21 @@ VALUES
 (3, 1, 'franco', '1234', 1),
 (4, 1, 'guido', '1234', 1),
 (5, 2, 'adrian', '1234', 0),
-(6, 2, 'mariano', '1234', 0);
+(6, 2, 'mariano', '1234', 0),
+(7, 2, 'ana.garcia',       '1234', 0),
+(8, 2, 'luis.martinez',    '1234', 0),
+(9, 2, 'maria.lopez',      '1234', 0),
+(10,2, 'jorge.perez',      '1234', 0),
+(11,2, 'lucia.rodriguez',  '1234', 0),
+(12,2, 'mateo.gomez',      '1234', 0),
+(13,2, 'sofia.fernandez',  '1234', 0),
+(14,2, 'diego.sanchez',    '1234', 0),
+(15,2, 'valentina.gonzalez','1234',0),
+(16,2, 'bruno.torres',     '1234', 0),
+(17,2, 'camila.ramirez',   '1234', 0),
+(18,2, 'martin.flores',    '1234', 0),
+(19,2, 'emma.vega',        '1234', 0),
+(20,2, 'enzo.herrera',     '1234', 0);
 
 
 -- Precarga de Tipos de Cuentas

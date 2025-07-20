@@ -62,7 +62,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 
 	    String sql = "SELECT p.id AS id_prestamo, p.id_cliente, p.fecha, p.importe_pedido, p.cantidad_cuotas, "
 	               + "p.importe_cuota, p.cuotas_pendientes, p.id_estado, "
-	               + "c.id AS id_cuenta, c.numero_cuenta "
+	               + "c.id AS id_cuenta, c.numero_cuenta, c.saldo "
 	               + "FROM prestamos p "
 	               + "JOIN cuentas c ON p.id_cuenta = c.id "
 	               + "WHERE p.id = ?";
@@ -84,6 +84,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 	                Cuenta c = new Cuenta();
 	                c.setId(rs.getInt("id_cuenta"));
 	                c.setNumeroCuenta(rs.getString("numero_cuenta"));
+	                c.setSaldo(rs.getDouble("saldo"));
 	                prestamo.setCuenta(c);
 
 	                Cliente cl = new Cliente();
@@ -214,5 +215,29 @@ public class PrestamoDaoImpl implements PrestamoDao {
 		}
 		return false;
 	}
+	
+	@Override
+    public boolean modificarPrestamo(Prestamo prestamo) {
+        String sql = "UPDATE prestamos SET "
+                   + "id_cuenta = ?, importe_pedido = ?, cantidad_cuotas = ?, importe_cuota = ?, cuotas_pendientes = ?, "
+                   + "id_estado = ? "
+                   + "WHERE id  = ?";
 
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, prestamo.getCuenta().getId());
+            ps.setDouble(2, prestamo.getImportePedido());
+            ps.setInt(3, prestamo.getCantidadCuotas());
+            ps.setDouble(4, prestamo.getImportePorCuota());
+            ps.setInt(5, prestamo.getCuotasPendientes());
+            ps.setInt(6, prestamo.getIdEstado());
+            ps.setInt(7, prestamo.getId());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

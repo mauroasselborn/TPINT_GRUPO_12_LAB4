@@ -18,5 +18,7 @@ public interface PrestamoNegocio {
 	boolean cambiarEstadoPrestamo(int idPrestamo, int nuevoEstado);
 
 	boolean acreditarPrestamo(int idPrestamo);
+	
+	boolean modificarPrestamo(Prestamo prestamo);
 
 }

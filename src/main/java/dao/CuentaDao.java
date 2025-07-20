@@ -14,15 +14,15 @@ public interface CuentaDao {
 	public List<Cuenta> obtenerTodas();
 
 	public Cuenta obtenerPorId(int id);
-	
+
 	public boolean existeNumeroCuenta(String numeroCuenta);
-	
+
 	public boolean existeCBU(String cbu);
-	
+
 	public boolean descontarSaldo(int idCuenta, double monto);
-	
-    public boolean aumentarSaldo(int idCuenta, double monto);
-    
-    List<Cuenta> obtenerPorCliente(int idCliente);
-    
-    }
+
+	public boolean aumentarSaldo(int idCuenta, double monto);
+
+	List<Cuenta> obtenerPorCliente(int idCliente);
+
+}

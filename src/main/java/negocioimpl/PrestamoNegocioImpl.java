@@ -119,4 +119,10 @@ public class PrestamoNegocioImpl implements PrestamoNegocio {
 		return true;
 	}
 
+	@Override
+	public boolean modificarPrestamo(Prestamo prestamo) {
+		prestamoDao.modificarPrestamo(prestamo);
+		return true;
+	}
+
 }

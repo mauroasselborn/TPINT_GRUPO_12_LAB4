@@ -27,7 +27,6 @@ public class PrestamosServlet extends HttpServlet {
 	private PrestamoNegocio prestamoNegocio = new PrestamoNegocioImpl();
 	private CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
 	private ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
-	private CuotaNegocio cuotaNegocio = new CuotaNegocioImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -36,7 +35,7 @@ public class PrestamosServlet extends HttpServlet {
 		Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
 
 		if (usuarioLogueado == null) {
-			response.sendRedirect(request.getContextPath() + "/login.jsp");
+			response.sendRedirect(request.getContextPath() + "/Login.jsp");
 			return;
 		}
 
@@ -67,7 +66,7 @@ public class PrestamosServlet extends HttpServlet {
 		// CLIENTE - Listar mis préstamos
 		if ("listar".equals(accion)) {
 			if (usuarioLogueado.getCliente() == null) {
-				response.sendRedirect(request.getContextPath() + "/login.jsp");
+				response.sendRedirect(request.getContextPath() + "/Login.jsp");
 				return;
 			}
 
@@ -79,22 +78,41 @@ public class PrestamosServlet extends HttpServlet {
 			request.getRequestDispatcher("/cliente/GestionarPrestamos.jsp").forward(request, response);
 			return;
 		}
-		
-		//Detalle prestamo
-		if("detalle".equals(accion)) {
+
+		// Detalle prestamo
+
+		if (session != null) {
+
+			request.setAttribute("toastMensaje", (String) session.getAttribute("toastMensaje"));
+			request.setAttribute("toastTitulo", (String) session.getAttribute("toastTitulo"));
+			request.setAttribute("toastTipo", (String) session.getAttribute("toastTipo"));
+
+			// Limpio los mensajes
+			session.removeAttribute("toastMensaje");
+			session.removeAttribute("toastTitulo");
+			session.removeAttribute("toastTipo");
+		}
+
+		if ("detalle".equals(accion))
+
+		{
+
 			int idPrestamo = Integer.parseInt(request.getParameter("id"));
 			Prestamo prestamo = prestamoNegocio.obtenerPrestamoPorId(idPrestamo);
-			List<Cuota> listaCuotas = cuotaNegocio.obtenerCuotasPorPrestamo(idPrestamo);
-			
-			
-			request.setAttribute("cuotas", listaCuotas);
+
+			CuotaNegocio cuotaNegocio = new CuotaNegocioImpl();
+			Cuota proxima = cuotaNegocio.obtenerProximaCuotaPorPrestamo(idPrestamo);
+			int pendientes = cuotaNegocio.contarCuotasPendientes(idPrestamo);
+
 			request.setAttribute("prestamo", prestamo);
+			request.setAttribute("proximaCuota", proxima);
+			request.setAttribute("cuotasPendientes", pendientes);
 			request.getRequestDispatcher("/cliente/DetallePrestamo.jsp").forward(request, response);
 		}
 
-		// CLIENTE - Solicitar préstamo (por defecto si no hay acción o es otra)
+		// CLIENTE - Solicitar prestamo (por defecto si no hay accion)
 		if (usuarioLogueado.getCliente() == null) {
-			response.sendRedirect(request.getContextPath() + "/login.jsp");
+			response.sendRedirect(request.getContextPath() + "/Login.jsp");
 			return;
 		}
 
@@ -120,7 +138,7 @@ public class PrestamosServlet extends HttpServlet {
 		String toastTipo = "";
 
 		if (usuarioLogueado == null) {
-			response.sendRedirect(request.getContextPath() + "/login.jsp");
+			response.sendRedirect(request.getContextPath() + "/Login.jsp");
 			return;
 		}
 
@@ -212,9 +230,9 @@ public class PrestamosServlet extends HttpServlet {
 			ex.printStackTrace();
 		}
 
-		request.setAttribute("toastMensaje", toastMensaje);
-		request.setAttribute("toastTitulo", toastTitulo);
-		request.setAttribute("toastTipo", toastTipo);
+		session.setAttribute("toastMensaje", toastMensaje);
+		session.setAttribute("toastTitulo",  toastTitulo);
+		session.setAttribute("toastTipo",    toastTipo);
 		doGet(request, response);
 	}
 }

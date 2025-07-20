@@ -18,4 +18,6 @@ public interface PrestamoDao {
 
 	boolean cambiarEstadoPrestamo(int idPrestamo, int nuevoEstado);
 
+	boolean modificarPrestamo(Prestamo prestamo);
+
 }

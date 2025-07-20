@@ -130,51 +130,6 @@ public class CuentaDaoImpl implements CuentaDao {
 	}
 	
 	
-	
-	
-	
-/* PROBANDO CODIGO PARA AGREGAR MOVIMIENTO 
- * 
-	@Override
-	public boolean alta(Cuenta cuenta) {
-		boolean estado = false;
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		String sql = "INSERT INTO cuentas " + "(id_cliente, numero_cuenta, cbu, id_tipo_cuenta, fecha_creacion, saldo, activo) " + "VALUES (?, ?, ?, ?, ?, ?, 1)";
-
-		try {
-			con = Conexion.getConexion();
-			ps = con.prepareStatement(sql);
-
-			ps.setInt(1, cuenta.getCliente().getId());
-			ps.setString(2, cuenta.getNumeroCuenta());
-			ps.setString(3, cuenta.getCbu());
-			ps.setInt(4, cuenta.getTipoCuenta().getId());
-			ps.setString(5, cuenta.getFechaCreacion());
-			ps.setDouble(6, cuenta.getSaldo());
-
-			if (ps.executeUpdate() > 0) {
-				estado = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (ps != null)
-					ps.close();
-			} catch (Exception e) {
-			}
-			try {
-				if (con != null)
-					con.close();
-			} catch (Exception e) {
-			}
-		}
-
-		return estado;
-	}*/
-	
 	@Override
 	public boolean alta(Cuenta cuenta) {
 	    boolean estado = false;
