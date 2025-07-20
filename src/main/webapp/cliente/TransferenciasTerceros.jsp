@@ -13,6 +13,7 @@
     <!-- Contenido principal -->
     <div class="container-fluid content py-4">
 <%
+	@SuppressWarnings("unchecked")
     List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentasCliente");
 
 String cuentaOrigen = (String) request.getAttribute("cuentaOrigen");

@@ -19,6 +19,7 @@
 %>
 
 <h3>Debug cuentas por tipo</h3>
+
 <c:forEach var="entry" items="${cuentasPorTipo}">
     <p>${entry.key}: ${entry.value}</p>
 </c:forEach>
@@ -55,6 +56,7 @@
         <div style="flex: 1 1 45%; min-width: 300px;">
           <h2 class="text-center mb-4">Cuentas por Tipo</h2>
           <%
+         	 @SuppressWarnings("unchecked")
             Map<String, Integer> datos = (Map<String, Integer>) request.getAttribute("cuentasPorTipo");
             if (datos != null && !datos.isEmpty()) {
           %>
@@ -70,6 +72,7 @@
         <div style="flex: 1 1 45%; min-width: 300px;">
           <h2 class="text-center mb-4">Préstamos por Estado</h2>
           <%
+          	@SuppressWarnings("unchecked")
             Map<String, Integer> prestamos = (Map<String, Integer>) request.getAttribute("prestamosPorEstado");
             if (prestamos != null && !prestamos.isEmpty()) {
           %>
@@ -85,6 +88,7 @@
         <div style="flex: 1 1 45%; min-width: 300px;">
           <h2 class="text-center mb-4">Clientes por Provincia</h2>
           <%
+          	@SuppressWarnings("unchecked")
             Map<String, Integer> clientesProv = (Map<String, Integer>) request.getAttribute("clientesPorProvincia");
             if (clientesProv != null && !clientesProv.isEmpty()) {
           %>

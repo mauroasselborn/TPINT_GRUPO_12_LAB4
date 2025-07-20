@@ -53,7 +53,9 @@
         <div class="mb-3">
           <label>Nacionalidad</label>
           <select class="form-select" name="idNacionalidad" required>
-            <% List<Nacionalidad> nacionalidades = (List<Nacionalidad>) request.getAttribute("nacionalidades");
+            <% 
+            @SuppressWarnings("unchecked")
+            List<Nacionalidad> nacionalidades = (List<Nacionalidad>) request.getAttribute("nacionalidades");
                if (nacionalidades != null) {
                  for (Nacionalidad nac : nacionalidades) { %>
               <option value="<%=nac.getId()%>"><%=nac.getDescripcion()%></option>
@@ -74,7 +76,9 @@
 		<div class="mb-3">
           <label>Provincia</label>
           <select class="form-select" name="idProvincia" required>
-            <% List<Provincia> provincias = (List<Provincia>) request.getAttribute("provincias");
+            <% 
+            @SuppressWarnings("unchecked")
+            List<Provincia> provincias = (List<Provincia>) request.getAttribute("provincias");
                if (provincias != null) {
                  for (Provincia prov : provincias) { %>
               <option value="<%=prov.getId()%>"><%=prov.getNombre()%></option>
@@ -85,7 +89,9 @@
         <div class="mb-3">
           <label>Localidad</label>
           <select class="form-select" name="idLocalidad" required>
-            <% List<Localidad> localidades = (List<Localidad>) request.getAttribute("localidades");
+            <% 
+            @SuppressWarnings("unchecked")
+            List<Localidad> localidades = (List<Localidad>) request.getAttribute("localidades");
                if (localidades != null) {
                  for (Localidad loc : localidades) { %>
               <option value="<%=loc.getId()%>"><%=loc.getNombre()%></option>

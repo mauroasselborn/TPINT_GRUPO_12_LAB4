@@ -36,7 +36,7 @@
 			</div>
 
 			<%
-				// Obtener cuentas enviadas por el servlet
+				@SuppressWarnings("unchecked")
 				List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentas");
 			%>
 

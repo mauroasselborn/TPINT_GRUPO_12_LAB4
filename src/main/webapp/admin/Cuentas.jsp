@@ -39,6 +39,7 @@
 				</thead>
 				<tbody>
 					<%
+					@SuppressWarnings("unchecked")
 					List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentas");
 					if (cuentas != null) {
 						for (int i = 0; i < cuentas.size(); i++) {

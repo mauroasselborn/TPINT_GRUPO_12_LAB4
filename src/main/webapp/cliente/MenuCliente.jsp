@@ -35,9 +35,11 @@
 		<div class="bg-light p-4 rounded shadow-sm">
 
 			<%
-			// Obtener atributos enviados por el servlet
+			
+			@SuppressWarnings("unchecked")
 			List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentas");
 			Cuenta cuentaSeleccionada = (Cuenta) request.getAttribute("cuentaSeleccionada");
+			@SuppressWarnings("unchecked")
 			List<Movimiento> movimientos = (List<Movimiento>) request.getAttribute("movimientos");
 
 			double saldo = cuentaSeleccionada.getSaldo();
@@ -78,19 +80,14 @@
 					onclick="toggleCBU()">Ver CBU</button>
 
 				<!-- Span para mostrar el CBU -->
-				<span id="cbuSpan" class="fw-bold text-primary me-3"
-					style="display: none;"> <%=cuentaSeleccionada.getCbu()%>
-				</span> <span id="copyBtn" class="fw-bold text-primary me-3"
-					style="display: none;">
-
+				<span id="cbuSpan" class="fw-bold text-primary me-3" style="display: none;"> <%=cuentaSeleccionada.getCbu()%></span> 
+				<span id="copyBtn" class="fw-bold text-primary me-3" style="display: none;">
+					
 					<form action="MenuClienteServlet" method="post" id="copiarForm">
-						<input type="hidden" name="accion" value="copiarCBU"> <input
-							type="hidden" name="cbu" id="copyBtn"
-							value="<%=cuentaSeleccionada.getCbu()%>"> <input
-							type="hidden" name="idCuenta"
-							value="<%=cuentaSeleccionada.getId()%>">
-						<button type="button" class="btn btn-secondary"
-							onclick="copiarCBU()">📋</button>
+						<input type="hidden" name="accion" value="copiarCBU"> 
+						<input type="hidden" name="cbu" id="copyBtn" value="<%=cuentaSeleccionada.getCbu()%>"> 
+						<input type="hidden" name="idCuenta" value="<%=cuentaSeleccionada.getId()%>">
+						<button type="button" class="btn btn-secondary"	onclick="copiarCBU()">📋</button>
 					</form>
 				</span>
 
@@ -250,7 +247,7 @@
 					  slider.querySelectorAll('.noUi-connect').forEach(el => el.style.background = 'black');
 					  slider.querySelectorAll('.noUi-handle').forEach(el => el.style.borderRadius = '50%');
 
-					  // ✅ Filtro personalizado para DataTables (por monto absoluto)
+					  //Filtro personalizado para DataTables (por monto absoluto)
 					  $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 					    var texto = data[4].replace(/[^\d.-]/g, ''); // Columna Importe
 					    var valor = parseFloat(texto);
