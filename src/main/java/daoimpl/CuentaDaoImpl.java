@@ -20,8 +20,7 @@ public class CuentaDaoImpl implements CuentaDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		String sql = "SELECT c.id, c.numero_cuenta, c.cbu, c.saldo, c.fecha_creacion, " + "c.id_tipo_cuenta, c.id_cliente, cl.nombre, cl.apellido, c.activo " + "FROM bancogrupo12.cuentas c " + "JOIN bancogrupo12.clientes cl ON c.id_cliente = cl.id "
-				+ "WHERE c.activo = 1";
+		String sql = "SELECT c.id, c.numero_cuenta, c.cbu, c.saldo, c.fecha_creacion, " + "c.id_tipo_cuenta, c.id_cliente, cl.nombre, cl.apellido, c.activo " + "FROM bancogrupo12.cuentas c " + "JOIN bancogrupo12.clientes cl ON c.id_cliente = cl.id ";
 
 		try {
 			con = Conexion.getConexion();

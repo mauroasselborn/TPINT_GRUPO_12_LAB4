@@ -55,7 +55,7 @@
 						<td class="text-nowrap">
 							<div class="d-flex justify-content-center">
 								<a href="CuentasServlet?accion=editar&id=<%=c.getId()%>" class="btn btn-warning btn-sm me-1">Modificar</a>
-								<button class="btn btn-danger btn-sm" onclick="confirmarEliminacion(<%=c.getId()%>)">Eliminar</button>
+								<button class="btn btn-<%=c.isActivo()? "danger":"success" %> btn-sm" onclick="confirmarEliminacion(<%=c.getId()%>)"><%= c.isActivo()? "Eliminar":"Activar" %></button>
 							</div>
 						</td>
 					</tr>

@@ -142,7 +142,7 @@ Usuario usuario = (Usuario) request.getAttribute("usuario");
 
 				<div class="mb-3">
 					<label>Teléfono</label> 
-					<input type="text" class="form-control"	name="telefono" value="<%=cliente.getTelefono()%>">
+					<input type="number" class="form-control"	name="telefono" value="<%=cliente.getTelefono()%>">
 				</div>
 				
 				
