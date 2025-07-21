@@ -33,6 +33,7 @@
 				</thead>
 				<tbody>
 					<%
+					@SuppressWarnings("unchecked")
 					List<Prestamo> prestamos = (List<Prestamo>) request.getAttribute("prestamos");
 					if (prestamos != null && !prestamos.isEmpty()) {
 						for (Prestamo p : prestamos) {

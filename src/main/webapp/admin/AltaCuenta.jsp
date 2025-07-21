@@ -28,6 +28,7 @@
 						id="clienteId" name="clienteId" class="form-select" required>
 						<option value="" disabled selected>Seleccione un cliente</option>
 						<%
+						@SuppressWarnings("unchecked")
               List<Cliente> listaClientes = (List<Cliente>) request.getAttribute("clientes");
               if (listaClientes != null) {
                 for (int i = 0; i < listaClientes.size(); i++) {

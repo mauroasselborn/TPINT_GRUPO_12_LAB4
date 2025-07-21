@@ -45,6 +45,7 @@
 
 				<tbody>
 					<%
+					@SuppressWarnings("unchecked")
 					List<Cliente> listaClientes = (List<Cliente>) request.getAttribute("listaClientes");
 					if (listaClientes != null) {
 						for (int i = 0; i < listaClientes.size(); i++) {

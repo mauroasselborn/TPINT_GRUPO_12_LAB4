@@ -61,6 +61,7 @@ Usuario usuario = (Usuario) request.getAttribute("usuario");
 					<label>Nacionalidad</label> 
 					<select class="form-select"	name="idNacionalidad" required>
 						<%
+						@SuppressWarnings("unchecked")
 						List<Nacionalidad> nacionalidades = (List<Nacionalidad>) request.getAttribute("nacionalidades");
 						if (nacionalidades != null) {
 							for (int i = 0; i < nacionalidades.size(); i++) {
@@ -92,6 +93,7 @@ Usuario usuario = (Usuario) request.getAttribute("usuario");
 					<label>Provincia</label> 
 					<select class="form-select"	name="idProvincia" required>
 						<%
+						@SuppressWarnings("unchecked")
 						List<Provincia> provincias = (List<Provincia>) request.getAttribute("provincias");
 						if (provincias != null) {
 							for (int i = 0; i < provincias.size(); i++) {
@@ -113,6 +115,7 @@ Usuario usuario = (Usuario) request.getAttribute("usuario");
 					<label>Localidad</label> 
 					<select class="form-select"	name="idLocalidad" required>
 						<%
+						@SuppressWarnings("unchecked")
 						List<Localidad> localidades = (List<Localidad>) request.getAttribute("localidades");
 						if (localidades != null) {
 							for (int i = 0; i < localidades.size(); i++) {
