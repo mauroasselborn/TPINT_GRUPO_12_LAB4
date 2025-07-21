@@ -36,15 +36,16 @@ public class CuotaNegocioImpl implements CuotaNegocio {
 		double montoCuota = prestamo.getImportePorCuota();
 		int idCuenta = prestamo.getCuenta().getId();
 
-		boolean okPago = cuotaDao.pagarCuota(idCuota, fechaPago);
-		if (!okPago) {
-			return "Error al registrar el pago de la cuota.";
-		}
 
 		boolean okSaldo = new CuentaDaoImpl().descontarSaldo(idCuenta, montoCuota);
 		if (!okSaldo) {
 			return "Saldo insuficiente en la cuenta " + prestamo.getCuenta().getNumeroCuenta() + " para cuota de $"
 					+ new DecimalFormat("#0.00").format(montoCuota) + ".";
+		}
+
+		boolean okPago = cuotaDao.pagarCuota(idCuota, fechaPago);
+		if (!okPago) {
+			return "Error al registrar el pago de la cuota.";
 		}
 
 		prestamo.setCuotasPendientes(prestamo.getCuotasPendientes() - 1);
