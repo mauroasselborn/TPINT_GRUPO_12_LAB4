@@ -33,11 +33,18 @@ public class ClientesServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String accion = request.getParameter("accion");
 		HttpSession session = request.getSession(false);
+//		Usuario user = new Usuario();
 
 		if (session == null || session.getAttribute("usuarioLogueado") == null) {
 			response.sendRedirect("../Login.jsp");
 			return;
 		}
+//		user = (Usuario) session.getAttribute("usuarioLogueado");
+
+//		if (user.getTipoUsuario().getDescripcion().equals("Administrador")) {
+//			response.sendRedirect("../Login.jsp");
+//			return;
+//		}
 
 		if ("listar".equals(accion)) {
 			List<Cliente> listaClientes = clienteNegocio.obtenerTodos();
@@ -48,73 +55,131 @@ public class ClientesServlet extends HttpServlet {
 		}
 
 		if ("editar".equals(accion)) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			Cliente cliente = clienteNegocio.obtenerPorId(id);
-			Usuario usuario = usuarioNegocio.obtenerUsuarioPorIdCliente(id);
+		    String idParam = request.getParameter("id");
+		    if (idParam != null && !idParam.isEmpty()) {
+		        int id = Integer.parseInt(idParam);
 
-			ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
-			LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
-			NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
+		        Cliente cliente = clienteNegocio.obtenerPorId(id);
+		        Usuario usuario = usuarioNegocio.obtenerUsuarioPorIdCliente(id);
 
-			cliente.setProvincia(provinciaNegocio.obtenerPorId(cliente.getProvincia().getId()));
-			cliente.setLocalidad(localidadNegocio.obtenerPorId(cliente.getLocalidad().getId()));
-			cliente.setNacionalidad(nacionalidadNegocio.obtenerPorId(cliente.getNacionalidad().getId()));
+		        ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
+		        LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
+		        NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
 
-			request.setAttribute("cliente", cliente);
-			request.setAttribute("provincias", provinciaNegocio.obtenerTodos());
-			request.setAttribute("localidades", localidadNegocio.obtenerTodos());
-			request.setAttribute("nacionalidades", nacionalidadNegocio.obtenerTodos());
-			request.setAttribute("usuario", usuario);
+		        List<Provincia> provincias = provinciaNegocio.obtenerTodos();
+		        List<Nacionalidad> nacionalidades = nacionalidadNegocio.obtenerTodos();
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/ModificarCliente.jsp");
-			dispatcher.forward(request, response);
-			return;
+		        // Detectar si se seleccionó una nueva provincia desde el formulario
+		        String idProvinciaParam = request.getParameter("idProvincia");
+		        int idProvinciaSeleccionada;
+		        if (idProvinciaParam != null && !idProvinciaParam.isEmpty()) {
+		            idProvinciaSeleccionada = Integer.parseInt(idProvinciaParam);
+		            cliente.setProvincia(provinciaNegocio.obtenerPorId(idProvinciaSeleccionada));
+		            request.setAttribute("selectedProvinciaId", idProvinciaSeleccionada);
+		        } else {
+		            idProvinciaSeleccionada = cliente.getProvincia().getId();
+		            request.setAttribute("selectedProvinciaId", idProvinciaSeleccionada);
+		        }
+
+		        List<Localidad> localidades = localidadNegocio.obtenerTodos(idProvinciaSeleccionada);
+
+		        // Asegurarse de traer localidad y nacionalidad correctas
+		        if (cliente.getLocalidad() != null) {
+		            cliente.setLocalidad(localidadNegocio.obtenerPorId(cliente.getLocalidad().getId()));
+		        }
+		        if (cliente.getNacionalidad() != null) {
+		            cliente.setNacionalidad(nacionalidadNegocio.obtenerPorId(cliente.getNacionalidad().getId()));
+		        }
+
+		        request.setAttribute("cliente", cliente);
+		        request.setAttribute("usuario", usuario);
+		        request.setAttribute("provincias", provincias);
+		        request.setAttribute("localidades", localidades);
+		        request.setAttribute("nacionalidades", nacionalidades);
+
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/ModificarCliente.jsp");
+		        dispatcher.forward(request, response);
+		        return;
+		    } else {
+		        response.sendRedirect("ClientesServlet?accion=listar");
+		        return;
+		    }
 		}
 
 		if ("detalle".equals(accion)) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			Cliente cliente = clienteNegocio.obtenerPorId(id);
-			Usuario usuario = usuarioNegocio.obtenerUsuarioPorIdCliente(id);
+		    String idParam = request.getParameter("id");
+		    if (idParam != null && !idParam.isEmpty()) {
+		        int id = Integer.parseInt(idParam);
 
-			ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
-			LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
-			NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
+		        Cliente cliente = clienteNegocio.obtenerPorId(id);
+		        Usuario usuario = usuarioNegocio.obtenerUsuarioPorIdCliente(id);
 
-			cliente.setProvincia(provinciaNegocio.obtenerPorId(cliente.getProvincia().getId()));
-			cliente.setLocalidad(localidadNegocio.obtenerPorId(cliente.getLocalidad().getId()));
-			cliente.setNacionalidad(nacionalidadNegocio.obtenerPorId(cliente.getNacionalidad().getId()));
+		        ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
+		        LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
+		        NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
 
-			request.setAttribute("cliente", cliente);
-			request.setAttribute("usuario", usuario);
+		        cliente.setProvincia(provinciaNegocio.obtenerPorId(cliente.getProvincia().getId()));
+		        cliente.setLocalidad(localidadNegocio.obtenerPorId(cliente.getLocalidad().getId()));
+		        cliente.setNacionalidad(nacionalidadNegocio.obtenerPorId(cliente.getNacionalidad().getId()));
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/DetalleCliente.jsp");
-			dispatcher.forward(request, response);
-			return;
+		        request.setAttribute("cliente", cliente);
+		        request.setAttribute("usuario", usuario);
+
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/DetalleCliente.jsp");
+		        dispatcher.forward(request, response);
+		        return;
+		    } else {
+		        response.sendRedirect("ClientesServlet?accion=listar");
+		        return;
+		    }
 		}
+
 
 		if ("alta".equals(accion)) {
-			ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
-			LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
-			NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
+		    ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
+		    LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
+		    NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
 
-			request.setAttribute("localidades", localidadNegocio.obtenerTodos());
-			request.setAttribute("provincias", provinciaNegocio.obtenerTodos());
-			request.setAttribute("nacionalidades", nacionalidadNegocio.obtenerTodos());
+		    String idProvinciaParam = request.getParameter("idProvincia");
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/AltaCliente.jsp");
-			dispatcher.forward(request, response);
+		    // Filtrado dinámico de localidades por provincia seleccionada
+		    if (idProvinciaParam != null && !idProvinciaParam.isEmpty() && request.getParameter("dni") == null) {
+		        int idProvincia = Integer.parseInt(idProvinciaParam);
+		        List<Localidad> localidades = localidadNegocio.obtenerTodos(idProvincia);
+		        request.setAttribute("localidades", localidades);
+		        request.setAttribute("selectedProvinciaId", idProvincia);
+		    } else {
+		        // Carga inicial o sin selección de provincia aún
+		        request.setAttribute("localidades", localidadNegocio.obtenerTodos());
+		        request.setAttribute("selectedProvinciaId", 0);
+		    }
+
+		    request.setAttribute("provincias", provinciaNegocio.obtenerTodos());
+		    request.setAttribute("nacionalidades", nacionalidadNegocio.obtenerTodos());
+
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/AltaCliente.jsp");
+		    dispatcher.forward(request, response);
+		    return;
 		}
+
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String accion = request.getParameter("accion");
 		HttpSession session = request.getSession(false);
-
+//		Usuario user = new Usuario();
+//		if (session.getAttribute("usuarioLogueado") != null) {
+//			user = (Usuario) session.getAttribute("usuarioLogueado");
+//		}
 		if (session == null || session.getAttribute("usuarioLogueado") == null) {
 			response.sendRedirect("../Login.jsp");
 			return;
 		}
+//		else if (user.getTipoUsuario().getDescripcion().equals("Administrador")) {
+//			response.sendRedirect("../Login.jsp");
+//		}
 
 		if (accion == null) {
 			response.sendRedirect("ClientesServlet?accion=listar");
@@ -127,107 +192,208 @@ public class ClientesServlet extends HttpServlet {
 
 		switch (accion) {
 
+		/*
+		 * case "alta": try { // Cliente Cliente nuevoCliente = new Cliente();
+		 * nuevoCliente.setDni(request.getParameter("dni"));
+		 * nuevoCliente.setCuil(request.getParameter("cuil"));
+		 * nuevoCliente.setNombre(request.getParameter("nombre"));
+		 * nuevoCliente.setApellido(request.getParameter("apellido"));
+		 * nuevoCliente.setSexo(request.getParameter("sexo"));
+		 * nuevoCliente.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+		 * nuevoCliente.setDireccion(request.getParameter("direccion"));
+		 * nuevoCliente.setCorreoElectronico(request.getParameter("correoElectronico"));
+		 * nuevoCliente.setTelefono(request.getParameter("telefono"));
+		 * 
+		 * Nacionalidad nac = new Nacionalidad();
+		 * nac.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
+		 * nuevoCliente.setNacionalidad(nac);
+		 * 
+		 * Provincia prov = new Provincia();
+		 * prov.setId(Integer.parseInt(request.getParameter("idProvincia")));
+		 * nuevoCliente.setProvincia(prov);
+		 * 
+		 * Localidad loc = new Localidad();
+		 * loc.setId(Integer.parseInt(request.getParameter("idLocalidad")));
+		 * nuevoCliente.setLocalidad(loc);
+		 * 
+		 * // Usuario String usuarioNombre = request.getParameter("usuario"); String
+		 * contrasena = request.getParameter("contrasena"); String repContrasena =
+		 * request.getParameter("repContrasena");
+		 * 
+		 * if (!contrasena.equals(repContrasena)) { throw new
+		 * Exception("Las contraseñas no coinciden."); }
+		 * 
+		 * Usuario nuevoUsuario = new Usuario();
+		 * nuevoUsuario.setNombreUsuario(usuarioNombre);
+		 * nuevoUsuario.setContrasena(contrasena); nuevoUsuario.setActivo(false);
+		 * 
+		 * TipoUsuario tipoCliente = new TipoUsuario(); tipoCliente.setId(2);
+		 * nuevoUsuario.setTipoUsuario(tipoCliente);
+		 * 
+		 * clienteNegocio.registrarClienteConUsuario(nuevoCliente, nuevoUsuario);
+		 * 
+		 * toastMensaje = "Cliente y usuario agregados correctamente."; toastTitulo =
+		 * "Éxito"; toastTipo = "success";
+		 * 
+		 * } catch (Exception ex) { toastMensaje = ex.getMessage(); toastTitulo =
+		 * "Error"; toastTipo = "error"; } break;
+		 */
+
 		case "alta":
-			try {
-				// Cliente
-				Cliente nuevoCliente = new Cliente();
-				nuevoCliente.setDni(request.getParameter("dni"));
-				nuevoCliente.setCuil(request.getParameter("cuil"));
-				nuevoCliente.setNombre(request.getParameter("nombre"));
-				nuevoCliente.setApellido(request.getParameter("apellido"));
-				nuevoCliente.setSexo(request.getParameter("sexo"));
-				nuevoCliente.setFechaNacimiento(request.getParameter("fechaNacimiento"));
-				nuevoCliente.setDireccion(request.getParameter("direccion"));
-				nuevoCliente.setCorreoElectronico(request.getParameter("correoElectronico"));
-				nuevoCliente.setTelefono(request.getParameter("telefono"));
+		    // Verifica si es solo recarga del combo (solo mandaron idProvincia, pero no DNI ni nombre)
+		    String dni = request.getParameter("dni");
+		    String nombre = request.getParameter("nombre");
+		    String apellido = request.getParameter("apellido");
+		    String idProvinciaParam = request.getParameter("idProvincia");
 
-				Nacionalidad nac = new Nacionalidad();
-				nac.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
-				nuevoCliente.setNacionalidad(nac);
+		    boolean esRecargaCombo =
+		        (dni == null || dni.isEmpty()) &&
+		        (nombre == null || nombre.isEmpty()) &&
+		        (apellido == null || apellido.isEmpty()) &&
+		        idProvinciaParam != null && !idProvinciaParam.isEmpty();
 
-				Provincia prov = new Provincia();
-				prov.setId(Integer.parseInt(request.getParameter("idProvincia")));
-				nuevoCliente.setProvincia(prov);
+		    if (esRecargaCombo) {
+		        // SOLO recarga de localidades: mostrar el formulario filtrado
+		        ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
+		        LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
+		        NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
 
-				Localidad loc = new Localidad();
-				loc.setId(Integer.parseInt(request.getParameter("idLocalidad")));
-				nuevoCliente.setLocalidad(loc);
+		        int idProvincia = Integer.parseInt(idProvinciaParam);
 
-				// Usuario
-				String usuarioNombre = request.getParameter("usuario");
-				String contrasena = request.getParameter("contrasena");
-				String repContrasena = request.getParameter("repContrasena");
+		        request.setAttribute("provincias", provinciaNegocio.obtenerTodos());
+		        request.setAttribute("localidades", localidadNegocio.obtenerTodos(idProvincia));
+		        request.setAttribute("selectedProvinciaId", idProvincia);
+		        request.setAttribute("nacionalidades", nacionalidadNegocio.obtenerTodos());
 
-				if (!contrasena.equals(repContrasena)) {
-					throw new Exception("Las contraseñas no coinciden.");
-				}
+		        // Replicar valores ya cargados si querés (opcional)
+		        request.setAttribute("dni", dni);
+		        request.setAttribute("cuil", request.getParameter("cuil"));
+		        request.setAttribute("nombre", nombre);
+		        request.setAttribute("apellido", apellido);
+		        request.setAttribute("sexo", request.getParameter("sexo"));
+		        request.setAttribute("fechaNacimiento", request.getParameter("fechaNacimiento"));
+		        request.setAttribute("direccion", request.getParameter("direccion"));
+		        request.setAttribute("correoElectronico", request.getParameter("correoElectronico"));
+		        request.setAttribute("telefono", request.getParameter("telefono"));
+		        request.setAttribute("usuario", request.getParameter("usuario"));
+		        request.setAttribute("idNacionalidad", request.getParameter("idNacionalidad"));
+		        request.setAttribute("idProvincia", idProvinciaParam);
 
-				Usuario nuevoUsuario = new Usuario();
-				nuevoUsuario.setNombreUsuario(usuarioNombre);
-				nuevoUsuario.setContrasena(contrasena);
-				nuevoUsuario.setActivo(false);
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/AltaCliente.jsp");
+		        dispatcher.forward(request, response);
+		        return;
+		    }
 
-				TipoUsuario tipoCliente = new TipoUsuario();
-				tipoCliente.setId(2);
-				nuevoUsuario.setTipoUsuario(tipoCliente);
+		    // Si no es recarga, hace el alta normal (lo que ya tenías):
+		    try {
+		        // Cliente
+		        Cliente nuevoCliente = new Cliente();
+		        nuevoCliente.setDni(dni);
+		        nuevoCliente.setCuil(request.getParameter("cuil"));
+		        nuevoCliente.setNombre(nombre);
+		        nuevoCliente.setApellido(apellido);
+		        nuevoCliente.setSexo(request.getParameter("sexo"));
+		        nuevoCliente.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+		        nuevoCliente.setDireccion(request.getParameter("direccion"));
+		        nuevoCliente.setCorreoElectronico(request.getParameter("correoElectronico"));
+		        nuevoCliente.setTelefono(request.getParameter("telefono"));
 
-				clienteNegocio.registrarClienteConUsuario(nuevoCliente, nuevoUsuario);
+		        Nacionalidad nac = new Nacionalidad();
+		        nac.setId(Integer.parseInt(request.getParameter("idNacionalidad")));
+		        nuevoCliente.setNacionalidad(nac);
 
-				toastMensaje = "Cliente y usuario agregados correctamente.";
-				toastTitulo = "Éxito";
-				toastTipo = "success";
+		        Provincia prov = new Provincia();
+		        prov.setId(Integer.parseInt(request.getParameter("idProvincia")));
+		        nuevoCliente.setProvincia(prov);
 
-				// Redirige al listado
-				List<Cliente> listaClientes = clienteNegocio.obtenerTodos();
-				request.setAttribute("listaClientes", listaClientes);
-				request.setAttribute("toastMensaje", toastMensaje);
-				request.setAttribute("toastTitulo", toastTitulo);
-				request.setAttribute("toastTipo", toastTipo);
+		        Localidad loc = new Localidad();
+		        loc.setId(Integer.parseInt(request.getParameter("idLocalidad")));
+		        nuevoCliente.setLocalidad(loc);
 
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/Clientes.jsp");
-				dispatcher.forward(request, response);
-				return;
+		        // Usuario
+		        String usuarioNombre = request.getParameter("usuario");
+		        String contrasena = request.getParameter("contrasena");
+		        String repContrasena = request.getParameter("repContrasena");
 
-			} catch (Exception ex) {
-				// Volver a AltaCliente.jsp con los valores cargados
-				request.setAttribute("error", ex.getMessage());
+		        if (!contrasena.equals(repContrasena)) {
+		            throw new Exception("Las contraseñas no coinciden.");
+		        }
 
-				// Reenviar los datos del formulario
-				request.setAttribute("dni", request.getParameter("dni"));
-				request.setAttribute("cuil", request.getParameter("cuil"));
-				request.setAttribute("nombre", request.getParameter("nombre"));
-				request.setAttribute("apellido", request.getParameter("apellido"));
-				request.setAttribute("sexo", request.getParameter("sexo"));
-				request.setAttribute("fechaNacimiento", request.getParameter("fechaNacimiento"));
-				request.setAttribute("direccion", request.getParameter("direccion"));
-				request.setAttribute("correoElectronico", request.getParameter("correoElectronico"));
-				request.setAttribute("telefono", request.getParameter("telefono"));
-				request.setAttribute("usuario", request.getParameter("usuario"));
-				request.setAttribute("idNacionalidad", request.getParameter("idNacionalidad"));
-				request.setAttribute("idProvincia", request.getParameter("idProvincia"));
-				request.setAttribute("idLocalidad", request.getParameter("idLocalidad"));
+		        Usuario nuevoUsuario = new Usuario();
+		        nuevoUsuario.setNombreUsuario(usuarioNombre);
+		        nuevoUsuario.setContrasena(contrasena);
+		        nuevoUsuario.setActivo(false);
 
-				// Reenviar también las listas
-				ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
-				LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
-				NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
+		        TipoUsuario tipoCliente = new TipoUsuario();
+		        tipoCliente.setId(2);
+		        nuevoUsuario.setTipoUsuario(tipoCliente);
 
-				request.setAttribute("localidades", localidadNegocio.obtenerTodos());
-				request.setAttribute("provincias", provinciaNegocio.obtenerTodos());
-				request.setAttribute("nacionalidades", nacionalidadNegocio.obtenerTodos());
+		        clienteNegocio.registrarClienteConUsuario(nuevoCliente, nuevoUsuario);
 
-				toastMensaje = ex.getMessage();
-				toastTitulo = "Error";
-				toastTipo = "error";
+		        toastMensaje = "Cliente y usuario agregados correctamente.";
+		        toastTitulo = "Éxito";
+		        toastTipo = "success";
 
-				request.setAttribute("toastMensaje", toastMensaje);
-				request.setAttribute("toastTitulo", toastTitulo);
-				request.setAttribute("toastTipo", toastTipo);
+		        // Redirige al listado
+		        List<Cliente> listaClientes = clienteNegocio.obtenerTodos();
+		        request.setAttribute("listaClientes", listaClientes);
+		        request.setAttribute("toastMensaje", toastMensaje);
+		        request.setAttribute("toastTitulo", toastTitulo);
+		        request.setAttribute("toastTipo", toastTipo);
 
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/AltaCliente.jsp");
-				dispatcher.forward(request, response);
-				return;
-			}
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/Clientes.jsp");
+		        dispatcher.forward(request, response);
+		        return;
+
+		    } catch (Exception ex) {
+		        // Volver a AltaCliente.jsp con los valores cargados
+		        request.setAttribute("error", ex.getMessage());
+
+		        // Reenviar los datos del formulario
+		        request.setAttribute("dni", dni);
+		        request.setAttribute("cuil", request.getParameter("cuil"));
+		        request.setAttribute("nombre", nombre);
+		        request.setAttribute("apellido", apellido);
+		        request.setAttribute("sexo", request.getParameter("sexo"));
+		        request.setAttribute("fechaNacimiento", request.getParameter("fechaNacimiento"));
+		        request.setAttribute("direccion", request.getParameter("direccion"));
+		        request.setAttribute("correoElectronico", request.getParameter("correoElectronico"));
+		        request.setAttribute("telefono", request.getParameter("telefono"));
+		        request.setAttribute("usuario", request.getParameter("usuario"));
+		        request.setAttribute("idNacionalidad", request.getParameter("idNacionalidad"));
+		        request.setAttribute("idProvincia", idProvinciaParam);
+		        request.setAttribute("idLocalidad", request.getParameter("idLocalidad"));
+
+		        // Reenviar también las listas
+		        ProvinciaNegocio provinciaNegocio = new ProvinciaNegocioImpl();
+		        LocalidadNegocio localidadNegocio = new LocalidadNegocioImpl();
+		        NacionalidadNegocio nacionalidadNegocio = new NacionalidadNegocioImpl();
+
+		        // Cargar las localidades correctamente según provincia elegida
+		        if (idProvinciaParam != null && !idProvinciaParam.isEmpty()) {
+		            int idProvincia = Integer.parseInt(idProvinciaParam);
+		            request.setAttribute("localidades", localidadNegocio.obtenerTodos(idProvincia));
+		            request.setAttribute("selectedProvinciaId", idProvincia);
+		        } else {
+		            request.setAttribute("localidades", localidadNegocio.obtenerTodos());
+		            request.setAttribute("selectedProvinciaId", 0);
+		        }
+		        request.setAttribute("provincias", provinciaNegocio.obtenerTodos());
+		        request.setAttribute("nacionalidades", nacionalidadNegocio.obtenerTodos());
+
+		        toastMensaje = ex.getMessage();
+		        toastTitulo = "Error";
+		        toastTipo = "error";
+
+		        request.setAttribute("toastMensaje", toastMensaje);
+		        request.setAttribute("toastTitulo", toastTitulo);
+		        request.setAttribute("toastTipo", toastTipo);
+
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/AltaCliente.jsp");
+		        dispatcher.forward(request, response);
+		        return;
+		    }
+
 
 		case "modificar":
 			try {

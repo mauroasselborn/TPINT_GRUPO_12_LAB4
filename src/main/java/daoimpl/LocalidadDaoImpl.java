@@ -53,6 +53,44 @@ public class LocalidadDaoImpl implements LocalidadDao {
 		return listaLocalidades;
 	}
 
+	public List<Localidad> obtenerTodos(int idProvincia) {
+	    List<Localidad> listaLocalidades = new ArrayList<>();
+	    String consultaSQL = "SELECT * FROM localidades WHERE id_provincia = ? ORDER BY nombre";
+	    Connection conexion = null;
+	    PreparedStatement statement = null;
+	    ResultSet resultado = null;
+
+	    try {
+	        conexion = Conexion.getConexion();
+	        statement = conexion.prepareStatement(consultaSQL);
+	        statement.setInt(1, idProvincia);
+	        resultado = statement.executeQuery();
+
+	        while (resultado.next()) {
+	            Localidad localidad = new Localidad();
+	            localidad.setId(resultado.getInt("id"));
+	            localidad.setNombre(resultado.getString("nombre"));
+	            localidad.setProvincia(resultado.getInt("id_provincia"));
+	            listaLocalidades.add(localidad);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (resultado != null) resultado.close();
+	        } catch (Exception e) {}
+	        try {
+	            if (statement != null) statement.close();
+	        } catch (Exception e) {}
+	        try {
+	            if (conexion != null) conexion.close();
+	        } catch (Exception e) {}
+	    }
+
+	    return listaLocalidades;
+	}
+
+	
 	@Override
 	public Localidad obtenerPorId(int idLocalidad) {
 		Localidad localidad = null;

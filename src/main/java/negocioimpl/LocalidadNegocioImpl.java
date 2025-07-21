@@ -14,7 +14,11 @@ public class LocalidadNegocioImpl implements LocalidadNegocio {
 	public List<Localidad> obtenerTodos() {
 		return localidadDao.obtenerTodos();
 	}
-
+	
+	@Override
+    public List<Localidad> obtenerTodos(int idProvincia) {
+        return localidadDao.obtenerTodos(idProvincia);
+    }
 	@Override
 	public Localidad obtenerPorId(int idLocalidad) {
 		return localidadDao.obtenerPorId(idLocalidad);
