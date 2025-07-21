@@ -31,6 +31,36 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	@Override
 	public boolean insertar(Cliente cliente) throws Exception {
+		
+		///Validación del nombre (solamente se permite letras o espacios)
+		if(cliente.getNombre()==null || cliente.getNombre().trim().isEmpty()) {
+			throw new Exception ("El nombre no puede estar vacio o sin completar");
+		}
+		for(char c : cliente.getNombre().toCharArray()) {
+			if(!Character.isLetter(c) && c !=' ') {
+				throw new Exception("El nombre solo puede contener letras o espacios");
+			}
+		}
+		
+		///Validación del apellido (solamente se permite letras o espacios)
+		if(cliente.getApellido()==null || cliente.getApellido().trim().isEmpty()) {
+			throw new Exception ("El apellido no puede estar vacio o sin completar");
+		}
+		for(char c : cliente.getApellido().toCharArray()) {
+			if(!Character.isLetter(c) && c !=' ') {
+				throw new Exception("El apellido solo puede contener letras o espacios");
+			}
+		}
+		
+		///Validación en el telefono (solo números)
+		if(cliente.getTelefono() != null && cliente.getTelefono().trim().isEmpty()) {
+			for (char c : cliente.getTelefono().toCharArray()) {
+	            if (!Character.isDigit(c)) {
+	                throw new Exception("El teléfono solo puede contener números.");
+	            }
+	        }
+		}
+		
 
 		Cliente existente = clienteDao.obtenerPorDni(cliente.getDni());
 
@@ -81,12 +111,9 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		if (cliente == null || cliente.getDni() == null || cliente.getDni().isEmpty()) {
 			throw new Exception("El DNI del cliente es obligatorio.");
 		}
+		
+		insertar(cliente);
 
-		// Valido si ya existe el cliente en la db
-		Cliente existente = clienteDao.obtenerPorDni(cliente.getDni());
-		if (existente != null) {
-			throw new ClienteRepetidoException("El cliente con DNI " + cliente.getDni() + " ya existe.");
-		}
 
 		// Valido el Usuario
 		if (usuario == null || usuario.getNombreUsuario() == null || usuario.getNombreUsuario().isEmpty()) {
