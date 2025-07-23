@@ -53,16 +53,18 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	}
 
 	@Override
-	public void modificarCuenta(Cuenta cuenta) throws Exception {
+	public String modificarCuenta(Cuenta cuenta) throws Exception {
 		// Validar saldo no negativo
 		if (cuenta.getSaldo() < 0) {
-			throw new Exception("El saldo no puede ser negativo.");
+			return "Error, El saldo no puede ser negativo.";
 		}
 
 		if (!dao.modificar(cuenta)) {
-			throw new Exception("Ocurrió un error al modificar la cuenta.");
+			return "Ocurrió un error al modificar la cuenta.";
 		}
+		
 		dao.modificar(cuenta);
+		return "Saldo modificada exitosamente, el saldo actual de la cuenta es: $"+ cuenta.getSaldo();
 	}
 
 	@Override

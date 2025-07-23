@@ -30,6 +30,19 @@ public class CuentasServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String accion = req.getParameter("accion");
 		HttpSession session = req.getSession(false);
+		if (session != null &&
+			    session.getAttribute("toastMensaje") != null &&
+			    session.getAttribute("toastTitulo") != null &&
+			    session.getAttribute("toastTipo") != null) {
+
+			    req.setAttribute("toastMensaje", session.getAttribute("toastMensaje"));
+			    req.setAttribute("toastTitulo", session.getAttribute("toastTitulo"));
+			    req.setAttribute("toastTipo", session.getAttribute("toastTipo"));
+
+			    session.removeAttribute("toastMensaje");
+			    session.removeAttribute("toastTitulo");
+			    session.removeAttribute("toastTipo");
+			}
 
 //		Usuario user = new Usuario();
 //		if (session.getAttribute("usuarioLogueado") != null) {
@@ -124,8 +137,27 @@ public class CuentasServlet extends HttpServlet {
 
 			    Cuenta cuenta = cuentaNegocio.obtenerCuenta(id); 
 			    if (cuenta != null) {
-			        cuenta.setSaldo(saldo); // 
-			        cuentaNegocio.modificarCuenta(cuenta); // 
+			    	cuenta.setSaldo(saldo); //  
+			        String toastMensaje =  cuentaNegocio.modificarCuenta(cuenta);
+			        
+			        boolean isError = toastMensaje.toLowerCase().contains("error")
+			        		|| toastMensaje.toLowerCase().contains("Error");
+			        String toastTitulo = isError ? "Error" : "Éxito";
+			        String toastTipo = isError ? "error" : "success";
+			        
+			        session = req.getSession();
+			        session.setAttribute("toastMensaje", toastMensaje);
+			        session.setAttribute("toastTitulo", toastTitulo);
+			        session.setAttribute("toastTipo", toastTipo);
+			        if(toastTipo.equals("error")) {
+			        	System.out.println("mostrartoast");
+			        	session.setAttribute("toastMensaje", toastMensaje);
+			        	session.setAttribute("toastTitulo", toastTitulo);
+			        	session.setAttribute("toastTipo", toastTipo);
+			        	resp.sendRedirect("CuentasServlet?accion=editar&id="+cuenta.getId());
+			        return;
+			        }
+			        	
 			    }
 
 			  

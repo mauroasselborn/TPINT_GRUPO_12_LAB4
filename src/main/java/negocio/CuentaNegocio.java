@@ -10,7 +10,7 @@ public interface CuentaNegocio {
 
 	void crearCuenta(Cuenta cuenta) throws Exception; // Alta de cuenta (saldo inicial $10 000, límite 3, CBU y número únicos)
 
-	void modificarCuenta(Cuenta cuenta) throws Exception;// Modificación (saldo ≥ 0)
+	String modificarCuenta(Cuenta cuenta) throws Exception;// Modificación (saldo ≥ 0)
 
 	void eliminarCuenta(int id) throws Exception; // Baja lógica (estado = 0)
 	
