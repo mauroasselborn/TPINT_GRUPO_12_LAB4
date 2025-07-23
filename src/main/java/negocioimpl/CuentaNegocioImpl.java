@@ -62,6 +62,7 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		if (!dao.modificar(cuenta)) {
 			throw new Exception("Ocurrió un error al modificar la cuenta.");
 		}
+		dao.modificar(cuenta);
 	}
 
 	@Override

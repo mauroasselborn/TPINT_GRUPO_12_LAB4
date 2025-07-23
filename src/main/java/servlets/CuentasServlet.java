@@ -2,7 +2,6 @@ package servlets;
 
 import entidades.Cuenta;
 import entidades.Cliente;
-import entidades.TipoCuenta;
 import negocio.CuentaNegocio;
 import negocio.ClienteNegocio;
 import negocio.TipoCuentaNegocio;
@@ -119,23 +118,24 @@ public class CuentasServlet extends HttpServlet {
 				clienteNegocio.altaLogica(idCliente);
 				usuarioNegocio.activarUsuarioPorIdCliente(idCliente);
 
-			} else if ("guardarModificacion".equals(accion)) {
-				Cuenta cuentamodificar = new Cuenta();
-				cuentamodificar.setId(Integer.parseInt(req.getParameter("id")));
+			} else if (accion.equals("guardarModificacion")) {
+			    int id = Integer.parseInt(req.getParameter("id"));
+			    double saldo = Double.parseDouble(req.getParameter("saldo"));
 
-				TipoCuenta tipocuenta = new TipoCuenta();
-				tipocuenta.setId(Integer.parseInt(req.getParameter("tipo")));
-				cuentamodificar.setTipoCuenta(tipocuenta);
+			    Cuenta cuenta = cuentaNegocio.obtenerCuenta(id); 
+			    if (cuenta != null) {
+			        cuenta.setSaldo(saldo); // 
+			        cuentaNegocio.modificarCuenta(cuenta); // 
+			    }
 
-				cuentamodificar.setCbu(req.getParameter("cbu"));
-				cuentamodificar.setSaldo(Double.parseDouble(req.getParameter("saldo")));
-				cuentaNegocio.modificarCuenta(cuentamodificar);
+			  
 			} else if ("borrar".equals(accion)) {
 				int idB = Integer.parseInt(req.getParameter("id"));
 				cuentaNegocio.eliminarCuenta(idB);
 			}
 
 			resp.sendRedirect("CuentasServlet?accion=listar");
+			return;
 
 		} catch (Exception e) {
 			req.setAttribute("error", e.getMessage());

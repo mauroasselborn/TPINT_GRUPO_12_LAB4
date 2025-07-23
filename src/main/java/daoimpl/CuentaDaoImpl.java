@@ -212,36 +212,24 @@ public class CuentaDaoImpl implements CuentaDao {
 	public boolean modificar(Cuenta cuenta) {
 		boolean estado = false;
 		Connection con = null;
-		PreparedStatement ps = null;
+	    PreparedStatement ps = null;
 
-		String sql = "UPDATE cuentas SET id_tipo_cuenta = ?, saldo = ?, cbu = ? WHERE id = ?";
+	    String sql = "UPDATE cuentas SET saldo = ? WHERE id = ?";
 
-		try {
-			con = Conexion.getConexion();
-			ps = con.prepareStatement(sql);
+	    try {
+	        con = Conexion.getConexion();
+	        ps = con.prepareStatement(sql);
+	        ps.setDouble(1, cuenta.getSaldo());
+	        ps.setInt(2, cuenta.getId());
 
-			ps.setInt(1, cuenta.getTipoCuenta().getId());
-			ps.setDouble(2, cuenta.getSaldo());
-			ps.setString(3, cuenta.getCbu());
-			ps.setInt(4, cuenta.getId());
-
-			if (ps.executeUpdate() > 0) {
-				estado = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (ps != null)
-					ps.close();
-			} catch (Exception e) {
-			}
-			try {
-				if (con != null)
-					con.close();
-			} catch (Exception e) {
-			}
-		}
+	        ps.executeUpdate();
+	        estado=true;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try { if (ps != null) ps.close(); } catch (Exception e) {}
+	        try { if (con != null) con.close(); } catch (Exception e) {}
+	    }
 
 		return estado;
 	}
