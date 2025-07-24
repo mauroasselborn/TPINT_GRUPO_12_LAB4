@@ -36,7 +36,7 @@
         Mis Cuentas
     </h1>
 </div>
-		<div class="bg-light rounded shadow-sm">
+		<div class="bg-light py-2 ms-3 rounded shadow-sm">
 
 			<%
 			
