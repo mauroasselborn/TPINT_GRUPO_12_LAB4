@@ -5,10 +5,14 @@ import daoimpl.CuentaDaoImpl;
 import entidades.Cliente;
 import entidades.Cuenta;
 import negocio.CuentaNegocio;
+import negocio.ClienteNegocio;
+import negocio.UsuarioNegocio;
 import java.util.List;
 
 public class CuentaNegocioImpl implements CuentaNegocio {
 	private CuentaDao dao = new CuentaDaoImpl();
+	ClienteNegocio clientenegocio= new ClienteNegocioImpl();
+	UsuarioNegocio usuarionegocio= new UsuarioNegocioImpl();
 
 	@Override
 	public List<Cuenta> listarCuentas() {
@@ -67,19 +71,13 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		return "Saldo modificada exitosamente, el saldo actual de la cuenta es: $"+ cuenta.getSaldo();
 	}
 
-	@Override
-	public boolean eliminarCuenta(int id) throws Exception {
-		if (!dao.baja(id)) {
-			throw new Exception("Ocurrió un error al eliminar la cuenta.");
-		}
-		return true;
-	}
+	
 
 	// Contar cuentas activas por ID de cliente
-	private int contarCuentasActivas(Cliente cliente) {
+	public int contarCuentasActivas(Cliente cliente) {
 		int count = 0;
 		for (Cuenta cuenta : dao.obtenerTodas()) {
-			if (cuenta.getCliente().getId() == cliente.getId()) {
+			if (cuenta.getCliente().getId() == cliente.getId() && cuenta.isActivo()) {
 				count++;
 			}
 		}
@@ -127,11 +125,51 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	    public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
 	        return dao.obtenerPorCliente(idCliente);
 	    }
+	    @Override
+		public String eliminarCuenta(int id) throws Exception {
+			Cuenta cuenta = new Cuenta();
+			cuenta=obtenerCuenta(id);
+			int activoCount = contarCuentasActivas(cuenta.getCliente());
+			String mensaje= "Cuenta Eliminada con exito";
+			if (activoCount == 1) {
+				//dar de baja cliente y usuario
+				clientenegocio.eliminar(cuenta.getCliente().getId());
+				usuarionegocio.eliminarPorIdCliente(cuenta.getCliente().getId());
+				mensaje += "También se desactivo su usuario y cliente.";
+			}
+			
+			if (dao.baja(id)) {
+				return mensaje;
+			}else {
+				
+				throw new Exception("Ocurrió un error al eliminar la cuenta.");
+			}
+		}
 
 		@Override
-		public boolean altaLogica(int id) {
-			return dao.altaLogica(id);
+		public String altaLogica(int id) throws Exception {
+			Cuenta cuenta = new Cuenta();
+			cuenta=obtenerCuenta(id);
+			int cantcuentas = contarCuentasActivas(cuenta.getCliente());
+			if (cantcuentas >= 3) {
+		        throw new Exception("El cliente ya tiene " + cantcuentas + " cuentas activas. No se puede dar de alta otra cuenta.");
+		    }
+			  String mensaje = "Cuenta activada correctamente.";
+
+			    // Si no tenía cuentas activas, se reactiva cliente y usuario también
+			    if (cantcuentas == 0) {
+			        clientenegocio.altaLogica(cuenta.getCliente().getId());
+			        usuarionegocio.activarUsuarioPorIdCliente(cuenta.getCliente().getId());
+			        mensaje += " También se activo el usuario y cliente de dicha cuenta.";
+			    }
+
+			    if (dao.altaLogica(id)) {
+			        return mensaje;
+			    } else {
+			        throw new Exception("Error al activar la cuenta.");
+			    }
 		}
+		
 	    
 	   
 }

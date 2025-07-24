@@ -113,9 +113,32 @@ public class CuentasServlet extends HttpServlet {
 				nueva.setTipoCuenta(tipocuenta.obtenerPorId(Integer.parseInt(req.getParameter("tipo"))));
 				nueva.setFechaCreacion(java.time.LocalDate.now().toString());
 				nueva.setSaldo(Double.parseDouble(req.getParameter("saldo")));
-				cuentaNegocio.crearCuenta(nueva);
-				clienteNegocio.altaLogica(idCliente);
-				usuarioNegocio.activarUsuarioPorIdCliente(idCliente);
+				 String toastMensaje = "";
+				    String toastTitulo = "";
+				    String toastTipo = "";
+
+				    try {
+				        cuentaNegocio.crearCuenta(nueva);
+
+				        clienteNegocio.altaLogica(idCliente);
+				        usuarioNegocio.activarUsuarioPorIdCliente(idCliente);
+
+				        toastMensaje = "Cuenta creada correctamente.";
+				        toastTitulo = "Éxito";
+				        toastTipo = "success";
+				    } catch (Exception e) {
+				        toastMensaje = e.getMessage();
+				        toastTitulo = "Error";
+				        toastTipo = "error";
+				    }
+
+				    session = req.getSession();
+				    session.setAttribute("toastMensaje", toastMensaje);
+				    session.setAttribute("toastTitulo", toastTitulo);
+				    session.setAttribute("toastTipo", toastTipo);
+				    session.setAttribute("mostrarToast", "true");
+				    resp.sendRedirect("CuentasServlet?accion=nuevo");
+			        return;
 
 			} else if (accion.equals("guardarModificacion")) {
 			    int id = Integer.parseInt(req.getParameter("id"));
@@ -148,35 +171,40 @@ public class CuentasServlet extends HttpServlet {
 
 			  
 			} else if ("eliminar".equals(accion)) {
-	            try {
-	                int id = Integer.parseInt(req.getParameter("id"));
-	                if (cuentaNegocio.eliminarCuenta(id)) {
-	                    session.setAttribute("toastMensaje", "Cuenta desactivada correctamente.");
-	                    session.setAttribute("toastTitulo", "Exito al Desactivar");
-	                    session.setAttribute("toastTipo", "success");
-	                } else {
-	                    throw new Exception("Error al desactivar la cuenta.");
-	                }
-	            } catch (Exception ex) {
-	                session.setAttribute("toastMensaje", ex.getMessage());
-	                session.setAttribute("toastTitulo", "ERROR");
-	                session.setAttribute("toastTipo", "error");
-	            }
+				try {
+	        		int id = Integer.parseInt(req.getParameter("id"));
+	        	    String mensaje = cuentaNegocio.eliminarCuenta(id);
+
+	        	    session = req.getSession();
+	        	    session.setAttribute("toastMensaje", mensaje);
+	        	    session.setAttribute("toastTitulo", "Éxito");
+	        	    session.setAttribute("toastTipo", "success");
+	        	    session.setAttribute("mostrarToast", "true");	        	    	        	
+	        	} catch (Exception e) {
+	        	    session = req.getSession();
+	        	    session.setAttribute("toastMensaje", e.getMessage());
+	        	    session.setAttribute("toastTitulo", "Error");
+	        	    session.setAttribute("toastTipo", "error");
+	        	    session.setAttribute("mostrarToast", "true");	        	   
+	        	}
 	        }
 	        else if ("altaLogica".equals(accion)) {
-	            try {
-	                int id = Integer.parseInt(req.getParameter("id"));
-	                if (cuentaNegocio.altaLogica(id)) {
-	                    session.setAttribute("toastMensaje", "Cuenta activada correctamente.");
-	                    session.setAttribute("toastTitulo", "Exito al Activar");
-	                    session.setAttribute("toastTipo", "success");
-	                } else {
-	                    throw new Exception("Error al activar la cuenta.");
-	                }
-	            } catch (Exception ex) {
-	                session.setAttribute("toastMensaje", ex.getMessage());
-	                session.setAttribute("toastTipo", "error");
-	            }
+	        	try {
+	        		int id = Integer.parseInt(req.getParameter("id"));
+	        	    String mensaje = cuentaNegocio.altaLogica(id);
+
+	        	    session = req.getSession();
+	        	    session.setAttribute("toastMensaje", mensaje);
+	        	    session.setAttribute("toastTitulo", "Éxito");
+	        	    session.setAttribute("toastTipo", "success");
+	        	    session.setAttribute("mostrarToast", "true");	        	    	        	
+	        	} catch (Exception e) {
+	        	    session = req.getSession();
+	        	    session.setAttribute("toastMensaje", e.getMessage());
+	        	    session.setAttribute("toastTitulo", "Error");
+	        	    session.setAttribute("toastTipo", "error");
+	        	    session.setAttribute("mostrarToast", "true");	        	   
+	        	}
 	        }
 
 			resp.sendRedirect("CuentasServlet?accion=listar");

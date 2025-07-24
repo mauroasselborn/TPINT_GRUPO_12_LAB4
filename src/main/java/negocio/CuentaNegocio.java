@@ -1,10 +1,13 @@
 package negocio;
 
+import entidades.Cliente;
 import entidades.Cuenta;
 import java.util.List;
 
 public interface CuentaNegocio {
 	List<Cuenta> listarCuentas(); // Listar todas las cuentas activas
+	
+	public int contarCuentasActivas(Cliente cliente);
 
 	Cuenta obtenerCuenta(int id) throws Exception; // Obtener cuenta por ID
 
@@ -12,7 +15,7 @@ public interface CuentaNegocio {
 
 	String modificarCuenta(Cuenta cuenta) throws Exception;// Modificación (saldo ≥ 0)
 
-	boolean eliminarCuenta(int id) throws Exception; // Baja lógica (estado = 0)
+	String eliminarCuenta(int id) throws Exception; // Baja lógica (estado = 0)
 	
 	public  String generarNumeroCuentaUnico(); //Genera nro aleatorio
 	
@@ -24,5 +27,5 @@ public interface CuentaNegocio {
     
     List<Cuenta> obtenerCuentasPorCliente(int idCliente);
     
-    public boolean altaLogica(int id);
+    public String altaLogica(int id) throws Exception;
 }
