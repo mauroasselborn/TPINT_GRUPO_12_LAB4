@@ -1,5 +1,6 @@
 package negocioimpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import dao.PrestamoDao;
@@ -103,7 +104,7 @@ public class PrestamoNegocioImpl implements PrestamoNegocio {
 
 		// Registrar movimiento de Alta de Préstamo
 		Movimiento movimiento = new Movimiento();
-		movimiento.setFecha(java.time.LocalDate.now().toString());
+		movimiento.setFecha(LocalDateTime.now().toString());
 		movimiento.setDetalle("Alta de préstamo");
 		movimiento.setTipoMovimiento(new TipoMovimiento(2, "Alta de Préstamo"));
 		movimiento.setImporte(monto);

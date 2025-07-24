@@ -2,6 +2,7 @@ package negocioimpl;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.time.LocalDateTime;
 
 import dao.CuotaDao;
 import dao.PrestamoDao;
@@ -61,7 +62,7 @@ public class CuotaNegocioImpl implements CuotaNegocio {
 
 		// Registro movimiento
 		Movimiento movimiento = new Movimiento();
-		movimiento.setFecha(java.time.LocalDate.now().toString());
+		movimiento.setFecha(LocalDateTime.now().toString());
 		movimiento.setDetalle("Pago de Cuota N°" + cuota.getNroCuota());
 		movimiento.setTipoMovimiento(new TipoMovimiento(3, "Pago de Préstamo"));
 		movimiento.setImporte(-cuota.getMonto());
