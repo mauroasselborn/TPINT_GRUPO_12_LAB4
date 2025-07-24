@@ -68,10 +68,11 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	}
 
 	@Override
-	public void eliminarCuenta(int id) throws Exception {
+	public boolean eliminarCuenta(int id) throws Exception {
 		if (!dao.baja(id)) {
 			throw new Exception("Ocurrió un error al eliminar la cuenta.");
 		}
+		return true;
 	}
 
 	// Contar cuentas activas por ID de cliente
@@ -126,6 +127,11 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	    public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
 	        return dao.obtenerPorCliente(idCliente);
 	    }
-	    
 
+		@Override
+		public boolean altaLogica(int id) {
+			return dao.altaLogica(id);
+		}
+	    
+	   
 }

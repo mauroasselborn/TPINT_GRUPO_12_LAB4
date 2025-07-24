@@ -273,6 +273,42 @@ public class CuentaDaoImpl implements CuentaDao {
 		return estado;
 	}
 	
+	@Override
+	public boolean altaLogica(int id) {
+		boolean estado = false;
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		String sql = "UPDATE cuentas SET activo = 1 WHERE id = ?";
+
+		try {
+			con = Conexion.getConexion();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
+
+			int filas = ps.executeUpdate();
+			if (filas > 0) {
+				estado = true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return estado;
+	}
+	
 	public boolean existeNumeroCuenta(String numeroCuenta) {
 	    Connection con = null;
 	    PreparedStatement stmt = null;

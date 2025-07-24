@@ -12,7 +12,7 @@ public interface CuentaNegocio {
 
 	String modificarCuenta(Cuenta cuenta) throws Exception;// Modificación (saldo ≥ 0)
 
-	void eliminarCuenta(int id) throws Exception; // Baja lógica (estado = 0)
+	boolean eliminarCuenta(int id) throws Exception; // Baja lógica (estado = 0)
 	
 	public  String generarNumeroCuentaUnico(); //Genera nro aleatorio
 	
@@ -24,5 +24,5 @@ public interface CuentaNegocio {
     
     List<Cuenta> obtenerCuentasPorCliente(int idCliente);
     
-    
+    public boolean altaLogica(int id);
 }
