@@ -25,4 +25,6 @@ public interface CuentaDao {
 
 	List<Cuenta> obtenerPorCliente(int idCliente);
 
+	public boolean altaLogica(int id);
+
 }

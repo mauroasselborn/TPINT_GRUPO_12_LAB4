@@ -6,9 +6,19 @@
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-    <div class="container d-flex justify-content-center align-items-center vh-100">
-        <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
+<body style="
+    background-image: url('imagenes/FondoLogin.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+">
+<!-- Título superior -->
+    <div class="container d-flex flex-column justify-content-center align-items-center vh-100">
+     <div class="text-white mb-2 text-center" style="font-size: 1.8rem; font-weight: bold; text-shadow: 1px 1px 3px black;">
+        BANCO GRUPO 12
+    </div>
+        <div class="card p-4 shadow" style="background-color: rgba(255, 255, 255, 0.9); width: 100%; max-width: 400px;">
             <h5 class="text-center mb-4">Iniciar Sesión</h5>
 
             <% if (request.getAttribute("mensajeError") != null) { %>

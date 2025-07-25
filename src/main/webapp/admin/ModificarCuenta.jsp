@@ -21,9 +21,6 @@
 
     <%
     Cuenta cuenta = (Cuenta) request.getAttribute("cuenta");
-	String tipo = "";
-	if (cuenta.getTipoCuenta().getId() == 1) tipo = "Caja de ahorro";
-	else if (cuenta.getTipoCuenta().getId() == 2) tipo = "Cuenta corriente";
     %>
 
     <form action="CuentasServlet" method="post">
@@ -38,15 +35,9 @@
       <!-- Tipo de cuenta -->
       <label for="tipo">Tipo de cuenta:</label>
 		<p class="form-control mb-3">
- 		 <%= tipo %>
+ 		 <%= cuenta.getTipoCuenta().getDescripcion() %>
 		</p>
 
-<!-- Campo oculto con el valor correspondiente (1 para Caja de ahorro, 2 para Cuenta corriente) -->
-		<% if (tipo.equals("Caja de ahorro")) { %>
-  		<input type="hidden" name="tipo" value="1">
-			<% } else if (tipo.equals("Cuenta corriente")) { %>
-  					<input type="hidden" name="tipo" value="2">
-		<% } %>
 
       <!-- CBU -->
       <label for="cbu">CBU:</label>
@@ -67,3 +58,5 @@
   <!-- Footer -->
   <jsp:include page="../componentes/Footer.jsp" />
 </div>
+</body>
+</html>

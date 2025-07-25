@@ -13,4 +13,6 @@ public interface CuotaNegocio {
 	Cuota obtenerProximaCuotaPorPrestamo(int idPrestamo);
 
 	int contarCuotasPendientes(int idPrestamo);
+	
+	Cuota obtenerCuotaPorId(int idCuota);
 }

@@ -75,15 +75,11 @@
 			<%
 			if (proximaCuota != null) {
 			%>
-			<form action="CuotasServlet" method="post">
-				<input type="hidden" name="accion" value="pagarCuota" /> <input
-					type="hidden" name="idPrestamo" value="<%=prestamo.getId()%>" /> <input
-					type="hidden" name="idCuota" value="<%=proximaCuota.getId()%>" />
-				<button type="submit" class="btn btn-success">
-					<i class="bi bi-cash-coin"></i> Pagar cuota
-					<%=proximaCuota.getNroCuota()%>
-				</button>
-			</form>
+			<button type="button" class="btn btn-success"
+				onclick="confirmarPago(<%=proximaCuota.getId()%>, <%=proximaCuota.getNroCuota()%>)">
+				<i class="bi bi-cash-coin"></i> Pagar cuota
+				<%=proximaCuota.getNroCuota()%>
+			</button>
 			<%
 			}
 			%>
@@ -91,6 +87,44 @@
 
 	</div>
 	<jsp:include page="../componentes/Footer.jsp" />
+
+	<!-- Modal de confirmación de pago de cuota -->
+	<div class="modal fade" id="modalConfirmarPago" tabindex="-1"
+		aria-labelledby="modalLabelPago" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalLabelPago">Confirmar pago</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Cerrar"></button>
+				</div>
+				<div class="modal-body" id="mensajePago"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Cancelar</button>
+					<form id="formPagarCuota" action="CuotasServlet" method="post">
+						<input type="hidden" name="accion" value="pagarCuota" /> <input
+							type="hidden" name="idPrestamo" value="<%=prestamo.getId()%>" />
+						<input type="hidden" name="idCuota" id="idCuotaPago" />
+						<button type="submit" class="btn btn-success">Pagar cuota
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+  function confirmarPago(idCuota, nroCuota) {
+    document.getElementById('idCuotaPago').value = idCuota;
+    document.getElementById('mensajePago').innerText =
+      '¿Deseas pagar la cuota número ' + nroCuota + '?';
+    let modal = new bootstrap.Modal(
+      document.getElementById('modalConfirmarPago')
+    );
+    modal.show();
+  }
+</script>
 
 
 </div>

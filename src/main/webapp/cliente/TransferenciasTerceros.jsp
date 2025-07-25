@@ -31,11 +31,15 @@ String importe = (String) request.getAttribute("importe");
             <label for="origen">Cuenta Origen:</label>
             <select id="origen" name="cuentaOrigen" class="form-select" required>
                 <% if (cuentas != null) {
-       for (Cuenta c : cuentas) { %>
+       for (Cuenta c : cuentas) { 
+       if(c.isActivo()){
+       %>
     <option value="<%= c.getId() %>">
         <%= c.getNumeroCuenta() %> - Saldo: $<%= c.getSaldo() %>
     </option>
-<%   }
+	<%   
+       }
+       }
    } %>
             </select>
 
