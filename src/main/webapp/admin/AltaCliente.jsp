@@ -22,30 +22,31 @@
 				<input type="hidden" name="accion" value="alta" />
 
 				<div class="mb-3">
-					<label>DNI</label> <input type="text" name="dni" pattern="\d{7,8}"
-						class="form-control" maxlength="8" title="Sólo 7 u 8 dígitos"
-						placeholder="Ingrese el DNI" required
+					<label>DNI</label> <input type="text" name="dni" pattern="[0-9]{8}"
+						class="form-control" maxlength="8" placeholder="Ingrese el DNI"
+						required
 						value="<%=request.getAttribute("dni") != null ? request.getAttribute("dni") : ""%>" />
 				</div>
 
 				<div class="mb-3">
-					<label>CUIL</label> <input type="text" name="cuil" pattern="\d{11}"
-						class="form-control" maxlength="11" title="11 dígitos sin guiones"
-						placeholder="Ingrese el CUIL" required
+					<label>CUIL</label> <input type="text" name="cuil"
+						class="form-control" pattern="\d{2}-\d{7,8}-\d" maxlength="13"
+						placeholder="Ingrese el CUIL (ej: 20-12345678-3)" required
 						value="<%=request.getAttribute("cuil") != null ? request.getAttribute("cuil") : ""%>" />
+
 				</div>
 
 				<div class="mb-3">
 					<label>Nombre</label> <input type="text" name="nombre"
-						pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+" placeholder="Ingrese el nombre"
-						title="Sólo letras y espacios" required
+						class="form-control" pattern="[A-Za-zÃÃ‰ÃÃ“ÃšÃ¡Ã©Ã­Ã³ÃºÃ±Ã‘ ]+"
+						placeholder="Ingrese el nombre" required
 						value="<%=request.getAttribute("nombre") != null ? request.getAttribute("nombre") : ""%>" />
 				</div>
 
 				<div class="mb-3">
 					<label>Apellido</label> <input type="text" name="apellido"
-						pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+" placeholder="Ingrese el apellido"
-						title="Sólo letras y espacios" required
+						class="form-control" pattern="[A-Za-zÃÃ‰ÃÃ“ÃšÃ¡Ã©Ã­Ã³ÃºÃ±Ã‘ ]+"
+						placeholder="Ingrese el apellido" required
 						value="<%=request.getAttribute("apellido") != null ? request.getAttribute("apellido") : ""%>" />
 
 				</div>
@@ -83,7 +84,9 @@
 
 				<div class="mb-3">
 					<label>Dirección</label> <input type="text" class="form-control"
-						name="direccion" placeholder="Ingrese su dirección" required>
+						name="direccion" placeholder="Ingrese su dirección"
+						value="<%=request.getAttribute("direccion") != null ? request.getAttribute("direccion") : ""%>"
+						required>
 				</div>
 
 				<div class="mb-3">
@@ -158,33 +161,35 @@
 
 				<div class="mb-3">
 					<label>Email</label> <input type="email" name="correoElectronico"
-						placeholder="Ingrese el correo electrónico"
-						title="Formato: usuario@dominio.com" required
+						class="form-control" placeholder="Ingrese el correo electrónico"
+						required
 						value="<%=request.getAttribute("correoElectronico") != null ? request.getAttribute("correoElectronico") : ""%>" />
 				</div>
 
 				<div class="mb-3">
 					<label>Teléfono</label> <input type="tel" name="telefono"
-						pattern="\d{10}" placeholder="Ingrese el teléfono"
-						title="10 dígitos numéricos" required
+						class="form-control" pattern="\d{10}"
+						placeholder="Ingrese el teléfono" required
 						value="<%=request.getAttribute("telefono") != null ? request.getAttribute("telefono") : ""%>" />
 				</div>
 
 				<div class="mb-3">
-					<label>Usuario</label> <input type="text" class="form-control"
-						name="usuario" placeholder="Ingrese el nombre de usuario" required>
+					<label>Usuario</label> <input type="text" name="usuario"
+						class="form-control" pattern="[A-Za-z0-9]{4,20}"
+						placeholder="Ingrese el nombre de usuario" required
+						value="<%=request.getAttribute("usuario") != null ? request.getAttribute("usuario") : ""%>" />
 				</div>
 
 				<div class="mb-3">
-					<label>Contraseña</label> <input type="password"
-						class="form-control" name="contrasena"
-						placeholder="Ingrese la contraseña" required>
+					<label>Contraseña</label> <input type="password" name="contrasena"
+						class="form-control" placeholder="Ingrese la contraseñaa"
+						minlength="6" required />
 				</div>
 
 				<div class="mb-3">
 					<label>Repetir contraseña</label> <input type="password"
 						class="form-control" name="repContrasena"
-						placeholder="Repita la contraseña" required>
+						placeholder="Repita la contraseña" minlength="6" required />
 				</div>
 
 				<div class="text-center">
