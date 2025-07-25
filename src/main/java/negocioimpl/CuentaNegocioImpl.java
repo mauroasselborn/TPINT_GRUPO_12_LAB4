@@ -130,12 +130,12 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 			Cuenta cuenta = new Cuenta();
 			cuenta=obtenerCuenta(id);
 			int activoCount = contarCuentasActivas(cuenta.getCliente());
-			String mensaje= "Cuenta Eliminada con exito";
+			String mensaje= "Cuenta desactivada con exito.";
 			if (activoCount == 1) {
 				//dar de baja cliente y usuario
 				clientenegocio.eliminar(cuenta.getCliente().getId());
 				usuarionegocio.eliminarPorIdCliente(cuenta.getCliente().getId());
-				mensaje += "También se desactivo su usuario y cliente.";
+				mensaje += " También se desactivo su usuario y cliente.";
 			}
 			
 			if (dao.baja(id)) {

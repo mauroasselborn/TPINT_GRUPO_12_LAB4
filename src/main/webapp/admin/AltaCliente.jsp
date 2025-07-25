@@ -75,7 +75,7 @@
 
 		<div class="mb-3">
           <label>Provincia</label>
-          <select class="form-select" name="idProvincia" required>
+          <select class="form-select" name="idProvincia" id="provinciaSelect" required>
             <% 
             @SuppressWarnings("unchecked")
             List<Provincia> provincias = (List<Provincia>) request.getAttribute("provincias");
@@ -88,16 +88,44 @@
 
         <div class="mb-3">
           <label>Localidad</label>
-          <select class="form-select" name="idLocalidad" required>
+          <select class="form-select" name="idLocalidad" id="localidadSelect" required>
             <% 
             @SuppressWarnings("unchecked")
             List<Localidad> localidades = (List<Localidad>) request.getAttribute("localidades");
                if (localidades != null) {
                  for (Localidad loc : localidades) { %>
-              <option value="<%=loc.getId()%>"><%=loc.getNombre()%></option>
+              <option value="<%= loc.getId() %>" data-provincia="<%= loc.getProvincia() %>"><%=loc.getNombre()%></option>
             <% }} %>
           </select>
         </div>
+       <script>
+  document.getElementById("provinciaSelect").addEventListener("change", function () {
+    var idProvincia = this.value;
+    var localidadSelect = document.getElementById("localidadSelect");
+
+    for (var i = 0; i < localidadSelect.options.length; i++) {
+      var opcion = localidadSelect.options[i];
+      var dataProv = opcion.getAttribute("data-provincia");
+
+      // Mostrar solo las localidades con el ID de provincia seleccionado
+      if (!dataProv || dataProv === idProvincia) {
+        opcion.style.display = "";
+      } else {
+        opcion.style.display = "none";
+      }
+    }
+ // Recorremos y seleccionamos la primera localidad visible
+    for (var i = 0; i < localidadSelect.options.length; i++) {
+      var opcion = localidadSelect.options[i];
+      if (opcion.style.display !== "none" && opcion.value !== "") {
+        localidadSelect.value = opcion.value;
+        break;
+      }
+    }
+
+    
+  });
+</script>
 
         <div class="mb-3">
           <label>Email</label>

@@ -6,12 +6,14 @@ import entidades.TipoUsuario;
 import entidades.Usuario;
 import negocio.UsuarioNegocio;
 import negocioimpl.ClienteNegocioImpl;
+import negocioimpl.CuentaNegocioImpl;
 import negocioimpl.LocalidadNegocioImpl;
 import negocioimpl.NacionalidadNegocioImpl;
 import negocioimpl.ProvinciaNegocioImpl;
 import negocioimpl.UsuarioNegocioImpl;
 import entidades.Localidad;
 import entidades.Nacionalidad;
+import negocio.CuentaNegocio;
 import negocio.ClienteNegocio;
 import negocio.ProvinciaNegocio;
 import negocio.LocalidadNegocio;
@@ -28,6 +30,7 @@ public class ClientesServlet extends HttpServlet {
 
 	private ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
 	private UsuarioNegocio usuarioNegocio = new UsuarioNegocioImpl();
+	private CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -291,12 +294,12 @@ public class ClientesServlet extends HttpServlet {
 			try {
 				int idAlta = Integer.parseInt(request.getParameter("id"));
 
-				if (clienteNegocio.altaLogica(idAlta) && usuarioNegocio.activarUsuarioPorIdCliente(idAlta)) {
+				if (cuentaNegocio.contarCuentasActivas(clienteNegocio.obtenerPorId(idAlta)) > 0 && clienteNegocio.altaLogica(idAlta) && usuarioNegocio.activarUsuarioPorIdCliente(idAlta)  ) {
 					toastMensaje = "Cliente dado de alta correctamente.";
 					toastTitulo = "Éxito";
 					toastTipo = "success";
 				} else {
-					throw new Exception("Error al dar de alta el cliente.");
+					throw new Exception("Error al dar de alta el cliente. Posiblemente no posee cuentas activas.");
 				}
 			} catch (Exception ex) {
 				toastMensaje = ex.getMessage();

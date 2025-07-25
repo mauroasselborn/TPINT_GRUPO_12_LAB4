@@ -94,13 +94,13 @@
 				<form id="formEliminar" action="CuentasServlet" method="post" style="display: none;">
 					<input type="hidden" name="accion" value="eliminar" /> 
 					<input type="hidden" name="id" id="idCuentaEliminar" />
-					<button type="submit" class="btn btn-danger">Eliminar</button>
+					<button type="submit" class="btn btn-danger">Desactivar</button>
 				</form>
 
 				<form id="formAlta" action="CuentasServlet" method="post" style="display: none;">
 					<input type="hidden" name="accion" value="altaLogica" /> 
 					<input type="hidden" name="id" id="idCuentaAlta" />
-					<button type="submit" class="btn btn-success">Dar de Alta</button>
+					<button type="submit" class="btn btn-success">Activar</button>
 				</form>
 
 
