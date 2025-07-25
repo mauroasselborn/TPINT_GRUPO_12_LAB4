@@ -74,50 +74,97 @@ public class CuotaDaoImpl implements CuotaDao {
 		}
 		return false;
 	}
-	
-	@Override
-    public Cuota obtenerProximaCuotaPorPrestamo(int idPrestamo) {
-        String sql =
-          "SELECT id, nro_cuota, monto "
-        + "  FROM cuotas "
-        + " WHERE id_prestamo = ? AND fecha_pago IS NULL "
-        + " ORDER BY nro_cuota ASC "
-        + " LIMIT 1";
-        try (Connection con = Conexion.getConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idPrestamo);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    Cuota c = new Cuota();
-                    c.setId(rs.getInt("id"));
-                    c.setNroCuota(rs.getInt("nro_cuota"));
-                    c.setMonto(rs.getDouble("monto"));
-                    return c;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
-    @Override
-    public int contarCuotasPendientes(int idPrestamo) {
-        String sql =
-          "SELECT COUNT(*) AS total "
-        + "  FROM cuotas "
-        + " WHERE id_prestamo = ? AND fecha_pago IS NULL";
-        try (Connection con = Conexion.getConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idPrestamo);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("total");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
+	@Override
+	public Cuota obtenerProximaCuotaPorPrestamo(int idPrestamo) {
+		String sql = "SELECT id, nro_cuota, monto " + "  FROM cuotas "
+				+ " WHERE id_prestamo = ? AND fecha_pago IS NULL " + " ORDER BY nro_cuota ASC " + " LIMIT 1";
+		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, idPrestamo);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					Cuota c = new Cuota();
+					c.setId(rs.getInt("id"));
+					c.setNroCuota(rs.getInt("nro_cuota"));
+					c.setMonto(rs.getDouble("monto"));
+					return c;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public int contarCuotasPendientes(int idPrestamo) {
+		String sql = "SELECT COUNT(*) AS total " + "  FROM cuotas " + " WHERE id_prestamo = ? AND fecha_pago IS NULL";
+		try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, idPrestamo);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt("total");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public Cuota obtenerCuotaPorId(int idCuota) {
+		Cuota cuota = null;
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conexion = Conexion.getConexion();
+			String sql = "SELECT id, id_prestamo, nro_cuota, monto, fecha_pago "
+					+ "FROM cuotas "
+					+ "WHERE id = ?";
+			
+			ps = conexion.prepareStatement(sql);
+			ps.setInt(1, idCuota);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				cuota = new Cuota();
+				cuota.setId(rs.getInt("id"));
+
+				Prestamo prestamo = new Prestamo();
+				prestamo.setId(rs.getInt("id_prestamo"));
+				cuota.setPrestamo(prestamo);
+
+				cuota.setNroCuota(rs.getInt("nro_cuota"));
+				cuota.setMonto(rs.getDouble("monto"));
+
+				Date fechaSql = rs.getDate("fecha_pago");
+				if (fechaSql != null) {
+					cuota.setFechaPago(new java.util.Date(fechaSql.getTime()));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			try {
+				if (conexion != null)
+					conexion.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return cuota;
+	}
 }

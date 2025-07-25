@@ -39,10 +39,12 @@
 						if (cuentas != null) {
 							for (Cuenta c : cuentas) {
 						%>
+						<% if(c.isActivo()){ %>
 						<option value="<%=c.getId()%>">
 							<%=c.getNumeroCuenta()%> - Saldo: $<%=c.getSaldo()%>
 						</option>
 						<%
+						}
 						}
 						}
 						%>
@@ -55,11 +57,14 @@
 						<%
 						if (cuentas != null) {
 							for (Cuenta c : cuentas) {
+						if(c.isActivo()){
 						%>
+						
 						<option value="<%=c.getCbu()%>">
 							<%=c.getNumeroCuenta()%> - Saldo: $<%=c.getSaldo()%>
 						</option>
 						<%
+						}
 						}
 						}
 						%>

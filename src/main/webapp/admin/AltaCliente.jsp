@@ -19,161 +19,185 @@
 		<div class="w-75 mx-auto">
 			<h2 class="text-center mb-4">Alta Cliente</h2>
 			<form action="ClientesServlet" method="post">
-    <input type="hidden" name="accion" value="alta" />
+				<input type="hidden" name="accion" value="alta" />
 
-    <div class="mb-3">
-        <label>DNI</label>
-        <input type="number" class="form-control"
-               name="dni" placeholder="Ingrese el DNI" required
-               value="<%= request.getAttribute("dni") != null ? request.getAttribute("dni") : "" %>">
-    </div>
+				<div class="mb-3">
+					<label>DNI</label> <input type="text" name="dni" pattern="[0-9]{8}"
+						class="form-control" maxlength="8" placeholder="Ingrese el DNI"
+						required
+						value="<%=request.getAttribute("dni") != null ? request.getAttribute("dni") : ""%>" />
+				</div>
 
-    <div class="mb-3">
-        <label>CUIL</label>
-        <input type="text" class="form-control"
-               name="cuil" placeholder="Ingrese su CUIL"
-               value="<%= request.getAttribute("cuil") != null ? request.getAttribute("cuil") : "" %>">
-    </div>
+				<div class="mb-3">
+					<label>CUIL</label> <input type="text" name="cuil"
+						class="form-control" pattern="\d{2}-\d{7,8}-\d" maxlength="13"
+						placeholder="Ingrese el CUIL (ej: 20-12345678-3)" required
+						value="<%=request.getAttribute("cuil") != null ? request.getAttribute("cuil") : ""%>" />
 
-    <div class="mb-3">
-        <label>Nombre</label>
-        <input type="text" class="form-control"
-               name="nombre" placeholder="Ingrese su nombre" required
-               value="<%= request.getAttribute("nombre") != null ? request.getAttribute("nombre") : "" %>">
-    </div>
+				</div>
 
-    <div class="mb-3">
-        <label>Apellido</label>
-        <input type="text" class="form-control"
-               name="apellido" placeholder="Ingrese el apellido" required
-               value="<%= request.getAttribute("apellido") != null ? request.getAttribute("apellido") : "" %>">
-    </div>
+				<div class="mb-3">
+					<label>Nombre</label> <input type="text" name="nombre"
+						class="form-control" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+"
+						placeholder="Ingrese el nombre" required
+						value="<%=request.getAttribute("nombre") != null ? request.getAttribute("nombre") : ""%>" />
+				</div>
 
-    <div class="mb-3">
-        <label>Sexo</label>
-        <select class="form-select" name="sexo" required>
-            <option value="Masculino" <%= "Masculino".equals(request.getAttribute("sexo")) ? "selected" : "" %>>Masculino</option>
-            <option value="Femenino" <%= "Femenino".equals(request.getAttribute("sexo")) ? "selected" : "" %>>Femenino</option>
-            <option value="Otro" <%= "Otro".equals(request.getAttribute("sexo")) ? "selected" : "" %>>Otro</option>
-        </select>
-    </div>
+				<div class="mb-3">
+					<label>Apellido</label> <input type="text" name="apellido"
+						class="form-control" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+"
+						placeholder="Ingrese el apellido" required
+						value="<%=request.getAttribute("apellido") != null ? request.getAttribute("apellido") : ""%>" />
 
-    <div class="mb-3">
-        <label>Nacionalidad</label>
-        <select class="form-select" name="idNacionalidad" required>
-            <%
-            List<Nacionalidad> nacionalidades = (List<Nacionalidad>) request.getAttribute("nacionalidades");
-            String idNacionalidad = String.valueOf(request.getAttribute("idNacionalidad"));
-            if (nacionalidades != null) {
-                for (Nacionalidad nac : nacionalidades) {
-                    String selected = (idNacionalidad != null && idNacionalidad.equals(String.valueOf(nac.getId()))) ? "selected" : "";
-            %>
-            <option value="<%=nac.getId()%>" <%=selected%>><%=nac.getDescripcion()%></option>
-            <%
-                }
-            }
-            %>
-        </select>
-    </div>
+				</div>
 
-    <div class="mb-3">
-        <label>Fecha de nacimiento</label>
-        <input type="date" class="form-control"
-               name="fechaNacimiento" required
-               value="<%= request.getAttribute("fechaNacimiento") != null ? request.getAttribute("fechaNacimiento") : "" %>">
-    </div>
+				<div class="mb-3">
+					<label>Sexo</label> <select class="form-select" name="sexo"
+						required>
+						<option value="Masculino">Masculino</option>
+						<option value="Femenino">Femenino</option>
+						<option value="Otro">Otro</option>
+					</select>
+				</div>
 
-    <div class="mb-3">
-        <label>Direccion</label>
-        <input type="text" class="form-control"
-               name="direccion" placeholder="Ingrese su direccion" required
-               value="<%= request.getAttribute("direccion") != null ? request.getAttribute("direccion") : "" %>">
-    </div>
+				<div class="mb-3">
+					<label>Nacionalidad</label> <select class="form-select"
+						name="idNacionalidad" required>
+						<%
+						@SuppressWarnings("unchecked")
+						List<Nacionalidad> nacionalidades = (List<Nacionalidad>) request.getAttribute("nacionalidades");
+						if (nacionalidades != null) {
+							for (Nacionalidad nac : nacionalidades) {
+						%>
+						<option value="<%=nac.getId()%>"><%=nac.getDescripcion()%></option>
+						<%
+						}
+						}
+						%>
+					</select>
+				</div>
 
-    <div class="mb-3">
-        <label>Provincia</label>
-        <select class="form-select" name="idProvincia" onchange="this.form.submit()" required>
-            <option value="0">Seleccione una provincia</option>
-            <%
-            List<Provincia> provincias = (List<Provincia>) request.getAttribute("provincias");
-            // Toma el id de provincia desde selectedProvinciaId o idProvincia
-            String idProvincia = String.valueOf(
-                request.getAttribute("selectedProvinciaId") != null ?
-                request.getAttribute("selectedProvinciaId") :
-                request.getAttribute("idProvincia")
-            );
-            if (provincias != null) {
-                for (Provincia prov : provincias) {
-                    String selected = (idProvincia != null && idProvincia.equals(String.valueOf(prov.getId()))) ? "selected" : "";
-            %>
-            <option value="<%=prov.getId()%>" <%=selected%>><%=prov.getNombre()%></option>
-            <%
-                }
-            }
-            %>
-        </select>
-    </div>
+				<div class="mb-3">
+					<label>Fecha de nacimiento</label> <input type="date"
+						class="form-control" name="fechaNacimiento" required>
+				</div>
 
-    <div class="mb-3">
-        <label>Localidad</label>
-        <select class="form-select" name="idLocalidad" required>
-            <%
-            List<Localidad> localidades = (List<Localidad>) request.getAttribute("localidades");
-            String idLocalidad = String.valueOf(request.getAttribute("idLocalidad"));
-            if (localidades != null && !localidades.isEmpty()) {
-                for (Localidad loc : localidades) {
-                    String selected = (idLocalidad != null && idLocalidad.equals(String.valueOf(loc.getId()))) ? "selected" : "";
-            %>
-            <option value="<%=loc.getId()%>" <%=selected%>><%=loc.getNombre()%></option>
-            <%
-                }
-            } else {
-            %>
-            <option value="">No hay localidades disponibles</option>
-            <%
-            }
-            %>
-        </select>
-    </div>
+				<div class="mb-3">
+					<label>Direcci�n</label> <input type="text" class="form-control"
+						name="direccion" placeholder="Ingrese su direcci�n"
+						value="<%=request.getAttribute("direccion") != null ? request.getAttribute("direccion") : ""%>"
+						required>
+				</div>
 
-    <div class="mb-3">
-        <label>Email</label>
-        <input type="email" class="form-control"
-               name="correoElectronico" placeholder="Ingrese su correo" required
-               value="<%= request.getAttribute("correoElectronico") != null ? request.getAttribute("correoElectronico") : "" %>">
-    </div>
+				<div class="mb-3">
+					<label>Provincia</label> <select class="form-select"
+						name="idProvincia" id="provinciaSelect" required>
+						<%
+						@SuppressWarnings("unchecked")
+						List<Provincia> provincias = (List<Provincia>) request.getAttribute("provincias");
+						if (provincias != null) {
+							for (Provincia prov : provincias) {
+						%>
+						<option value="<%=prov.getId()%>"><%=prov.getNombre()%></option>
+						<%
+						}
+						}
+						%>
+					</select>
+				</div>
 
-    <div class="mb-3">
-        <label>Telefono</label>
-        <input type="number" class="form-control"
-               name="telefono" placeholder="Ingrese el numero telefonico"
-               value="<%= request.getAttribute("telefono") != null ? request.getAttribute("telefono") : "" %>">
-    </div>
+				<div class="mb-3">
+					<label>Localidad</label> <select class="form-select"
+						name="idLocalidad" id="localidadSelect" required>
+						<%
+						@SuppressWarnings("unchecked")
+						List<Localidad> localidades = (List<Localidad>) request.getAttribute("localidades");
+						if (localidades != null) {
+							for (Localidad loc : localidades) {
+						%>
+						<option value="<%=loc.getId()%>"
+							data-provincia="<%=loc.getProvincia()%>"><%=loc.getNombre()%></option>
+						<%
+						}
+						}
+						%>
+					</select>
+				</div>
+				<script>
+					document
+							.getElementById("provinciaSelect")
+							.addEventListener(
+									"change",
+									function() {
+										var idProvincia = this.value;
+										var localidadSelect = document
+												.getElementById("localidadSelect");
 
-    <div class="mb-3">
-        <label>Usuario</label>
-        <input type="text" class="form-control"
-               name="usuario" placeholder="Ingrese el nombre de usuario" required
-               value="<%= request.getAttribute("usuario") != null ? request.getAttribute("usuario") : "" %>">
-    </div>
+										for (var i = 0; i < localidadSelect.options.length; i++) {
+											var opcion = localidadSelect.options[i];
+											var dataProv = opcion
+													.getAttribute("data-provincia");
 
-    <div class="mb-3">
-        <label>Contrasenia</label>
-        <input type="password" class="form-control"
-               name="contrasena" placeholder="Ingrese la contrasenia" required>
-    </div>
+											// Mostrar solo las localidades con el ID de provincia seleccionado
+											if (!dataProv
+													|| dataProv === idProvincia) {
+												opcion.style.display = "";
+											} else {
+												opcion.style.display = "none";
+											}
+										}
+										// Recorremos y seleccionamos la primera localidad visible
+										for (var i = 0; i < localidadSelect.options.length; i++) {
+											var opcion = localidadSelect.options[i];
+											if (opcion.style.display !== "none"
+													&& opcion.value !== "") {
+												localidadSelect.value = opcion.value;
+												break;
+											}
+										}
 
-    <div class="mb-3">
-        <label>Repetir contrasenia</label>
-        <input type="password" class="form-control"
-               name="repContrasena" placeholder="Repita la contrasenia" required>
-    </div>
+									});
+				</script>
 
-    <div class="text-center">
-        <a href="ClientesServlet?accion=listar" class="btn btn-secondary">Cancelar</a>
-        <button type="submit" class="btn btn-primary">Crear Cliente</button>
-    </div>
-</form>
+				<div class="mb-3">
+					<label>Email</label> <input type="email" name="correoElectronico"
+						class="form-control" placeholder="Ingrese el correo electr�nico"
+						required
+						value="<%=request.getAttribute("correoElectronico") != null ? request.getAttribute("correoElectronico") : ""%>" />
+				</div>
+
+				<div class="mb-3">
+					<label>Tel�fono</label> <input type="tel" name="telefono"
+						class="form-control" pattern="\d{10}"
+						placeholder="Ingrese el tel�fono" required
+						value="<%=request.getAttribute("telefono") != null ? request.getAttribute("telefono") : ""%>" />
+				</div>
+
+				<div class="mb-3">
+					<label>Usuario</label> <input type="text" name="usuario"
+						class="form-control" pattern="[A-Za-z0-9]{4,20}"
+						placeholder="Ingrese el nombre de usuario" required
+						value="<%=request.getAttribute("usuario") != null ? request.getAttribute("usuario") : ""%>" />
+				</div>
+
+				<div class="mb-3">
+					<label>Contrase�a</label> <input type="password" name="contrasena"
+						class="form-control" placeholder="Ingrese la contrase�aa"
+						minlength="6" required />
+				</div>
+
+				<div class="mb-3">
+					<label>Repetir contrase�a</label> <input type="password"
+						class="form-control" name="repContrasena"
+						placeholder="Repita la contrase�a" minlength="6" required />
+				</div>
+
+				<div class="text-center">
+					<a href="ClientesServlet?accion=listar" class="btn btn-secondary">Cancelar</a>
+					<button type="submit" class="btn btn-primary">Crear
+						Cliente</button>
+				</div>
+			</form>
 		</div>
 	</div>
 

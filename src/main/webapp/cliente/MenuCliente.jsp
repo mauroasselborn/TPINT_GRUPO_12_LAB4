@@ -30,9 +30,13 @@
 	<jsp:include page="../componentes/BarraSuperior.jsp" />
 
 	<!-- Contenido principal -->
-	<div class="container-fluid content py-4">
-		<h1 class="text-primary mb-3">Mis Cuentas</h1>
-		<div class="bg-light p-4 rounded shadow-sm">
+	<div class="container-fluid content pt-5">
+		<div class="text-center mt-4 ">
+    <h1 style="font-size: 2.8rem; font-weight: bold; color: #0d6efd; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">
+        Mis Cuentas
+    </h1>
+</div>
+		<div class="bg-light py-2 ms-3 rounded shadow-sm">
 
 			<%
 			
