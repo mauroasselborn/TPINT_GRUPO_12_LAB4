@@ -41,6 +41,7 @@
 						<td><%=cuotasPendientes%></td>
 					</tr>
 
+					
 					<%
 					if (proximaCuota != null) {
 					%>
@@ -54,7 +55,13 @@
 						<td><%=prestamo.getFechaAlta()%></td>
 					</tr>
 					<%
-					} else {
+					} else if (prestamo.getIdEstado() == 3) {
+					%>
+					<tr>
+						<th colspan="2" class="text-center text-muted">Préstamo	Rechazado</th>
+					</tr>
+					<%
+					}else{
 					%>
 					<tr>
 						<th colspan="2" class="text-center text-muted">Préstamo
