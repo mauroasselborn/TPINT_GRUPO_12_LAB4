@@ -169,7 +169,7 @@
 				<div class="mb-3">
 					<label>Teléfono</label> <input type="tel" name="telefono"
 						class="form-control" pattern="\d{10}"
-						placeholder="Ingrese el teléfono" required
+						placeholder="Ingrese el teléfono ej 1144443333" required
 						value="<%=request.getAttribute("telefono") != null ? request.getAttribute("telefono") : ""%>" />
 				</div>
 
