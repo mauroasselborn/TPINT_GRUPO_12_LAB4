@@ -31,7 +31,8 @@
                         <th>Cantidad de Cuotas</th>
                         <th>Importe por Cuota</th>
                         <th>Cuotas Pendientes</th>                        
-                        <th>Fecha de Alta</th>
+                        <th>Fecha de Solicitud</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -49,6 +50,13 @@
                         <td><%= p.getImportePorCuota() %></td>
                         <td><%= p.getCuotasPendientes()%></td>
                         <td><%= p.getFechaAlta() %></td>
+                        <%
+                        String estado = null;
+                        if(p.getIdEstado() == 1) estado = "PENDIENTE"; 
+                        else if(p.getIdEstado() == 2) estado = "APROBADO";
+                        else estado = "RECHAZADO";
+                        %>
+                        <td><%= estado %></td>
                         <td>
                             <div class="d-flex justify-content-center">
                                 <a href="PrestamosServlet?accion=detalle&id=<%= p.getId() %>" class="btn btn-info btn-sm">
