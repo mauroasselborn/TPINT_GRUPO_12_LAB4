@@ -116,7 +116,7 @@ public class TransferenciasServlet extends HttpServlet {
                     }
                 }
 
-                if (cuentaDestino == null) {
+                if (cuentaDestino == null || !cuentaDestino.isActivo() ) {
                 	toastMensaje = "La cuenta a la que quieres transferir no existe.";
                     toastTitulo = "Error";
                     toastTipo = "error";
@@ -124,7 +124,8 @@ public class TransferenciasServlet extends HttpServlet {
                 	toastMensaje = "La cuenta destino es igual a la cuenta origen.";
                     toastTitulo = "Error";
                     toastTipo = "error";
-                }else{
+                }
+                else{
                     cuentaNegocio.descontarSaldo(cuentaOrigenId, monto);
                     cuentaNegocio.aumentarSaldo(cuentaDestino.getId(), monto);
 

@@ -90,48 +90,74 @@ Usuario usuario = (Usuario) request.getAttribute("usuario");
 
 
 				<div class="mb-3">
-					<label>Provincia</label> 
-					<select class="form-select"	name="idProvincia" required>
+					<label>Provincia</label> <select class="form-select"
+						name="idProvincia" id="provinciaSelect" required>
 						<%
 						@SuppressWarnings("unchecked")
 						List<Provincia> provincias = (List<Provincia>) request.getAttribute("provincias");
 						if (provincias != null) {
-							for (int i = 0; i < provincias.size(); i++) {
-								Provincia prov = provincias.get(i);
+							for (Provincia prov : provincias) {
 						%>
-						<option value="<%=prov.getId()%>"
-							<%=prov.getId() == cliente.getProvincia().getId() ? "selected" : ""%>>
-							<%=prov.getNombre()%>
-						</option>
+						<option value="<%=prov.getId()%>"><%=prov.getNombre()%></option>
 						<%
 						}
 						}
 						%>
-
 					</select>
 				</div>
 
 				<div class="mb-3">
-					<label>Localidad</label> 
-					<select class="form-select"	name="idLocalidad" required>
+					<label>Localidad</label> <select class="form-select"
+						name="idLocalidad" id="localidadSelect" required>
 						<%
 						@SuppressWarnings("unchecked")
 						List<Localidad> localidades = (List<Localidad>) request.getAttribute("localidades");
 						if (localidades != null) {
-							for (int i = 0; i < localidades.size(); i++) {
-								Localidad loc = localidades.get(i);
+							for (Localidad loc : localidades) {
 						%>
 						<option value="<%=loc.getId()%>"
-							<%=loc.getId() == cliente.getLocalidad().getId() ? "selected" : ""%>>
-							<%=loc.getNombre()%>
-						</option>
+							data-provincia="<%=loc.getProvincia()%>"><%=loc.getNombre()%></option>
 						<%
 						}
 						}
 						%>
-
 					</select>
 				</div>
+				<script>
+					document
+							.getElementById("provinciaSelect")
+							.addEventListener(
+									"change",
+									function() {
+										var idProvincia = this.value;
+										var localidadSelect = document
+												.getElementById("localidadSelect");
+
+										for (var i = 0; i < localidadSelect.options.length; i++) {
+											var opcion = localidadSelect.options[i];
+											var dataProv = opcion
+													.getAttribute("data-provincia");
+
+											// Mostrar solo las localidades con el ID de provincia seleccionado
+											if (!dataProv
+													|| dataProv === idProvincia) {
+												opcion.style.display = "";
+											} else {
+												opcion.style.display = "none";
+											}
+										}
+										// Recorremos y seleccionamos la primera localidad visible
+										for (var i = 0; i < localidadSelect.options.length; i++) {
+											var opcion = localidadSelect.options[i];
+											if (opcion.style.display !== "none"
+													&& opcion.value !== "") {
+												localidadSelect.value = opcion.value;
+												break;
+											}
+										}
+
+									});
+				</script>
 
 
 
