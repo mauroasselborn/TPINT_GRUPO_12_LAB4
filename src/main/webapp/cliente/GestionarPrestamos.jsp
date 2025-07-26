@@ -48,7 +48,7 @@
                         <td>$<%= String.format("%.2f", p.getImportePedido())%></td>
                         <td><%= p.getCantidadCuotas() %></td>
                         <td><%= p.getImportePorCuota() %></td>
-                        <td><%= p.getCuotasPendientes()%></td>
+                        <td><%= (p.getIdEstado() == 2) ? p.getCuotasPendientes() : "0" %></td>
                         <td><%= p.getFechaAlta() %></td>
                         <%
                         String estado = null;
